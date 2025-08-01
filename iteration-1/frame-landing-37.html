@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Brutalist Technical</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Aclonica&family=Fugaz+One&family=Racing+Sans+One&family=Anta&family=Russo+One&family=Bakbak+One&family=Monomaniac+One&family=Space+Grotesk:wght@400;700&family=Inter:wght@400;600;800&family=Bebas+Neue&family=Oswald:wght@400;600&family=Archivo:wght@400;700;900&family=Barlow:wght@400;700;900&family=Work+Sans:wght@400;700;900&family=Manrope:wght@400;700;800&family=Syne:wght@400;700;800&family=DM+Sans:wght@400;700&family=Plus+Jakarta+Sans:wght@400;700;800&family=Lexend:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #f0f0f0;
+            --accent-color: #00ff00;
+            --text-color: #1a1a1a;
+            --bg-color: #f0f0f0;
+            --gray-100: #e0e0e0;
+            --gray-200: #c0c0c0;
+            --gray-300: #a0a0a0;
+            --gray-400: #808080;
+            --gray-500: #606060;
+            --gray-600: #404040;
+            --font-size-multiplier: 1;
+            --headline-font: 'Archivo', sans-serif;
+            --body-font: 'Barlow', sans-serif;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #f0f0f0;
+            --secondary-color: #1a1a1a;
+            --accent-color: #00ff00;
+            --text-color: #f0f0f0;
+            --bg-color: #1a1a1a;
+            --gray-100: #2a2a2a;
+            --gray-200: #3a3a3a;
+            --gray-300: #4a4a4a;
+            --gray-400: #5a5a5a;
+            --gray-500: #6a6a6a;
+            --gray-600: #7a7a7a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            padding: 12px 24px;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 4px solid var(--accent-color);
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toolbar label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .toolbar select,
+        .toolbar input[type="color"],
+        .toolbar input[type="range"] {
+            padding: 6px;
+            border: 2px solid var(--accent-color);
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .toolbar input[type="color"] {
+            width: 48px;
+            height: 32px;
+            cursor: pointer;
+            border-radius: 0;
+        }
+
+        .theme-toggle {
+            background: var(--accent-color);
+            border: none;
+            color: var(--primary-color);
+            padding: 8px 20px;
+            cursor: pointer;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 900;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--bg-color);
+            padding: 32px 48px;
+            border-bottom: 8px solid var(--primary-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--headline-font);
+            font-size: calc(32px * var(--font-size-multiplier));
+            font-weight: 900;
+            letter-spacing: -2px;
+            border: 4px solid var(--primary-color);
+            padding: 8px 16px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: calc(13px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 12px 24px;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            border-color: var(--primary-color);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 96px 0;
+            background-color: var(--bg-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-family: var(--headline-font);
+            font-size: calc(96px * var(--font-size-multiplier));
+            font-weight: 900;
+            line-height: 0.9;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+
+        .hero-accent {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 0 8px;
+            display: inline-block;
+        }
+
+        .hero p {
+            font-size: calc(20px * var(--font-size-multiplier));
+            margin-bottom: 48px;
+            font-weight: 500;
+            max-width: 600px;
+        }
+
+        .hero-visual {
+            background-color: var(--primary-color);
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    var(--accent-color),
+                    var(--accent-color) 2px,
+                    transparent 2px,
+                    transparent 20px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    var(--accent-color),
+                    var(--accent-color) 2px,
+                    transparent 2px,
+                    transparent 20px
+                );
+            opacity: 0.3;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 20px 48px;
+            font-size: calc(14px * var(--font-size-multiplier));
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-block;
+            border: 4px solid var(--primary-color);
+            position: relative;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            transform: translate(-4px, -4px);
+            box-shadow: 4px 4px 0 var(--primary-color);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            transform: translate(-4px, -4px);
+            box-shadow: 4px 4px 0 var(--accent-color);
+        }
+
+        /* Style Guide Section */
+        .style-guide {
+            padding: 96px 0;
+            background-color: var(--gray-100);
+        }
+
+        .section-header {
+            margin-bottom: 64px;
+            border-bottom: 8px solid var(--primary-color);
+            padding-bottom: 24px;
+        }
+
+        .section-header h2 {
+            font-family: var(--headline-font);
+            font-size: calc(64px * var(--font-size-multiplier));
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+        }
+
+        .section-header p {
+            font-size: calc(18px * var(--font-size-multiplier));
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .style-item {
+            background-color: var(--bg-color);
+            padding: 48px;
+            border: 4px solid var(--primary-color);
+            position: relative;
+        }
+
+        .style-item::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: -8px;
+            bottom: -8px;
+            background-color: var(--accent-color);
+            z-index: -1;
+        }
+
+        .style-item h3 {
+            font-family: var(--headline-font);
+            font-size: calc(28px * var(--font-size-multiplier));
+            margin-bottom: 24px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .color-block {
+            width: 100%;
+            height: 120px;
+            margin-bottom: 16px;
+            border: 4px solid var(--primary-color);
+        }
+
+        /* About Section */
+        .about {
+            padding: 96px 0;
+            background-color: var(--bg-color);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 64px;
+        }
+
+        .about-text p {
+            font-size: calc(18px * var(--font-size-multiplier));
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .about-text p:first-child {
+            font-size: calc(24px * var(--font-size-multiplier));
+            font-weight: 700;
+        }
+
+        .about-stats {
+            display: grid;
+            gap: 24px;
+        }
+
+        .stat-item {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            padding: 32px;
+            position: relative;
+        }
+
+        .stat-item::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: -8px;
+            bottom: -8px;
+            border: 4px solid var(--accent-color);
+            z-index: -1;
+        }
+
+        .stat-number {
+            font-family: var(--headline-font);
+            font-size: calc(48px * var(--font-size-multiplier));
+            font-weight: 900;
+        }
+
+        .stat-label {
+            font-size: calc(12px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 96px 0;
+            background-color: var(--gray-100);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .service-card {
+            background-color: var(--bg-color);
+            padding: 48px;
+            border: 4px solid var(--primary-color);
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .service-card:hover {
+            transform: translate(-8px, -8px);
+            box-shadow: 8px 8px 0 var(--accent-color);
+        }
+
+        .service-number {
+            font-family: var(--headline-font);
+            font-size: calc(72px * var(--font-size-multiplier));
+            font-weight: 900;
+            color: var(--accent-color);
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(28px * var(--font-size-multiplier));
+            margin-bottom: 16px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .service-card p {
+            font-size: calc(16px * var(--font-size-multiplier));
+            font-weight: 500;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 96px 0;
+            background-color: var(--bg-color);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 64px;
+        }
+
+        .contact-form {
+            background-color: var(--gray-100);
+            padding: 48px;
+            border: 4px solid var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: calc(12px * var(--font-size-multiplier));
+            font-weight: 900;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 16px;
+            border: 4px solid var(--primary-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--body-font);
+            font-size: calc(16px * var(--font-size-multiplier));
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        .contact-info {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            padding: 48px;
+            height: fit-content;
+        }
+
+        .contact-info-item {
+            margin-bottom: 32px;
+        }
+
+        .contact-info-item h4 {
+            font-family: var(--headline-font);
+            font-size: calc(20px * var(--font-size-multiplier));
+            margin-bottom: 8px;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--accent-color);
+        }
+
+        .contact-info-item p {
+            font-size: calc(16px * var(--font-size-multiplier));
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            padding: 48px 0;
+            text-align: center;
+            border-top: 8px solid var(--accent-color);
+        }
+
+        footer p {
+            font-size: calc(14px * var(--font-size-multiplier));
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-grid,
+            .style-grid,
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: calc(64px * var(--font-size-multiplier));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-group">
+            <label for="headline-font">Headline Font:</label>
+            <select id="headline-font">
+                <option value="'Archivo', sans-serif">Archivo</option>
+                <option value="'Prosto One', display">Prosto One</option>
+                <option value="'Aclonica', display">Aclonica</option>
+                <option value="'Fugaz One', display">Fugaz One</option>
+                <option value="'Racing Sans One', display">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Bakbak One', display">Bakbak One</option>
+                <option value="'Monomaniac One', sans-serif">Monomaniac One</option>
+                <option value="'Bebas Neue', display">Bebas Neue</option>
+                <option value="'Oswald', sans-serif">Oswald</option>
+                <option value="'Syne', sans-serif">Syne</option>
+                <option value="'Work Sans', sans-serif">Work Sans</option>
+            </select>
+        </div>
+        <div class="toolbar-group">
+            <label for="body-font">Body Font:</label>
+            <select id="body-font">
+                <option value="'Barlow', sans-serif">Barlow</option>
+                <option value="'Inter', sans-serif">Inter</option>
+                <option value="'DM Sans', sans-serif">DM Sans</option>
+                <option value="'Work Sans', sans-serif">Work Sans</option>
+                <option value="'Manrope', sans-serif">Manrope</option>
+                <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
+                <option value="'Lexend', sans-serif">Lexend</option>
+                <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+            </select>
+        </div>
+        <div class="toolbar-group">
+            <label for="primary-color">Primary:</label>
+            <input type="color" id="primary-color" value="#1a1a1a">
+        </div>
+        <div class="toolbar-group">
+            <label for="secondary-color">Secondary:</label>
+            <input type="color" id="secondary-color" value="#f0f0f0">
+        </div>
+        <div class="toolbar-group">
+            <label for="accent-color">Accent:</label>
+            <input type="color" id="accent-color" value="#00ff00">
+        </div>
+        <div class="toolbar-group">
+            <label for="font-size">Font Size:</label>
+            <input type="range" id="font-size" min="0.8" max="1.2" step="0.1" value="1">
+            <span id="font-size-value">1.0</span>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()">Dark Mode</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">FRAME</div>
+            <ul class="nav-links">
+                <li><a href="#home">001/HOME</a></li>
+                <li><a href="#about">002/ABOUT</a></li>
+                <li><a href="#services">003/SERVICES</a></li>
+                <li><a href="#contact">004/CONTACT</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-text">
+                    <h1>DIGITAL<br><span class="hero-accent">BRUTALISM</span><br>AGENCY</h1>
+                    <p>We build raw, powerful digital experiences that cut through the noise. No decoration. Just impact.</p>
+                    <div class="btn-group">
+                        <a href="#contact" class="btn btn-primary">INITIATE PROJECT</a>
+                        <a href="#services" class="btn btn-secondary">VIEW WORK</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="tech-pattern"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Style Guide Section -->
+    <section class="style-guide">
+        <div class="container">
+            <div class="section-header">
+                <h2>DESIGN SYSTEM</h2>
+                <p>RAW MATERIALS FOR DIGITAL CONSTRUCTION</p>
+            </div>
+            <div class="style-grid">
+                <div class="style-item">
+                    <h3>COLORS</h3>
+                    <div class="color-block" style="background-color: var(--primary-color);"></div>
+                    <p>PRIMARY: INDUSTRIAL BLACK</p>
+                </div>
+                <div class="style-item">
+                    <h3>TYPOGRAPHY</h3>
+                    <p style="font-family: var(--headline-font); font-size: 32px; font-weight: 900;">HEADLINE</p>
+                    <p style="font-family: var(--body-font); font-size: 18px;">Body Text Sample</p>
+                </div>
+                <div class="style-item">
+                    <h3>STRUCTURE</h3>
+                    <p>RIGID GRID SYSTEM<br>NO CURVES<br>MAXIMUM IMPACT</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>ABOUT FRAME</h2>
+                <p>DIGITAL ARCHITECTS OF THE MODERN WEB</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Frame is not your typical digital agency. We believe in the power of raw, unfiltered design.</p>
+                    <p>Our approach strips away the unnecessary, leaving only what matters: functionality, impact, and results. We don't hide behind pretty pixels or trendy effects.</p>
+                    <p>Every project is an exercise in digital brutalism - honest, powerful, and impossible to ignore. We build experiences that demand attention and deliver results.</p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">250+</div>
+                        <div class="stat-label">Projects Delivered</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Years of Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Client Satisfaction</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>OUR SERVICES</h2>
+                <p>DIGITAL SOLUTIONS WITHOUT COMPROMISE</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-number">01</div>
+                    <h3>WEB DESIGN</h3>
+                    <p>Brutalist websites that load fast, work everywhere, and get results.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-number">02</div>
+                    <h3>BRAND IDENTITY</h3>
+                    <p>Bold visual systems that stand out in a world of sameness.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-number">03</div>
+                    <h3>UI/UX DESIGN</h3>
+                    <p>Interfaces that prioritize function over form, without sacrificing either.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>CONTACT US</h2>
+                <p>LET'S BUILD SOMETHING POWERFUL</p>
+            </div>
+            <div class="contact-content">
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">NAME</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">EMAIL</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">MESSAGE</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">SEND MESSAGE</button>
+                </form>
+                <div class="contact-info">
+                    <div class="contact-info-item">
+                        <h4>EMAIL</h4>
+                        <p>hello@frame.agency</p>
+                    </div>
+                    <div class="contact-info-item">
+                        <h4>PHONE</h4>
+                        <p>+1 (555) 123-4567</p>
+                    </div>
+                    <div class="contact-info-item">
+                        <h4>LOCATION</h4>
+                        <p>NEW YORK, NY</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 FRAME. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            document.querySelector('.theme-toggle').textContent = newTheme === 'dark' ? 'LIGHT MODE' : 'DARK MODE';
+        }
+
+        // Font Controls
+        document.getElementById('headline-font').addEventListener('change', function(e) {
+            document.documentElement.style.setProperty('--headline-font', e.target.value);
+        });
+
+        document.getElementById('body-font').addEventListener('change', function(e) {
+            document.documentElement.style.setProperty('--body-font', e.target.value);
+        });
+
+        // Color Controls
+        document.getElementById('primary-color').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--primary-color', e.target.value);
+        });
+
+        document.getElementById('secondary-color').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--secondary-color', e.target.value);
+        });
+
+        document.getElementById('accent-color').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--accent-color', e.target.value);
+        });
+
+        // Font Size Control
+        document.getElementById('font-size').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--font-size-multiplier', e.target.value);
+            document.getElementById('font-size-value').textContent = e.target.value;
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

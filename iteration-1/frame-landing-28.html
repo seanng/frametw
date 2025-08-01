@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Bold Typography, Clean Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Aclonica&family=Fugaz+One&family=Racing+Sans+One&family=Anta&family=Russo+One&family=Bakbak+One&family=Monomaniac+One&family=Anton&family=Bebas+Neue&family=Oswald:wght@400;600&family=Barlow+Condensed:wght@400;700&family=Archivo+Black&family=Teko:wght@400;600&family=Chakra+Petch:wght@400;700&family=Orbitron:wght@400;700&family=Michroma&family=Audiowide&family=Black+Ops+One&family=Bungee&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1C1C1C;
+            --secondary-color: #2A2A2A;
+            --accent-color: #FFD700;
+            --text-color: #B0B0B0;
+            --bg-color: #FFFFFF;
+            --card-bg: #F5F5F5;
+            --font-multiplier: 1;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #F0F0F0;
+            --secondary-color: #D0D0D0;
+            --accent-color: #FFD700;
+            --text-color: #B0B0B0;
+            --bg-color: #1C1C1C;
+            --card-bg: #2A2A2A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Oswald', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            line-height: 1.5;
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--secondary-color);
+            padding: 12px 40px;
+            z-index: 1001;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .toolbar label {
+            font-size: 10px;
+            color: var(--text-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .toolbar select,
+        .toolbar input[type="color"],
+        .toolbar input[type="range"] {
+            padding: 6px 12px;
+            background: var(--bg-color);
+            color: var(--primary-color);
+            border: none;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 0;
+        }
+
+        .toolbar select:hover,
+        .toolbar input:hover {
+            background: var(--accent-color);
+            color: var(--secondary-color);
+        }
+
+        .toolbar input[type="range"] {
+            width: 120px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: var(--bg-color);
+            padding: 30px 60px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-family: var(--headline-font, 'Anton'), sans-serif;
+            font-size: calc(36px * var(--font-multiplier));
+            font-weight: 900;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: -1px;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '.';
+            color: var(--accent-color);
+            font-size: calc(48px * var(--font-multiplier));
+            position: absolute;
+            top: -5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: calc(14px * var(--font-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .theme-toggle {
+            background: var(--primary-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            font-size: calc(12px * var(--font-multiplier));
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-color);
+            color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 150px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            padding: 0 60px;
+            position: relative;
+            background: linear-gradient(135deg, var(--bg-color) 0%, var(--card-bg) 100%);
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-family: var(--headline-font, 'Anton'), sans-serif;
+            font-size: calc(96px * var(--font-multiplier));
+            line-height: 0.85;
+            margin-bottom: 30px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -3px;
+        }
+
+        .hero-text h1 .highlight {
+            color: var(--accent-color);
+            display: inline-block;
+            transform: rotate(-2deg);
+            position: relative;
+        }
+
+        .hero-text p {
+            font-size: calc(18px * var(--font-multiplier));
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            opacity: 0.7;
+            max-width: 500px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 45px;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            font-size: calc(14px * var(--font-multiplier));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button.primary {
+            background: var(--accent-color);
+            color: var(--secondary-color);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 3px solid var(--primary-color);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .hero-graphic {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .graphic-line {
+            height: 80px;
+            background: var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .graphic-line:nth-child(2) {
+            background: var(--accent-color);
+            margin-left: 40px;
+        }
+
+        .graphic-line:nth-child(3) {
+            background: var(--secondary-color);
+            margin-left: 80px;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 120px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: var(--headline-font, 'Anton'), sans-serif;
+            font-size: calc(64px * var(--font-multiplier));
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            font-size: calc(16px * var(--font-multiplier));
+            color: var(--text-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 400;
+        }
+
+        /* Style Guide */
+        .style-guide {
+            background: var(--card-bg);
+        }
+
+        .style-showcase {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 60px;
+        }
+
+        .style-column h3 {
+            font-family: var(--headline-font, 'Anton'), sans-serif;
+            font-size: calc(32px * var(--font-multiplier));
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .color-card {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: calc(12px * var(--font-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .color-card:hover {
+            transform: scale(1.1) rotate(3deg);
+        }
+
+        .typography-demo {
+            display: grid;
+            gap: 25px;
+        }
+
+        .type-sample {
+            padding: 20px;
+            background: var(--bg-color);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .type-sample h4 {
+            font-family: var(--headline-font, 'Anton'), sans-serif;
+            font-size: calc(24px * var(--font-multiplier));
+            margin-bottom: 10px;
+        }
+
+        .type-sample p {
+            font-size: calc(14px * var(--font-multiplier));
+            color: var(--text-color);
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-family: var(--headline-font, 'Anton'), sans-serif;
+            font-size: calc(40px * var(--font-multiplier));
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        .about-text p {
+            font-size: calc(16px * var(--font-multiplier));
+            line-height: 1.8;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .about-visual {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .visual-box {
+            background: var(--primary-color);
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--headline-font, 'Anton'), sans-serif;
+            font-size: calc(48px * var(--font-multiplier));
+            color: var(--bg-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visual-box:nth-child(2) {
+            background: var(--accent-color);
+            color: var(--secondary-color);
+        }
+
+        .visual-box:nth-child(3) {
+            background: var(--secondary-color);
+            color: var(--accent-color);
+        }
+
+        .visual-box:nth-child(4) {
+            background: transparent;
+            border: 4px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* Services */
+        .services-layout {
+            display: grid;
+            gap: 40px;
+        }
+
+        .service-row {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 40px;
+            align-items: center;
+            padding: 40px;
+            background: var(--card-bg);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .service-row:hover {
+            background: var(--accent-color);
+            color: var(--secondary-color);
+            transform: translateX(20px);
+        }
+
+        .service-number {
+            font-family: var(--headline-font, 'Anton'), sans-serif;
+            font-size: calc(72px * var(--font-multiplier));
+            font-weight: 900;
+            opacity: 0.2;
+        }
+
+        .service-content h3 {
+            font-family: var(--headline-font, 'Anton'), sans-serif;
+            font-size: calc(32px * var(--font-multiplier));
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .service-content p {
+            font-size: calc(14px * var(--font-multiplier));
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .service-icon {
+            font-size: calc(32px * var(--font-multiplier));
+            opacity: 0.5;
+        }
+
+        /* Contact */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 80px;
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 30px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: calc(12px * var(--font-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 30px 0 15px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+            font-family: inherit;
+            font-size: calc(16px * var(--font-multiplier));
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-bottom-color: var(--accent-color);
+        }
+
+        .submit-button {
+            background: var(--primary-color);
+            color: var(--bg-color);
+            padding: 20px 60px;
+            border: none;
+            font-family: inherit;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: calc(16px * var(--font-multiplier));
+            justify-self: start;
+        }
+
+        .submit-button:hover {
+            background: var(--accent-color);
+            color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .contact-info {
+            background: var(--card-bg);
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .contact-info h3 {
+            font-family: var(--headline-font, 'Anton'), sans-serif;
+            font-size: calc(40px * var(--font-multiplier));
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .info-block {
+            margin-bottom: 30px;
+        }
+
+        .info-block h4 {
+            font-size: calc(12px * var(--font-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .info-block p {
+            font-size: calc(18px * var(--font-multiplier));
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: var(--bg-color);
+            padding: 80px 60px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-family: var(--headline-font, 'Anton'), sans-serif;
+            font-size: calc(48px * var(--font-multiplier));
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .footer-links a {
+            color: var(--bg-color);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: calc(12px * var(--font-multiplier));
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        footer p {
+            font-size: calc(12px * var(--font-multiplier));
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .toolbar {
+                padding: 10px 20px;
+                gap: 15px;
+            }
+
+            nav {
+                padding: 20px 30px;
+            }
+
+            .logo {
+                font-size: calc(28px * var(--font-multiplier));
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-text h1 {
+                font-size: calc(64px * var(--font-multiplier));
+            }
+
+            section {
+                padding: 80px 30px;
+            }
+
+            .section-title {
+                font-size: calc(48px * var(--font-multiplier));
+            }
+
+            .style-showcase,
+            .about-grid,
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .cta-button {
+                width: 100%;
+                text-align: center;
+            }
+
+            .service-row {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 30px;
+            }
+
+            .service-number {
+                font-size: calc(48px * var(--font-multiplier));
+            }
+
+            .service-icon {
+                display: none;
+            }
+
+            .contact-info {
+                padding: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-group">
+            <label>Headline</label>
+            <select id="headlineFont">
+                <option value="Anton">Anton</option>
+                <option value="Prosto One">Prosto One</option>
+                <option value="Aclonica">Aclonica</option>
+                <option value="Fugaz One">Fugaz One</option>
+                <option value="Racing Sans One">Racing Sans One</option>
+                <option value="Anta">Anta</option>
+                <option value="Russo One">Russo One</option>
+                <option value="Bakbak One">Bakbak One</option>
+                <option value="Monomaniac One">Monomaniac One</option>
+                <option value="Bebas Neue">Bebas Neue</option>
+                <option value="Oswald">Oswald</option>
+                <option value="Archivo Black">Archivo Black</option>
+                <option value="Teko">Teko</option>
+                <option value="Chakra Petch">Chakra Petch</option>
+                <option value="Orbitron">Orbitron</option>
+                <option value="Michroma">Michroma</option>
+                <option value="Audiowide">Audiowide</option>
+                <option value="Black Ops One">Black Ops One</option>
+                <option value="Bungee">Bungee</option>
+            </select>
+        </div>
+        <div class="toolbar-group">
+            <label>Body</label>
+            <select id="bodyFont">
+                <option value="Oswald">Oswald</option>
+                <option value="Prosto One">Prosto One</option>
+                <option value="Aclonica">Aclonica</option>
+                <option value="Anta">Anta</option>
+                <option value="Russo One">Russo One</option>
+                <option value="Barlow Condensed">Barlow Condensed</option>
+                <option value="Archivo Black">Archivo Black</option>
+                <option value="Teko">Teko</option>
+                <option value="Chakra Petch">Chakra Petch</option>
+                <option value="Orbitron">Orbitron</option>
+                <option value="Michroma">Michroma</option>
+                <option value="Audiowide">Audiowide</option>
+            </select>
+        </div>
+        <div class="toolbar-group">
+            <label>Primary</label>
+            <input type="color" id="primaryColor" value="#1C1C1C">
+        </div>
+        <div class="toolbar-group">
+            <label>Secondary</label>
+            <input type="color" id="secondaryColor" value="#2A2A2A">
+        </div>
+        <div class="toolbar-group">
+            <label>Accent</label>
+            <input type="color" id="accentColor" value="#FFD700">
+        </div>
+        <div class="toolbar-group">
+            <label>Font Size</label>
+            <input type="range" id="fontMultiplier" min="0.8" max="1.5" step="0.1" value="1">
+            <span id="fontValue">1.0x</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="logo">FRAME</a>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+            <button class="theme-toggle" onclick="toggleTheme()">Dark Mode</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>We Build<br><span class="highlight">Digital</span><br>Experiences</h1>
+                    <p>Bold design meets flawless execution. We create digital products that demand attention and deliver results.</p>
+                    <div class="cta-buttons">
+                        <a href="#contact" class="cta-button primary">Get Started</a>
+                        <a href="#services" class="cta-button secondary">Learn More</a>
+                    </div>
+                </div>
+                <div class="hero-graphic">
+                    <div class="graphic-line"></div>
+                    <div class="graphic-line"></div>
+                    <div class="graphic-line"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Style Guide Section -->
+        <section class="style-guide">
+            <div class="section-header">
+                <h2 class="section-title">Our Design System</h2>
+                <p class="section-subtitle">Bold. Precise. Impactful.</p>
+            </div>
+            <div class="style-showcase">
+                <div class="style-column">
+                    <h3>Color Palette</h3>
+                    <div class="color-grid">
+                        <div class="color-card" style="background: var(--primary-color); color: var(--bg-color)">Primary</div>
+                        <div class="color-card" style="background: var(--secondary-color); color: var(--bg-color)">Secondary</div>
+                        <div class="color-card" style="background: var(--accent-color); color: var(--secondary-color)">Accent</div>
+                        <div class="color-card" style="background: var(--bg-color); border: 3px solid var(--primary-color); color: var(--primary-color)">Background</div>
+                        <div class="color-card" style="background: var(--card-bg); border: 3px solid var(--primary-color); color: var(--primary-color)">Surface</div>
+                        <div class="color-card" style="background: var(--text-color); color: var(--bg-color)">Text</div>
+                    </div>
+                </div>
+                <div class="style-column">
+                    <h3>Typography</h3>
+                    <div class="typography-demo">
+                        <div class="type-sample">
+                            <h4 style="font-family: var(--headline-font, 'Anton'), sans-serif;">Display Headlines</h4>
+                            <p>Bold, impactful headlines that command attention</p>
+                        </div>
+                        <div class="type-sample">
+                            <h4>Body Typography</h4>
+                            <p>Clean, readable text optimized for digital screens</p>
+                        </div>
+                        <div class="type-sample">
+                            <h4 style="font-size: 12px; text-transform: uppercase; letter-spacing: 2px;">Label Text</h4>
+                            <p>Structured information hierarchy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="section-header">
+                <h2 class="section-title">About Frame</h2>
+                <p class="section-subtitle">Digital Agency Redefined</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-text">
+                    <h3>We Don't Just Design.<br>We Dominate.</h3>
+                    <p>Frame is where bold ideas meet flawless execution. We're not your average digital agency – we're the architects of digital experiences that leave lasting impressions.</p>
+                    <p>Our approach is simple: combine cutting-edge design with rock-solid development. The result? Digital products that don't just look good – they perform.</p>
+                    <p>From startups to enterprises, we partner with brands that aren't afraid to stand out. Because in a world full of noise, only the bold get noticed.</p>
+                </div>
+                <div class="about-visual">
+                    <div class="visual-box">01</div>
+                    <div class="visual-box">02</div>
+                    <div class="visual-box">03</div>
+                    <div class="visual-box">04</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services">
+            <div class="section-header">
+                <h2 class="section-title">What We Do</h2>
+                <p class="section-subtitle">Services That Drive Results</p>
+            </div>
+            <div class="services-layout">
+                <div class="service-row">
+                    <div class="service-number">01</div>
+                    <div class="service-content">
+                        <h3>Brand Strategy</h3>
+                        <p>Strategic positioning that sets you apart. We craft brand identities that resonate, communicate, and convert.</p>
+                    </div>
+                    <div class="service-icon">→</div>
+                </div>
+                <div class="service-row">
+                    <div class="service-number">02</div>
+                    <div class="service-content">
+                        <h3>Web Development</h3>
+                        <p>Pixel-perfect websites built for performance. Fast, responsive, and engineered to scale with your business.</p>
+                    </div>
+                    <div class="service-icon">→</div>
+                </div>
+                <div class="service-row">
+                    <div class="service-number">03</div>
+                    <div class="service-content">
+                        <h3>UI/UX Design</h3>
+                        <p>Interfaces that users love. We design experiences that are intuitive, engaging, and conversion-focused.</p>
+                    </div>
+                    <div class="service-icon">→</div>
+                </div>
+                <div class="service-row">
+                    <div class="service-number">04</div>
+                    <div class="service-content">
+                        <h3>Digital Marketing</h3>
+                        <p>Campaigns that cut through the noise. Data-driven strategies that deliver measurable ROI.</p>
+                    </div>
+                    <div class="service-icon">→</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="section-header">
+                <h2 class="section-title">Let's Talk</h2>
+                <p class="section-subtitle">Ready to Make an Impact?</p>
+            </div>
+            <div class="contact-container">
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Company</label>
+                        <input type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Send Message</button>
+                </form>
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    <div class="info-block">
+                        <h4>Email</h4>
+                        <p>hello@frame.agency</p>
+                    </div>
+                    <div class="info-block">
+                        <h4>Phone</h4>
+                        <p>+1 (555) 123-4567</p>
+                    </div>
+                    <div class="info-block">
+                        <h4>Office</h4>
+                        <p>123 Design Street<br>Creative District<br>NY 10001</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">FRAME.</div>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <p>&copy; 2024 Frame Digital Agency. Bold by Design.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            
+            const themeToggle = document.querySelector('.theme-toggle');
+            themeToggle.textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+            
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
+            
+            const themeToggle = document.querySelector('.theme-toggle');
+            themeToggle.textContent = savedTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+        });
+
+        // Toolbar Controls
+        document.getElementById('headlineFont').addEventListener('change', (e) => {
+            document.documentElement.style.setProperty('--headline-font', `'${e.target.value}'`);
+        });
+
+        document.getElementById('bodyFont').addEventListener('change', (e) => {
+            document.body.style.fontFamily = `'${e.target.value}', sans-serif`;
+        });
+
+        document.getElementById('primaryColor').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--primary-color', e.target.value);
+        });
+
+        document.getElementById('secondaryColor').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--secondary-color', e.target.value);
+        });
+
+        document.getElementById('accentColor').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--accent-color', e.target.value);
+        });
+
+        document.getElementById('fontMultiplier').addEventListener('input', (e) => {
+            const value = e.target.value;
+            document.documentElement.style.setProperty('--font-multiplier', value);
+            document.getElementById('fontValue').textContent = `${value}x`;
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Apply animations to sections
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(50px)';
+            section.style.transition = 'all 0.8s ease';
+            observer.observe(section);
+        });
+
+        // Animate service rows on hover
+        document.querySelectorAll('.service-row').forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.background = 'var(--accent-color)';
+                this.style.color = 'var(--secondary-color)';
+            });
+            
+            row.addEventListener('mouseleave', function() {
+                this.style.background = 'var(--card-bg)';
+                this.style.color = 'var(--primary-color)';
+            });
+        });
+
+        // Form interaction
+        const formInputs = document.querySelectorAll('.form-group input, .form-group textarea');
+        formInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.querySelector('label').style.color = 'var(--accent-color)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.querySelector('label').style.color = 'var(--accent-color)';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Corporate Excellence in Digital Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Aclonica&family=Fugaz+One&family=Racing+Sans+One&family=Anta&family=Russo+One&family=Bakbak+One&family=Monomaniac+One&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@400;700;900&family=Bebas+Neue&family=Anton&family=Archivo+Black&family=Oswald:wght@400;600&family=Teko:wght@400;600&family=Saira:wght@400;700&family=Barlow+Condensed:wght@400;700&family=Fjalla+One&family=Yantramanav:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1C1C1C;
+            --secondary-color: #2E2E2E;
+            --accent-color: #C9302C;
+            --text-color: #1C1C1C;
+            --bg-color: #FFFFFF;
+            --gray-100: #FAFAFA;
+            --gray-200: #F0F0F0;
+            --gray-300: #E0E0E0;
+            --gray-400: #B0B0B0;
+            --gray-500: #808080;
+            --gray-600: #505050;
+            --gradient-1: linear-gradient(135deg, #1C1C1C 0%, #3A3A3A 100%);
+            --gradient-2: linear-gradient(135deg, #C9302C 0%, #E74C3C 100%);
+            --font-size-multiplier: 1;
+            --headline-font: 'Oswald', sans-serif;
+            --body-font: 'Barlow Condensed', sans-serif;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #FFFFFF;
+            --secondary-color: #E0E0E0;
+            --accent-color: #E74C3C;
+            --text-color: #FFFFFF;
+            --bg-color: #0A0A0A;
+            --gray-100: #141414;
+            --gray-200: #1E1E1E;
+            --gray-300: #2E2E2E;
+            --gray-400: #5E5E5E;
+            --gray-500: #8E8E8E;
+            --gray-600: #BEBEBE;
+            --gradient-1: linear-gradient(135deg, #FFFFFF 0%, #C0C0C0 100%);
+            --gradient-2: linear-gradient(135deg, #E74C3C 0%, #FF6B6B 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        /* Toolbar Styles */
+        .toolbar {
+            background-color: var(--gray-200);
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-300);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+        }
+
+        .toolbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .toolbar label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .toolbar select, .toolbar input[type="color"], .toolbar input[type="range"] {
+            padding: 6px 12px;
+            border: 1px solid var(--gray-400);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 12px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .toolbar input[type="color"] {
+            width: 40px;
+            height: 32px;
+            padding: 2px;
+            border-radius: 2px;
+        }
+
+        .toolbar input[type="range"] {
+            width: 100px;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--bg-color);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--headline-font);
+            font-size: calc(28px * var(--font-size-multiplier));
+            font-weight: 600;
+            letter-spacing: 3px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 45px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: calc(13px * var(--font-size-multiplier));
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: var(--gradient-1);
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .theme-toggle:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 132px;
+        }
+
+        /* Hero Section - Corporate Elegance */
+        .hero {
+            min-height: calc(100vh - 132px);
+            display: flex;
+            align-items: center;
+            background: linear-gradient(to bottom, var(--bg-color) 0%, var(--gray-100) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background: var(--gradient-1);
+            opacity: 0.05;
+            transform: skewX(-15deg) translateX(100px);
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 650px;
+        }
+
+        .hero-content h1 {
+            font-family: var(--headline-font);
+            font-size: calc(72px * var(--font-size-multiplier));
+            line-height: 1;
+            font-weight: 600;
+            letter-spacing: -1px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .hero-content .subtitle {
+            font-size: calc(24px * var(--font-size-multiplier));
+            color: var(--gray-500);
+            margin-bottom: 40px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-content p {
+            font-size: calc(18px * var(--font-size-multiplier));
+            color: var(--gray-600);
+            margin-bottom: 50px;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-2);
+            color: white;
+            padding: 16px 45px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: calc(14px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-block;
+            border-radius: 2px;
+            box-shadow: 0 5px 20px rgba(201, 48, 44, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(201, 48, 44, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            padding: 16px 45px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: calc(14px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary-color);
+            display: inline-block;
+            border-radius: 2px;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Style Guide Section */
+        .style-guide {
+            padding: 100px 0;
+            background-color: var(--bg-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-family: var(--headline-font);
+            font-size: calc(48px * var(--font-size-multiplier));
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .section-subtitle {
+            font-size: calc(18px * var(--font-size-multiplier));
+            color: var(--gray-500);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .style-item {
+            background-color: var(--gray-100);
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .style-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .color-swatch {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 25px;
+            border-radius: 2px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .style-item h3 {
+            font-family: var(--headline-font);
+            font-size: calc(20px * var(--font-size-multiplier));
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .style-item p {
+            color: var(--gray-500);
+            font-size: calc(14px * var(--font-size-multiplier));
+            line-height: 1.6;
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 0;
+            background-color: var(--gray-100);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-family: var(--headline-font);
+            font-size: calc(42px * var(--font-size-multiplier));
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .about-text p {
+            font-size: calc(17px * var(--font-size-multiplier));
+            line-height: 1.8;
+            color: var(--gray-600);
+            margin-bottom: 25px;
+        }
+
+        .about-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .metric-card {
+            background-color: var(--bg-color);
+            padding: 40px 30px;
+            text-align: center;
+            border-radius: 2px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .metric-number {
+            font-family: var(--headline-font);
+            font-size: calc(48px * var(--font-size-multiplier));
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .metric-label {
+            font-size: calc(13px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gray-500);
+            font-weight: 600;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 0;
+            background-color: var(--bg-color);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .service-card {
+            background-color: var(--gray-100);
+            padding: 50px 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-2);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--headline-font);
+            font-size: calc(36px * var(--font-size-multiplier));
+            color: white;
+            font-weight: 700;
+            border-radius: 2px;
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(24px * var(--font-size-multiplier));
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .service-card p {
+            color: var(--gray-500);
+            line-height: 1.8;
+            font-size: calc(15px * var(--font-size-multiplier));
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--gray-100) 0%, var(--bg-color) 100%);
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-info {
+            margin-bottom: 60px;
+        }
+
+        .contact-info h3 {
+            font-family: var(--headline-font);
+            font-size: calc(36px * var(--font-size-multiplier));
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .contact-info p {
+            font-size: calc(18px * var(--font-size-multiplier));
+            line-height: 1.8;
+            color: var(--gray-600);
+            margin-bottom: 40px;
+        }
+
+        .contact-details {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+
+        .contact-item {
+            text-align: center;
+        }
+
+        .contact-item-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-2);
+            margin: 0 auto 15px;
+            border-radius: 2px;
+        }
+
+        .contact-item-text {
+            font-size: calc(15px * var(--font-size-multiplier));
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .contact-form {
+            background-color: var(--bg-color);
+            padding: 60px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            border-radius: 2px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            font-size: calc(12px * var(--font-size-multiplier));
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-600);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 15px;
+            background-color: var(--gray-100);
+            border: 1px solid var(--gray-200);
+            color: var(--text-color);
+            font-family: var(--body-font);
+            font-size: calc(15px * var(--font-size-multiplier));
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background-color: var(--bg-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: var(--gradient-2);
+            color: white;
+            padding: 16px 50px;
+            border: none;
+            font-weight: 600;
+            font-size: calc(14px * var(--font-size-multiplier));
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-radius: 2px;
+            box-shadow: 0 5px 20px rgba(201, 48, 44, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(201, 48, 44, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 50px 0;
+        }
+
+        [data-theme="dark"] footer {
+            background-color: var(--gray-200);
+            color: var(--text-color);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            text-align: center;
+        }
+
+        .footer-content p {
+            font-size: calc(14px * var(--font-size-multiplier));
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            color: inherit;
+            text-decoration: none;
+            font-size: calc(13px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .toolbar-container {
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: calc(48px * var(--font-size-multiplier));
+            }
+
+            .style-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+
+            .contact-details {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-container">
+            <div class="toolbar-group">
+                <label for="headline-font">Headline Font:</label>
+                <select id="headline-font" onchange="updateFont('headline', this.value)">
+                    <option value="Oswald">Oswald</option>
+                    <option value="Prosto One">Prosto One</option>
+                    <option value="Aclonica">Aclonica</option>
+                    <option value="Fugaz One">Fugaz One</option>
+                    <option value="Racing Sans One">Racing Sans One</option>
+                    <option value="Anta">Anta</option>
+                    <option value="Russo One">Russo One</option>
+                    <option value="Bakbak One">Bakbak One</option>
+                    <option value="Monomaniac One">Monomaniac One</option>
+                    <option value="Bebas Neue">Bebas Neue</option>
+                    <option value="Anton">Anton</option>
+                    <option value="Archivo Black">Archivo Black</option>
+                    <option value="Orbitron">Orbitron</option>
+                    <option value="Teko">Teko</option>
+                    <option value="Fjalla One">Fjalla One</option>
+                </select>
+
+                <label for="body-font">Body Font:</label>
+                <select id="body-font" onchange="updateFont('body', this.value)">
+                    <option value="Barlow Condensed">Barlow Condensed</option>
+                    <option value="Inter">Inter</option>
+                    <option value="Space Grotesk">Space Grotesk</option>
+                    <option value="Saira">Saira</option>
+                    <option value="Yantramanav">Yantramanav</option>
+                    <option value="Russo One">Russo One</option>
+                    <option value="Anta">Anta</option>
+                </select>
+            </div>
+
+            <div class="toolbar-group">
+                <label for="primary-color">Primary:</label>
+                <input type="color" id="primary-color" value="#1C1C1C" onchange="updateColor('primary', this.value)">
+
+                <label for="secondary-color">Secondary:</label>
+                <input type="color" id="secondary-color" value="#2E2E2E" onchange="updateColor('secondary', this.value)">
+
+                <label for="accent-color">Accent:</label>
+                <input type="color" id="accent-color" value="#C9302C" onchange="updateColor('accent', this.value)">
+            </div>
+
+            <div class="toolbar-group">
+                <label for="font-size">Font Size:</label>
+                <input type="range" id="font-size" min="0.8" max="1.2" step="0.1" value="1" onchange="updateFontSize(this.value)">
+                <span id="font-size-value">1.0x</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">FRAME</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#style-guide">Style Guide</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><button class="theme-toggle" onclick="toggleTheme()">Dark Mode</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1>Corporate Excellence<br>Digital Innovation</h1>
+                    <p class="subtitle">Sophisticated Design Solutions for Forward-Thinking Enterprises</p>
+                    <p>We blend strategic thinking with refined aesthetics to create digital experiences that elevate your brand and drive measurable business results.</p>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn-primary">Start Your Project</a>
+                        <a href="#services" class="btn-secondary">Our Portfolio</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Style Guide Section -->
+        <section id="style-guide" class="style-guide">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Design System</h2>
+                    <p class="section-subtitle">A refined palette that communicates professionalism and innovation through carefully selected colors and gradients.</p>
+                </div>
+                <div class="style-grid">
+                    <div class="style-item">
+                        <div class="color-swatch" style="background: var(--gradient-1);"></div>
+                        <h3>Primary Gradient</h3>
+                        <p>Executive sophistication</p>
+                    </div>
+                    <div class="style-item">
+                        <div class="color-swatch" style="background: var(--gradient-2);"></div>
+                        <h3>Accent Gradient</h3>
+                        <p>Strategic emphasis</p>
+                    </div>
+                    <div class="style-item">
+                        <div class="color-swatch" style="background-color: var(--primary-color);"></div>
+                        <h3>Primary Color</h3>
+                        <p>Professional authority</p>
+                    </div>
+                    <div class="style-item">
+                        <div class="color-swatch" style="background: linear-gradient(to bottom, var(--gray-100), var(--gray-600));"></div>
+                        <h3>Neutral Scale</h3>
+                        <p>Hierarchical clarity</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>Strategic Design Leadership</h2>
+                        <p>Frame represents the intersection of corporate sophistication and digital innovation. We are a premier digital agency specializing in creating refined, results-driven solutions for ambitious enterprises.</p>
+                        <p>Our approach combines strategic business insight with exceptional design craftsmanship. We understand that in today's competitive landscape, your digital presence must not only look exceptional but also perform flawlessly.</p>
+                        <p>With over a decade of experience serving Fortune 500 companies and innovative startups alike, we've developed a methodology that consistently delivers measurable results while maintaining the highest standards of design excellence.</p>
+                    </div>
+                    <div class="about-metrics">
+                        <div class="metric-card">
+                            <div class="metric-number">250+</div>
+                            <div class="metric-label">Enterprise Clients</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">98%</div>
+                            <div class="metric-label">Client Retention</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">45M</div>
+                            <div class="metric-label">Users Reached</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">18</div>
+                            <div class="metric-label">Industry Awards</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Our Services</h2>
+                    <p class="section-subtitle">Comprehensive digital solutions tailored to meet the unique challenges of modern enterprises.</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">01</div>
+                        <h3>Digital Strategy</h3>
+                        <p>Data-driven strategic planning that aligns digital initiatives with business objectives, ensuring maximum ROI and sustainable growth.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">02</div>
+                        <h3>UX/UI Design</h3>
+                        <p>Sophisticated interface design that balances aesthetic excellence with intuitive functionality, creating memorable user experiences.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">03</div>
+                        <h3>Development</h3>
+                        <p>Robust, scalable solutions built with cutting-edge technologies, ensuring performance, security, and future-proof architecture.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">04</div>
+                        <h3>Brand Identity</h3>
+                        <p>Comprehensive brand systems that communicate your values and differentiate your business in competitive markets.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">05</div>
+                        <h3>Consulting</h3>
+                        <p>Expert guidance on digital transformation, helping organizations navigate technological change with confidence.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">06</div>
+                        <h3>Analytics</h3>
+                        <p>Advanced analytics and insights that drive informed decision-making and continuous optimization of digital assets.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="container">
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3>Let's Discuss Your Vision</h3>
+                        <p>Ready to elevate your digital presence? Our team of experts is here to transform your vision into reality with strategic design and flawless execution.</p>
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <div class="contact-item-icon"></div>
+                                <div class="contact-item-text">inquiries@frame.agency</div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-item-icon"></div>
+                                <div class="contact-item-text">+1 (888) 555-0123</div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-item-icon"></div>
+                                <div class="contact-item-text">789 Executive Plaza, NY 10016</div>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="company">Company</label>
+                                <input type="text" id="company" name="company" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="message">Project Details</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Submit Inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Frame Digital Agency. Excellence in Digital Innovation.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Careers</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            
+            const themeToggle = document.querySelector('.theme-toggle');
+            themeToggle.textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+            
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+        const themeToggle = document.querySelector('.theme-toggle');
+        themeToggle.textContent = savedTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+
+        // Font Updates
+        function updateFont(type, font) {
+            if (type === 'headline') {
+                document.documentElement.style.setProperty('--headline-font', `'${font}', sans-serif`);
+            } else {
+                document.documentElement.style.setProperty('--body-font', `'${font}', sans-serif`);
+            }
+        }
+
+        // Color Updates
+        function updateColor(type, color) {
+            document.documentElement.style.setProperty(`--${type}-color`, color);
+            
+            // Update gradients
+            if (type === 'primary') {
+                const lighter = adjustColor(color, 40);
+                document.documentElement.style.setProperty('--gradient-1', `linear-gradient(135deg, ${color} 0%, ${lighter} 100%)`);
+            } else if (type === 'accent') {
+                const lighter = adjustColor(color, 20);
+                document.documentElement.style.setProperty('--gradient-2', `linear-gradient(135deg, ${color} 0%, ${lighter} 100%)`);
+            }
+        }
+
+        // Helper function to lighten colors
+        function adjustColor(color, amount) {
+            const num = parseInt(color.replace("#", ""), 16);
+            const r = Math.min(255, ((num >> 16) & 0xff) + amount);
+            const g = Math.min(255, ((num >> 8) & 0xff) + amount);
+            const b = Math.min(255, (num & 0xff) + amount);
+            return "#" + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
+        }
+
+        // Font Size Updates
+        function updateFontSize(value) {
+            document.documentElement.style.setProperty('--font-size-multiplier', value);
+            document.getElementById('font-size-value').textContent = `${value}x`;
+        }
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Form Submission
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your inquiry. Our team will contact you within 24 hours.');
+            this.reset();
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

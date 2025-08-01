@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Sophisticated Typography & Subtle Gradients</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Aclonica&family=Fugaz+One&family=Racing+Sans+One&family=Anta&family=Russo+One&family=Bakbak+One&family=Monomaniac+One&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@400;700;900&family=Bebas+Neue&family=Anton&family=Archivo+Black&family=Oswald:wght@400;600&family=Teko:wght@400;600&family=Saira:wght@400;700&family=Barlow+Condensed:wght@400;700&family=Fjalla+One&family=Yantramanav:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #212121;
+            --secondary-color: #424242;
+            --accent-color: #6C63FF;
+            --text-color: #212121;
+            --bg-color: #FFFFFF;
+            --gray-100: #FAFAFA;
+            --gray-200: #F5F5F5;
+            --gray-300: #E0E0E0;
+            --gray-400: #BDBDBD;
+            --gray-500: #9E9E9E;
+            --gray-600: #757575;
+            --gradient-subtle: linear-gradient(180deg, rgba(108,99,255,0.05) 0%, rgba(108,99,255,0) 100%);
+            --gradient-accent: linear-gradient(135deg, #6C63FF 0%, #8B85FF 100%);
+            --font-size-multiplier: 1;
+            --headline-font: 'Teko', sans-serif;
+            --body-font: 'Saira', sans-serif;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #FFFFFF;
+            --secondary-color: #E0E0E0;
+            --accent-color: #8B85FF;
+            --text-color: #FFFFFF;
+            --bg-color: #121212;
+            --gray-100: #1E1E1E;
+            --gray-200: #252525;
+            --gray-300: #404040;
+            --gray-400: #626262;
+            --gray-500: #7E7E7E;
+            --gray-600: #ADADAD;
+            --gradient-subtle: linear-gradient(180deg, rgba(139,133,255,0.08) 0%, rgba(139,133,255,0) 100%);
+            --gradient-accent: linear-gradient(135deg, #8B85FF 0%, #A5A0FF 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-weight: 400;
+        }
+
+        /* Toolbar Styles */
+        .toolbar {
+            background-color: var(--gray-200);
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-300);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            backdrop-filter: blur(10px);
+            background-color: rgba(255,255,255,0.9);
+        }
+
+        [data-theme="dark"] .toolbar {
+            background-color: rgba(18,18,18,0.9);
+        }
+
+        .toolbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .toolbar label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .toolbar select, .toolbar input[type="color"], .toolbar input[type="range"] {
+            padding: 6px 12px;
+            border: 1px solid var(--gray-300);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 12px;
+            border-radius: 0;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .toolbar select:hover, .toolbar input:hover {
+            border-color: var(--accent-color);
+        }
+
+        .toolbar input[type="color"] {
+            width: 40px;
+            height: 32px;
+            padding: 2px;
+        }
+
+        .toolbar input[type="range"] {
+            width: 100px;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--gradient-subtle);
+            backdrop-filter: blur(20px);
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 28px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--headline-font);
+            font-size: calc(40px * var(--font-size-multiplier));
+            font-weight: 600;
+            letter-spacing: -1px;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 45px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: calc(15px * var(--font-size-multiplier));
+            letter-spacing: 0.3px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: var(--gradient-accent);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .theme-toggle:hover::before {
+            left: 100%;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 140px;
+        }
+
+        /* Hero Section - Sophisticated Typography Focus */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: var(--gradient-subtle);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to top, var(--bg-color), transparent);
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero-content h1 {
+            font-family: var(--headline-font);
+            font-size: calc(120px * var(--font-size-multiplier));
+            line-height: 0.85;
+            font-weight: 600;
+            letter-spacing: -3px;
+            margin-bottom: 40px;
+            background: linear-gradient(180deg, var(--primary-color) 0%, var(--gray-500) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content .subtitle {
+            font-size: calc(28px * var(--font-size-multiplier));
+            font-weight: 300;
+            color: var(--gray-600);
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+        }
+
+        .hero-content p {
+            font-size: calc(19px * var(--font-size-multiplier));
+            color: var(--gray-600);
+            margin-bottom: 50px;
+            line-height: 1.8;
+            max-width: 700px;
+            font-weight: 400;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 18px 50px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: calc(16px * var(--font-size-multiplier));
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(108,99,255,0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(108,99,255,0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-color);
+            padding: 18px 50px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: calc(16px * var(--font-size-multiplier));
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--gray-300);
+            display: inline-block;
+            position: relative;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .hero-decoration {
+            position: absolute;
+            right: -200px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 600px;
+            height: 600px;
+            background: var(--gradient-accent);
+            opacity: 0.1;
+            border-radius: 50%;
+            filter: blur(100px);
+        }
+
+        /* Style Guide Section */
+        .style-guide {
+            padding: 120px 0;
+            background-color: var(--bg-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .section-header {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-family: var(--headline-font);
+            font-size: calc(72px * var(--font-size-multiplier));
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .section-subtitle {
+            font-size: calc(20px * var(--font-size-multiplier));
+            color: var(--gray-500);
+            max-width: 700px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .style-item {
+            background: linear-gradient(180deg, var(--gray-100) 0%, var(--bg-color) 100%);
+            padding: 50px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-200);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .style-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .style-item:hover::before {
+            transform: translateX(0);
+        }
+
+        .style-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+
+        .color-display {
+            width: 100%;
+            height: 140px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .style-item h3 {
+            font-family: var(--headline-font);
+            font-size: calc(32px * var(--font-size-multiplier));
+            margin-bottom: 15px;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+        }
+
+        .style-item p {
+            color: var(--gray-500);
+            font-size: calc(16px * var(--font-size-multiplier));
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        /* About Section */
+        .about {
+            padding: 120px 0;
+            background: linear-gradient(180deg, var(--gradient-subtle), var(--bg-color));
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 100px;
+            align-items: start;
+        }
+
+        .about-content h2 {
+            font-family: var(--headline-font);
+            font-size: calc(64px * var(--font-size-multiplier));
+            margin-bottom: 40px;
+            font-weight: 600;
+            letter-spacing: -2px;
+            line-height: 1.1;
+        }
+
+        .about-content p {
+            font-size: calc(19px * var(--font-size-multiplier));
+            line-height: 1.8;
+            color: var(--gray-600);
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .about-features {
+            display: grid;
+            gap: 40px;
+        }
+
+        .feature-item {
+            padding: 35px;
+            background: linear-gradient(135deg, var(--gray-100) 0%, var(--bg-color) 100%);
+            border-left: 3px solid var(--accent-color);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .feature-number {
+            font-family: var(--headline-font);
+            font-size: calc(56px * var(--font-size-multiplier));
+            color: var(--accent-color);
+            line-height: 1;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .feature-title {
+            font-size: calc(20px * var(--font-size-multiplier));
+            margin-bottom: 10px;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+        }
+
+        .feature-desc {
+            font-size: calc(15px * var(--font-size-multiplier));
+            color: var(--gray-500);
+            line-height: 1.6;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 120px 0;
+            background-color: var(--gray-100);
+        }
+
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 60px;
+            margin-top: 80px;
+        }
+
+        .service-card {
+            background-color: var(--bg-color);
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-200);
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 0;
+            background: var(--gradient-subtle);
+            transition: height 0.3s ease;
+        }
+
+        .service-card:hover::after {
+            height: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+        }
+
+        .service-header {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 30px;
+        }
+
+        .service-number {
+            font-family: var(--headline-font);
+            font-size: calc(24px * var(--font-size-multiplier));
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(40px * var(--font-size-multiplier));
+            margin-bottom: 20px;
+            font-weight: 500;
+            letter-spacing: -1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card p {
+            color: var(--gray-600);
+            line-height: 1.8;
+            font-size: calc(17px * var(--font-size-multiplier));
+            position: relative;
+            z-index: 1;
+            font-weight: 400;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 120px 0;
+            background: linear-gradient(180deg, var(--bg-color) 0%, var(--gradient-subtle) 100%);
+        }
+
+        .contact-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .contact-header h2 {
+            font-family: var(--headline-font);
+            font-size: calc(72px * var(--font-size-multiplier));
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: -2px;
+        }
+
+        .contact-header p {
+            font-size: calc(20px * var(--font-size-multiplier));
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .contact-info h3 {
+            font-family: var(--headline-font);
+            font-size: calc(32px * var(--font-size-multiplier));
+            margin-bottom: 30px;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .contact-label {
+            font-size: calc(12px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        .contact-value {
+            font-size: calc(18px * var(--font-size-multiplier));
+            color: var(--text-color);
+            font-weight: 400;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .form-group label {
+            font-size: calc(14px * var(--font-size-multiplier));
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: var(--gray-600);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 18px 24px;
+            background-color: var(--gray-100);
+            border: 1px solid transparent;
+            color: var(--text-color);
+            font-family: var(--body-font);
+            font-size: calc(16px * var(--font-size-multiplier));
+            transition: all 0.3s ease;
+            font-weight: 400;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background-color: var(--bg-color);
+            box-shadow: 0 0 0 3px rgba(108,99,255,0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 18px 50px;
+            border: none;
+            font-weight: 500;
+            font-size: calc(16px * var(--font-size-multiplier));
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            align-self: flex-start;
+            box-shadow: 0 10px 30px rgba(108,99,255,0.2);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(108,99,255,0.3);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        [data-theme="dark"] footer {
+            background-color: var(--gray-100);
+            color: var(--text-color);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        footer p {
+            font-size: calc(15px * var(--font-size-multiplier));
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .social-links a {
+            color: inherit;
+            text-decoration: none;
+            font-size: calc(14px * var(--font-size-multiplier));
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+            font-weight: 400;
+        }
+
+        .social-links a:hover {
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content h1 {
+                font-size: calc(80px * var(--font-size-multiplier));
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .services-container {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .toolbar-container {
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: calc(60px * var(--font-size-multiplier));
+            }
+
+            .section-title {
+                font-size: calc(48px * var(--font-size-multiplier));
+            }
+
+            .style-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-container">
+            <div class="toolbar-group">
+                <label for="headline-font">Headline Font:</label>
+                <select id="headline-font" onchange="updateFont('headline', this.value)">
+                    <option value="Teko">Teko</option>
+                    <option value="Prosto One">Prosto One</option>
+                    <option value="Aclonica">Aclonica</option>
+                    <option value="Fugaz One">Fugaz One</option>
+                    <option value="Racing Sans One">Racing Sans One</option>
+                    <option value="Anta">Anta</option>
+                    <option value="Russo One">Russo One</option>
+                    <option value="Bakbak One">Bakbak One</option>
+                    <option value="Monomaniac One">Monomaniac One</option>
+                    <option value="Bebas Neue">Bebas Neue</option>
+                    <option value="Anton">Anton</option>
+                    <option value="Archivo Black">Archivo Black</option>
+                    <option value="Orbitron">Orbitron</option>
+                    <option value="Oswald">Oswald</option>
+                    <option value="Fjalla One">Fjalla One</option>
+                </select>
+
+                <label for="body-font">Body Font:</label>
+                <select id="body-font" onchange="updateFont('body', this.value)">
+                    <option value="Saira">Saira</option>
+                    <option value="Inter">Inter</option>
+                    <option value="Space Grotesk">Space Grotesk</option>
+                    <option value="Barlow Condensed">Barlow Condensed</option>
+                    <option value="Yantramanav">Yantramanav</option>
+                    <option value="Russo One">Russo One</option>
+                    <option value="Anta">Anta</option>
+                </select>
+            </div>
+
+            <div class="toolbar-group">
+                <label for="primary-color">Primary:</label>
+                <input type="color" id="primary-color" value="#212121" onchange="updateColor('primary', this.value)">
+
+                <label for="secondary-color">Secondary:</label>
+                <input type="color" id="secondary-color" value="#424242" onchange="updateColor('secondary', this.value)">
+
+                <label for="accent-color">Accent:</label>
+                <input type="color" id="accent-color" value="#6C63FF" onchange="updateColor('accent', this.value)">
+            </div>
+
+            <div class="toolbar-group">
+                <label for="font-size">Font Size:</label>
+                <input type="range" id="font-size" min="0.8" max="1.2" step="0.1" value="1" onchange="updateFontSize(this.value)">
+                <span id="font-size-value">1.0x</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">FRAME</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#style-guide">Style Guide</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><button class="theme-toggle" onclick="toggleTheme()">Dark Mode</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-decoration"></div>
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1>Sophisticated<br>Typography<br>Meets Design</h1>
+                    <p class="subtitle">Where subtle gradients and refined typography converge to create digital experiences that inspire.</p>
+                    <p>We believe in the power of typography to communicate not just words, but emotions, values, and visions. Our approach combines sophisticated type design with subtle visual elements to create memorable digital experiences.</p>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn-primary">Begin Your Journey</a>
+                        <a href="#services" class="btn-secondary">Explore Our Work</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Style Guide Section -->
+        <section id="style-guide" class="style-guide">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Design Language</h2>
+                    <p class="section-subtitle">A carefully curated palette that speaks volumes through subtlety and sophistication.</p>
+                </div>
+                <div class="style-grid">
+                    <div class="style-item">
+                        <div class="color-display" style="background: var(--gradient-accent);"></div>
+                        <h3>Accent Gradient</h3>
+                        <p>Our signature gradient creates depth without overwhelming, adding a touch of sophistication to key elements.</p>
+                    </div>
+                    <div class="style-item">
+                        <div class="color-display" style="background: linear-gradient(180deg, var(--primary-color) 0%, var(--gray-500) 100%);"></div>
+                        <h3>Typography Gradient</h3>
+                        <p>Subtle gradients in typography create visual hierarchy and add dimension to our headline treatments.</p>
+                    </div>
+                    <div class="style-item">
+                        <div class="color-display" style="background: var(--gradient-subtle);"></div>
+                        <h3>Ambient Gradient</h3>
+                        <p>Barely-there gradients that create atmosphere and depth without distracting from content.</p>
+                    </div>
+                    <div class="style-item">
+                        <div class="color-display" style="background: linear-gradient(90deg, var(--gray-100), var(--gray-200), var(--gray-300));"></div>
+                        <h3>Neutral Progression</h3>
+                        <p>A sophisticated grayscale system that provides structure and hierarchy throughout the design.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-container">
+                    <div class="about-content">
+                        <h2>Typography is Our Foundation</h2>
+                        <p>At Frame, we understand that great design begins with great typography. Every letterform, every space, every line height is carefully considered to create harmonious, readable, and impactful digital experiences.</p>
+                        <p>Our philosophy embraces the subtle power of gradients – not as bold statements, but as gentle enhancements that guide the eye and create depth. We believe in design that whispers rather than shouts, yet leaves a lasting impression.</p>
+                        <p>With a focus on sophisticated typography and refined visual elements, we create digital solutions that stand the test of time. Our work is characterized by clarity, elegance, and purposeful restraint.</p>
+                    </div>
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <div class="feature-number">01</div>
+                            <div class="feature-title">Typography First</div>
+                            <div class="feature-desc">Every project begins with careful typography selection and hierarchy planning.</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-number">02</div>
+                            <div class="feature-title">Subtle Gradients</div>
+                            <div class="feature-desc">Gradients that enhance without overwhelming, creating depth and visual interest.</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-number">03</div>
+                            <div class="feature-title">Refined Aesthetics</div>
+                            <div class="feature-desc">Clean lines, thoughtful spacing, and meticulous attention to every detail.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Our Expertise</h2>
+                    <p class="section-subtitle">Comprehensive digital services delivered with typographic excellence and visual sophistication.</p>
+                </div>
+                <div class="services-container">
+                    <div class="service-card">
+                        <div class="service-header">
+                            <div class="service-number">01</div>
+                            <h3>Brand Typography</h3>
+                        </div>
+                        <p>We develop comprehensive typographic systems that define your brand voice across all digital touchpoints. From custom type selection to detailed usage guidelines, we ensure consistency and impact.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-header">
+                            <div class="service-number">02</div>
+                            <h3>Interface Design</h3>
+                        </div>
+                        <p>Creating interfaces where typography leads and gradients support. Our designs prioritize readability, hierarchy, and user experience while maintaining visual sophistication.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-header">
+                            <div class="service-number">03</div>
+                            <h3>Digital Development</h3>
+                        </div>
+                        <p>Bringing typographic excellence to life through precise development. We ensure every font renders perfectly, every gradient transitions smoothly, and every interaction feels refined.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-header">
+                            <div class="service-number">04</div>
+                            <h3>Design Systems</h3>
+                        </div>
+                        <p>Comprehensive design systems that scale beautifully. We create flexible frameworks that maintain typographic integrity and visual consistency across your entire digital ecosystem.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="contact-container">
+                <div class="contact-header">
+                    <h2>Let's Create Together</h2>
+                    <p>Ready to elevate your digital presence with sophisticated typography and refined design? Let's start a conversation.</p>
+                </div>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3>Get in Touch</h3>
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <span class="contact-label">Email</span>
+                                <span class="contact-value">studio@frame.design</span>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-label">Phone</span>
+                                <span class="contact-value">+1 (415) 555-0142</span>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-label">Location</span>
+                                <span class="contact-value">San Francisco, CA</span>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="project">Project Type</label>
+                            <input type="text" id="project" name="project" placeholder="e.g., Brand Identity, Website Design">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Tell Us About Your Project</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Frame Digital Agency. Crafted with typographic excellence.</p>
+            <div class="social-links">
+                <a href="#">Behance</a>
+                <a href="#">Dribbble</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            
+            const themeToggle = document.querySelector('.theme-toggle');
+            themeToggle.textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+            
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+        const themeToggle = document.querySelector('.theme-toggle');
+        themeToggle.textContent = savedTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+
+        // Font Updates
+        function updateFont(type, font) {
+            if (type === 'headline') {
+                document.documentElement.style.setProperty('--headline-font', `'${font}', sans-serif`);
+            } else {
+                document.documentElement.style.setProperty('--body-font', `'${font}', sans-serif`);
+            }
+        }
+
+        // Color Updates
+        function updateColor(type, color) {
+            document.documentElement.style.setProperty(`--${type}-color`, color);
+            
+            // Update gradients based on new colors
+            if (type === 'accent') {
+                const lighter = adjustColor(color, 30);
+                document.documentElement.style.setProperty('--gradient-accent', `linear-gradient(135deg, ${color} 0%, ${lighter} 100%)`);
+                
+                // Update subtle gradient
+                const subtle = hexToRgba(color, 0.05);
+                document.documentElement.style.setProperty('--gradient-subtle', `linear-gradient(180deg, ${subtle} 0%, transparent 100%)`);
+            }
+        }
+
+        // Helper function to adjust color brightness
+        function adjustColor(color, amount) {
+            const num = parseInt(color.replace("#", ""), 16);
+            const r = Math.min(255, ((num >> 16) & 0xff) + amount);
+            const g = Math.min(255, ((num >> 8) & 0xff) + amount);
+            const b = Math.min(255, (num & 0xff) + amount);
+            return "#" + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
+        }
+
+        // Helper function to convert hex to rgba
+        function hexToRgba(hex, alpha) {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        // Font Size Updates
+        function updateFontSize(value) {
+            document.documentElement.style.setProperty('--font-size-multiplier', value);
+            document.getElementById('font-size-value').textContent = `${value}x`;
+        }
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Form Submission
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message. We will respond within 24 hours.');
+            this.reset();
+        });
+
+        // Parallax effect for hero decoration
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const decoration = document.querySelector('.hero-decoration');
+            if (decoration) {
+                decoration.style.transform = `translateY(${-50 + scrolled * 0.1}%) translateX(${scrolled * 0.05}px)`;
+            }
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Apply animation to sections
+        document.querySelectorAll('.style-item, .feature-item, .service-card').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(item);
+        });
+    </script>
+</body>
+</html>

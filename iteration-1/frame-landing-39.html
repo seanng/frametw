@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Architectural Minimal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Aclonica&family=Fugaz+One&family=Racing+Sans+One&family=Anta&family=Russo+One&family=Bakbak+One&family=Monomaniac+One&family=Space+Grotesk:wght@400;700&family=Inter:wght@400;600;800&family=Bebas+Neue&family=Oswald:wght@400;600&family=Archivo:wght@400;700;900&family=Barlow:wght@400;700;900&family=Work+Sans:wght@400;700;900&family=Manrope:wght@400;700;800&family=Syne:wght@400;700;800&family=DM+Sans:wght@400;700&family=Plus+Jakarta+Sans:wght@400;700;800&family=Lexend:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0f0f0f;
+            --secondary-color: #f8f8f8;
+            --accent-color: #e63946;
+            --text-color: #0f0f0f;
+            --bg-color: #f8f8f8;
+            --gray-100: #efefef;
+            --gray-200: #dfdfdf;
+            --gray-300: #bfbfbf;
+            --gray-400: #9f9f9f;
+            --gray-500: #7f7f7f;
+            --gray-600: #5f5f5f;
+            --font-size-multiplier: 1;
+            --headline-font: 'Syne', sans-serif;
+            --body-font: 'Manrope', sans-serif;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #f8f8f8;
+            --secondary-color: #0f0f0f;
+            --accent-color: #e63946;
+            --text-color: #f8f8f8;
+            --bg-color: #0f0f0f;
+            --gray-100: #1f1f1f;
+            --gray-200: #2f2f2f;
+            --gray-300: #3f3f3f;
+            --gray-400: #4f4f4f;
+            --gray-500: #6f6f6f;
+            --gray-600: #8f8f8f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* Grid Lines Background */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.05;
+            background-image: 
+                linear-gradient(var(--text-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--text-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            background-color: var(--bg-color);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toolbar label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gray-500);
+        }
+
+        .toolbar select,
+        .toolbar input[type="color"],
+        .toolbar input[type="range"] {
+            padding: 8px 12px;
+            border: 1px solid var(--gray-300);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 12px;
+            font-family: var(--body-font);
+            min-width: 150px;
+        }
+
+        .toolbar input[type="color"] {
+            width: 50px;
+            height: 35px;
+            cursor: pointer;
+            padding: 2px;
+        }
+
+        .theme-toggle {
+            background: var(--text-color);
+            border: none;
+            color: var(--bg-color);
+            padding: 10px 24px;
+            cursor: pointer;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--accent-color);
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--bg-color);
+            padding: 30px 50px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--headline-font);
+            font-size: calc(28px * var(--font-size-multiplier));
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 50px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: calc(13px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 50px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0;
+            background-color: var(--bg-color);
+            position: relative;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 7fr 5fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-family: var(--headline-font);
+            font-size: calc(80px * var(--font-size-multiplier));
+            font-weight: 800;
+            line-height: 0.95;
+            margin-bottom: 30px;
+            letter-spacing: -3px;
+        }
+
+        .hero-accent {
+            color: var(--accent-color);
+            display: block;
+        }
+
+        .hero p {
+            font-size: calc(18px * var(--font-size-multiplier));
+            margin-bottom: 50px;
+            color: var(--gray-600);
+            max-width: 550px;
+            line-height: 1.8;
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 600px;
+        }
+
+        .architect-blocks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .block {
+            position: absolute;
+            background-color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .block:nth-child(1) {
+            width: 60%;
+            height: 50%;
+            top: 0;
+            right: 0;
+        }
+
+        .block:nth-child(2) {
+            width: 40%;
+            height: 30%;
+            bottom: 20%;
+            left: 0;
+            background-color: var(--accent-color);
+        }
+
+        .block:nth-child(3) {
+            width: 50%;
+            height: 25%;
+            bottom: 0;
+            right: 10%;
+            background-color: var(--gray-300);
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 18px 50px;
+            font-size: calc(13px * var(--font-size-multiplier));
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: 2px solid var(--text-color);
+            background-color: transparent;
+            color: var(--text-color);
+        }
+
+        .btn-primary {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        /* Style Guide Section */
+        .style-guide {
+            padding: 100px 0;
+            background-color: var(--gray-100);
+        }
+
+        .section-header {
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 {
+            font-family: var(--headline-font);
+            font-size: calc(56px * var(--font-size-multiplier));
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+
+        .section-header p {
+            font-size: calc(16px * var(--font-size-multiplier));
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .style-item {
+            background-color: var(--bg-color);
+            padding: 50px;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .style-item h3 {
+            font-family: var(--headline-font);
+            font-size: calc(28px * var(--font-size-multiplier));
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .color-chip {
+            height: 60px;
+            border: 1px solid var(--gray-300);
+        }
+
+        .type-specimen {
+            margin: 20px 0;
+        }
+
+        .type-specimen p {
+            margin: 10px 0;
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 0;
+            background-color: var(--bg-color);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 100px;
+            align-items: start;
+        }
+
+        .about-text h3 {
+            font-family: var(--headline-font);
+            font-size: calc(32px * var(--font-size-multiplier));
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .about-text p {
+            font-size: calc(16px * var(--font-size-multiplier));
+            margin-bottom: 25px;
+            color: var(--gray-600);
+            line-height: 1.8;
+        }
+
+        .about-metrics {
+            display: grid;
+            gap: 40px;
+        }
+
+        .metric {
+            border-top: 3px solid var(--accent-color);
+            padding-top: 20px;
+        }
+
+        .metric-value {
+            font-family: var(--headline-font);
+            font-size: calc(48px * var(--font-size-multiplier));
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: calc(13px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gray-600);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 0;
+            background-color: var(--gray-100);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .service-card {
+            background-color: var(--bg-color);
+            padding: 60px 50px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--accent-color);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .service-number {
+            font-family: var(--headline-font);
+            font-size: calc(72px * var(--font-size-multiplier));
+            font-weight: 800;
+            color: var(--gray-200);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(24px * var(--font-size-multiplier));
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .service-card p {
+            color: var(--gray-600);
+            font-size: calc(15px * var(--font-size-multiplier));
+            line-height: 1.8;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background-color: var(--bg-color);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 100px;
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 30px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            font-size: calc(12px * var(--font-size-multiplier));
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gray-600);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 18px 0;
+            border: none;
+            border-bottom: 2px solid var(--gray-300);
+            background-color: transparent;
+            color: var(--text-color);
+            font-family: var(--body-font);
+            font-size: calc(16px * var(--font-size-multiplier));
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .contact-info h3 {
+            font-family: var(--headline-font);
+            font-size: calc(24px * var(--font-size-multiplier));
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .info-item {
+            margin-bottom: 30px;
+        }
+
+        .info-label {
+            font-size: calc(12px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gray-600);
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            font-size: calc(16px * var(--font-size-multiplier));
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            padding: 60px 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: calc(13px * var(--font-size-multiplier));
+            letter-spacing: 1px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .footer-links a {
+            color: var(--bg-color);
+            text-decoration: none;
+            font-size: calc(13px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content,
+            .style-grid,
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .hero h1 {
+                font-size: calc(56px * var(--font-size-multiplier));
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-overlay"></div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-group">
+            <label for="headline-font">Headline Font</label>
+            <select id="headline-font">
+                <option value="'Syne', sans-serif">Syne</option>
+                <option value="'Prosto One', display">Prosto One</option>
+                <option value="'Aclonica', display">Aclonica</option>
+                <option value="'Fugaz One', display">Fugaz One</option>
+                <option value="'Racing Sans One', display">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Bakbak One', display">Bakbak One</option>
+                <option value="'Monomaniac One', sans-serif">Monomaniac One</option>
+                <option value="'Bebas Neue', display">Bebas Neue</option>
+                <option value="'Oswald', sans-serif">Oswald</option>
+                <option value="'Archivo', sans-serif">Archivo</option>
+                <option value="'Work Sans', sans-serif">Work Sans</option>
+            </select>
+        </div>
+        <div class="toolbar-group">
+            <label for="body-font">Body Font</label>
+            <select id="body-font">
+                <option value="'Manrope', sans-serif">Manrope</option>
+                <option value="'Inter', sans-serif">Inter</option>
+                <option value="'DM Sans', sans-serif">DM Sans</option>
+                <option value="'Work Sans', sans-serif">Work Sans</option>
+                <option value="'Barlow', sans-serif">Barlow</option>
+                <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
+                <option value="'Lexend', sans-serif">Lexend</option>
+                <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+            </select>
+        </div>
+        <div class="toolbar-group">
+            <label for="primary-color">Primary</label>
+            <input type="color" id="primary-color" value="#0f0f0f">
+        </div>
+        <div class="toolbar-group">
+            <label for="secondary-color">Secondary</label>
+            <input type="color" id="secondary-color" value="#f8f8f8">
+        </div>
+        <div class="toolbar-group">
+            <label for="accent-color">Accent</label>
+            <input type="color" id="accent-color" value="#e63946">
+        </div>
+        <div class="toolbar-group">
+            <label for="font-size">Font Size</label>
+            <input type="range" id="font-size" min="0.8" max="1.2" step="0.1" value="1">
+            <span id="font-size-value">1.0</span>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()">Dark Mode</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">FRAME</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Architectural<br>Digital<br><span class="hero-accent">Design</span></h1>
+                    <p>We build digital experiences with the precision of architects and the vision of artists. Every project is a masterpiece of form and function.</p>
+                    <div class="btn-group">
+                        <a href="#contact" class="btn btn-primary">Start Building</a>
+                        <a href="#services" class="btn btn-secondary">View Portfolio</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="architect-blocks">
+                        <div class="block"></div>
+                        <div class="block"></div>
+                        <div class="block"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Style Guide Section -->
+    <section class="style-guide">
+        <div class="container">
+            <div class="section-header">
+                <h2>Design Philosophy</h2>
+                <p>Structured. Minimal. Powerful.</p>
+            </div>
+            <div class="style-grid">
+                <div class="style-item">
+                    <h3>Color System</h3>
+                    <div class="color-palette">
+                        <div class="color-chip" style="background-color: var(--primary-color);"></div>
+                        <div class="color-chip" style="background-color: var(--accent-color);"></div>
+                        <div class="color-chip" style="background-color: var(--gray-300);"></div>
+                    </div>
+                    <p style="margin-top: 30px;">Minimal palette focused on contrast and clarity</p>
+                </div>
+                <div class="style-item">
+                    <h3>Typography</h3>
+                    <div class="type-specimen">
+                        <p style="font-family: var(--headline-font); font-size: 32px; font-weight: 800;">Headlines</p>
+                        <p style="font-family: var(--body-font); font-size: 16px;">Body text for optimal readability</p>
+                    </div>
+                </div>
+                <div class="style-item">
+                    <h3>Grid Structure</h3>
+                    <p>Modular grid system based on architectural principles. Every element has its place, every space has purpose.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>About Frame</h2>
+                <p>Where Architecture Meets Digital</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>We design digital spaces like architects design buildings</h3>
+                    <p>Frame is a digital agency that approaches web design with architectural precision. We believe that great digital experiences are built on solid foundations, clear structures, and purposeful aesthetics.</p>
+                    <p>Our team combines technical expertise with design sensibility to create digital products that are both beautiful and functional. We don't just make websites; we craft digital environments.</p>
+                    <p>Every project begins with understanding the foundation: your goals, your users, your vision. From there, we build upward, layer by layer, until we've created something that stands out in the digital landscape.</p>
+                </div>
+                <div class="about-metrics">
+                    <div class="metric">
+                        <div class="metric-value">200+</div>
+                        <div class="metric-label">Projects Delivered</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">50+</div>
+                        <div class="metric-label">Awards Won</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">99%</div>
+                        <div class="metric-label">Client Retention</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Services</h2>
+                <p>Digital Solutions Built to Last</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-number">01</div>
+                    <h3>Web Architecture</h3>
+                    <p>Strategic planning and structural design for scalable digital platforms that grow with your business.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-number">02</div>
+                    <h3>Visual Design</h3>
+                    <p>Clean, purposeful aesthetics that communicate your brand message with clarity and impact.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-number">03</div>
+                    <h3>Digital Experience</h3>
+                    <p>User-centered design that creates meaningful connections between brands and their audiences.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Let's Build Together</h2>
+                <p>Start Your Project Today</p>
+            </div>
+            <div class="contact-content">
+                <form class="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="form-group full">
+                        <label for="project">Project Type</label>
+                        <input type="text" id="project" name="project" required>
+                    </div>
+                    <div class="form-group full">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <div class="info-item">
+                        <div class="info-label">Email</div>
+                        <div class="info-value">hello@frame.agency</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Phone</div>
+                        <div class="info-value">+1 (555) 123-4567</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Office</div>
+                        <div class="info-value">123 Design Street<br>New York, NY 10001</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>&copy; 2024 Frame. All rights reserved.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            document.querySelector('.theme-toggle').textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+        }
+
+        // Font Controls
+        document.getElementById('headline-font').addEventListener('change', function(e) {
+            document.documentElement.style.setProperty('--headline-font', e.target.value);
+        });
+
+        document.getElementById('body-font').addEventListener('change', function(e) {
+            document.documentElement.style.setProperty('--body-font', e.target.value);
+        });
+
+        // Color Controls
+        document.getElementById('primary-color').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--primary-color', e.target.value);
+        });
+
+        document.getElementById('secondary-color').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--secondary-color', e.target.value);
+        });
+
+        document.getElementById('accent-color').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--accent-color', e.target.value);
+        });
+
+        // Font Size Control
+        document.getElementById('font-size').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--font-size-multiplier', e.target.value);
+            document.getElementById('font-size-value').textContent = e.target.value;
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Parallax effect for hero blocks
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const blocks = document.querySelectorAll('.block');
+            
+            blocks[0].style.transform = `translateY(${scrolled * 0.1}px)`;
+            blocks[1].style.transform = `translateY(${scrolled * -0.15}px)`;
+            blocks[2].style.transform = `translateY(${scrolled * 0.05}px)`;
+        });
+    </script>
+</body>
+</html>
