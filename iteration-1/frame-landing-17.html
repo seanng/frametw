@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Brutalist Digital Forge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Aclonica&family=Fugaz+One&family=Racing+Sans+One&family=Anta&family=Russo+One&family=Bakbak+One&family=Monomaniac+One&family=Bungee&family=Black+Ops+One&family=Righteous&family=Orbitron:wght@400;700;900&family=Audiowide&family=Quantico:wght@400;700&family=Oxanium:wght@400;700&family=Exo+2:wght@400;700;900&family=Rajdhani:wght@400;700&family=Teko:wght@400;700&family=Barlow+Condensed:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FFD700;
+            --secondary-color: #FF4500;
+            --accent-color: #00CED1;
+            --bg-color: #1A1A1A;
+            --text-color: #FFFFFF;
+            --font-multiplier: 1;
+            --headline-font: 'Black Ops One', cursive;
+            --body-font: 'Rajdhani', sans-serif;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #F5F5F5;
+            --text-color: #1A1A1A;
+            --primary-color: #FF8C00;
+            --secondary-color: #DC143C;
+            --accent-color: #008B8B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            font-weight: 400;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #000;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 1001;
+            border-bottom: 5px solid var(--primary-color);
+            flex-wrap: wrap;
+        }
+
+        [data-theme="light"] .toolbar {
+            background: #FFF;
+            border-bottom-color: var(--secondary-color);
+        }
+
+        .toolbar-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toolbar label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .toolbar select, .toolbar input[type="color"], .toolbar input[type="range"] {
+            padding: 8px 12px;
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--text-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .toolbar input[type="color"] {
+            width: 50px;
+            height: 40px;
+            padding: 0;
+        }
+
+        .toolbar input[type="range"] {
+            width: 120px;
+        }
+
+        .theme-toggle {
+            margin-left: auto;
+            background: var(--primary-color);
+            border: 3px solid var(--primary-color);
+            padding: 10px 20px;
+            color: var(--bg-color);
+            cursor: pointer;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            background: transparent;
+            color: var(--primary-color);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: var(--bg-color);
+            padding: 20px 40px;
+            z-index: 1000;
+            border-bottom: 10px solid var(--secondary-color);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 1.2rem;
+            position: relative;
+            padding: 10px 20px;
+            border: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        nav a:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: skew(-10deg);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-top: 170px;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(255, 215, 0, 0.1) 10px,
+                    rgba(255, 215, 0, 0.1) 20px
+                );
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        h1 {
+            font-family: var(--headline-font);
+            font-size: calc(8rem * var(--font-multiplier));
+            line-height: 0.8;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: -5px;
+            color: var(--primary-color);
+            text-shadow: 
+                5px 5px 0 var(--secondary-color),
+                10px 10px 0 var(--accent-color),
+                15px 15px 20px rgba(0, 0, 0, 0.5);
+            transform: perspective(500px) rotateY(-5deg);
+        }
+
+        .hero p {
+            font-size: calc(2rem * var(--font-multiplier));
+            margin-bottom: 40px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 25px 50px;
+            background: var(--primary-color);
+            color: var(--bg-color);
+            text-decoration: none;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 1.3rem;
+            border: 5px solid var(--primary-color);
+            position: relative;
+            transition: all 0.2s ease;
+            transform: skew(-10deg);
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--primary-color);
+            transform: skew(10deg) scale(1.1);
+        }
+
+        /* Brutalist Shapes */
+        .brutal-shape {
+            position: absolute;
+            background: var(--secondary-color);
+            opacity: 0.8;
+        }
+
+        .shape-1 {
+            width: 200px;
+            height: 200px;
+            top: 20%;
+            left: 10%;
+            transform: rotate(45deg);
+        }
+
+        .shape-2 {
+            width: 150px;
+            height: 300px;
+            bottom: 20%;
+            right: 15%;
+            transform: skew(20deg);
+        }
+
+        .shape-3 {
+            width: 100px;
+            height: 100px;
+            top: 60%;
+            left: 80%;
+            background: var(--accent-color);
+        }
+
+        /* Style Guide Section */
+        .style-guide {
+            padding: 120px 40px;
+            background: var(--secondary-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .style-guide::before,
+        .style-guide::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--primary-color);
+            opacity: 0.2;
+        }
+
+        .style-guide::before {
+            top: -150px;
+            left: -150px;
+            transform: rotate(45deg);
+        }
+
+        .style-guide::after {
+            bottom: -150px;
+            right: -150px;
+        }
+
+        h2 {
+            font-family: var(--headline-font);
+            font-size: calc(4rem * var(--font-multiplier));
+            text-align: center;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--bg-color);
+            background: var(--primary-color);
+            padding: 20px;
+            display: inline-block;
+            transform: skew(-5deg);
+            width: 100%;
+        }
+
+        .style-elements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .style-item {
+            background: var(--bg-color);
+            padding: 40px;
+            border: 8px solid var(--primary-color);
+            position: relative;
+            transform: rotate(-2deg);
+            transition: transform 0.2s ease;
+        }
+
+        .style-item:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .style-item:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        .style-item h3 {
+            font-family: var(--headline-font);
+            font-size: calc(2rem * var(--font-multiplier));
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .color-swatch {
+            width: 80px;
+            height: 80px;
+            border: 5px solid var(--text-color);
+            position: relative;
+            transform: rotate(45deg);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .color-swatch:hover {
+            transform: rotate(0deg) scale(1.2);
+        }
+
+        /* About Section */
+        .about {
+            padding: 120px 40px;
+            text-align: center;
+            position: relative;
+            background: var(--accent-color);
+            color: var(--bg-color);
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about h2 {
+            background: var(--bg-color);
+            color: var(--primary-color);
+        }
+
+        .about p {
+            font-size: calc(1.4rem * var(--font-multiplier));
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .highlight-text {
+            background: var(--primary-color);
+            color: var(--bg-color);
+            padding: 5px 15px;
+            display: inline-block;
+            transform: skew(-10deg);
+            font-weight: 900;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 120px 40px;
+            background: var(--bg-color);
+            position: relative;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: transparent;
+            border: 10px solid var(--primary-color);
+            padding: 50px 30px;
+            text-align: center;
+            position: relative;
+            transition: all 0.2s ease;
+            transform: perspective(500px) rotateX(5deg);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: -20px;
+            bottom: -20px;
+            background: var(--secondary-color);
+            z-index: -1;
+        }
+
+        .service-card:hover {
+            transform: perspective(500px) rotateX(0deg) translateY(-10px);
+        }
+
+        .service-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-shadow: 3px 3px 0 var(--secondary-color);
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(1.8rem * var(--font-multiplier));
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .service-card p {
+            font-size: 1.1rem;
+            font-weight: 600;
+            line-height: 1.6;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 120px 40px;
+            text-align: center;
+            background: var(--primary-color);
+            color: var(--bg-color);
+        }
+
+        .contact h2 {
+            background: var(--bg-color);
+            color: var(--primary-color);
+            margin-bottom: 60px;
+        }
+
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 15px;
+            color: var(--bg-color);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 900;
+            font-size: 1.1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 20px;
+            background: var(--bg-color);
+            border: 5px solid var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--body-font);
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            transform: scale(1.02);
+        }
+
+        .submit-btn {
+            background: var(--bg-color);
+            color: var(--primary-color);
+            border: 5px solid var(--bg-color);
+            padding: 20px 60px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            transform: skew(-10deg);
+        }
+
+        .submit-btn:hover {
+            background: transparent;
+            color: var(--bg-color);
+            transform: skew(10deg) scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 40px;
+            text-align: center;
+            background: var(--bg-color);
+            border-top: 10px solid var(--secondary-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: calc(4rem * var(--font-multiplier));
+                letter-spacing: -2px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            nav a {
+                font-size: 1rem;
+            }
+
+            .toolbar {
+                padding: 10px;
+                gap: 10px;
+            }
+
+            .service-card::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-section">
+            <label>Headline:</label>
+            <select id="headlineFont">
+                <option value="'Black Ops One', cursive">Black Ops One</option>
+                <option value="'Prosto One', cursive">Prosto One</option>
+                <option value="'Aclonica', cursive">Aclonica</option>
+                <option value="'Fugaz One', cursive">Fugaz One</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Bakbak One', cursive">Bakbak One</option>
+                <option value="'Monomaniac One', sans-serif">Monomaniac One</option>
+                <option value="'Bungee', cursive">Bungee</option>
+                <option value="'Righteous', cursive">Righteous</option>
+                <option value="'Bebas Neue', cursive">Bebas Neue</option>
+            </select>
+        </div>
+        <div class="toolbar-section">
+            <label>Body:</label>
+            <select id="bodyFont">
+                <option value="'Rajdhani', sans-serif">Rajdhani</option>
+                <option value="'Teko', sans-serif">Teko</option>
+                <option value="'Barlow Condensed', sans-serif">Barlow Condensed</option>
+                <option value="'Orbitron', sans-serif">Orbitron</option>
+                <option value="'Audiowide', cursive">Audiowide</option>
+                <option value="'Quantico', sans-serif">Quantico</option>
+                <option value="'Oxanium', cursive">Oxanium</option>
+                <option value="'Exo 2', sans-serif">Exo 2</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Righteous', cursive">Righteous</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+            </select>
+        </div>
+        <div class="toolbar-section">
+            <label>Primary:</label>
+            <input type="color" id="primaryColor" value="#FFD700">
+        </div>
+        <div class="toolbar-section">
+            <label>Secondary:</label>
+            <input type="color" id="secondaryColor" value="#FF4500">
+        </div>
+        <div class="toolbar-section">
+            <label>Accent:</label>
+            <input type="color" id="accentColor" value="#00CED1">
+        </div>
+        <div class="toolbar-section">
+            <label>Font Size:</label>
+            <input type="range" id="fontMultiplier" min="0.8" max="1.5" step="0.1" value="1">
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()">FLIP MODE</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#home">HOME</a></li>
+            <li><a href="#style-guide">STYLE</a></li>
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#services">SERVICES</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="brutal-shape shape-1"></div>
+        <div class="brutal-shape shape-2"></div>
+        <div class="brutal-shape shape-3"></div>
+        <div class="hero-content">
+            <h1>FRAME</h1>
+            <p>Brutalist Digital Architecture</p>
+            <a href="#contact" class="cta-button">BREAK THE GRID</a>
+        </div>
+    </section>
+
+    <!-- Style Guide Section -->
+    <section class="style-guide" id="style-guide">
+        <h2>RAW DESIGN SYSTEM</h2>
+        <div class="style-elements">
+            <div class="style-item">
+                <h3>TYPOGRAPHY</h3>
+                <p>BOLD. HEAVY. UNAPOLOGETIC.</p>
+                <p style="font-family: var(--headline-font); font-size: 3rem; margin: 20px 0;">IMPACT</p>
+                <p>Body text punches through screens</p>
+            </div>
+            <div class="style-item">
+                <h3>COLORS</h3>
+                <p>PURE INTENSITY</p>
+                <div class="color-palette">
+                    <div class="color-swatch" style="background: var(--primary-color);"></div>
+                    <div class="color-swatch" style="background: var(--secondary-color);"></div>
+                    <div class="color-swatch" style="background: var(--accent-color);"></div>
+                </div>
+            </div>
+            <div class="style-item">
+                <h3>LAYOUT</h3>
+                <p>BROKEN GRIDS. HARSH ANGLES.</p>
+                <p>NOTHING ALIGNS. EVERYTHING WORKS.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <h2>WHAT IS FRAME?</h2>
+            <p>WE ARE <span class="highlight-text">FRAME</span> - DIGITAL BRUTALISTS</p>
+            <p>WE DON'T DO PRETTY. WE DO POWERFUL.</p>
+            <p>BORN FROM CONCRETE AND CODE, WE BUILD DIGITAL EXPERIENCES THAT HIT HARD AND LEAVE MARKS.</p>
+            <p>OUR PHILOSOPHY: <span class="highlight-text">FUNCTION OVER FLUFF</span></p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <h2>WHAT WE BUILD</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">⚒️</div>
+                <h3>WEB BRUTALISM</h3>
+                <p>WEBSITES THAT PUNCH THROUGH THE NOISE</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔨</div>
+                <h3>BRAND DEMOLITION</h3>
+                <p>TEAR DOWN THE OLD. BUILD THE BOLD.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🏗️</div>
+                <h3>UX ARCHITECTURE</h3>
+                <p>EXPERIENCES BUILT LIKE BUNKERS</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h3>PERFORMANCE</h3>
+                <p>FAST. FIERCE. UNFORGIVING.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2>MAKE CONTACT</h2>
+        <form class="contact-form">
+            <div class="form-group">
+                <label>NAME</label>
+                <input type="text" placeholder="YOUR IDENTITY">
+            </div>
+            <div class="form-group">
+                <label>EMAIL</label>
+                <input type="email" placeholder="YOUR@EMAIL.COM">
+            </div>
+            <div class="form-group">
+                <label>MESSAGE</label>
+                <textarea rows="5" placeholder="SPEAK YOUR MIND"></textarea>
+            </div>
+            <button type="submit" class="submit-btn">SEND IT</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 FRAME. BUILT TO LAST. DESIGNED TO DISRUPT.</p>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+        }
+
+        // Font Controls
+        document.getElementById('headlineFont').addEventListener('change', (e) => {
+            document.documentElement.style.setProperty('--headline-font', e.target.value);
+        });
+
+        document.getElementById('bodyFont').addEventListener('change', (e) => {
+            document.documentElement.style.setProperty('--body-font', e.target.value);
+        });
+
+        // Color Controls
+        document.getElementById('primaryColor').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--primary-color', e.target.value);
+        });
+
+        document.getElementById('secondaryColor').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--secondary-color', e.target.value);
+        });
+
+        document.getElementById('accentColor').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--accent-color', e.target.value);
+        });
+
+        // Font Size Multiplier
+        document.getElementById('fontMultiplier').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--font-multiplier', e.target.value);
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Random rotation on scroll
+        let ticking = false;
+        function randomRotate() {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    document.querySelectorAll('.style-item, .service-card').forEach(item => {
+                        const randomDeg = Math.random() * 4 - 2;
+                        item.style.transform = `rotate(${randomDeg}deg)`;
+                    });
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', randomRotate);
+    </script>
+</body>
+</html>

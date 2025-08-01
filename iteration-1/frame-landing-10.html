@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Retro Futuristic Agency</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Aclonica&family=Fugaz+One&family=Racing+Sans+One&family=Anta&family=Russo+One&family=Bakbak+One&family=Monomaniac+One&family=Bebas+Neue&family=Black+Ops+One&family=Bungee&family=Creepster&family=Faster+One&family=Kdam+Thmor+Pro&family=Monoton&family=Orbitron:wght@400;900&family=Press+Start+2P&family=Righteous&family=Rubik+Glitch&family=Sarpanch:wght@900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #f7931e;
+            --accent-color: #c1272d;
+            --bg-color: #1a0033;
+            --text-color: #ffffff;
+            --font-multiplier: 1;
+            --headline-font: 'Faster One', cursive;
+            --body-font: 'Anta', sans-serif;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #fef3e2;
+            --text-color: #1a0033;
+            --primary-color: #ff5722;
+            --secondary-color: #ff9800;
+            --accent-color: #e91e63;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(247, 147, 30, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(193, 39, 45, 0.2) 0%, transparent 50%);
+        }
+
+        /* Retro Future Effects */
+        @keyframes chrome-shine {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        @keyframes retro-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        @keyframes scan-line {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        .chrome-text {
+            background: linear-gradient(
+                90deg,
+                var(--primary-color) 0%,
+                var(--secondary-color) 25%,
+                var(--accent-color) 50%,
+                var(--secondary-color) 75%,
+                var(--primary-color) 100%
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: chrome-shine 3s linear infinite;
+        }
+
+        /* Scan Lines Overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(255, 255, 255, 0.03) 2px,
+                rgba(255, 255, 255, 0.03) 4px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.3) 0%, rgba(193, 39, 45, 0.3) 100%);
+            backdrop-filter: blur(20px);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            border-bottom: 3px solid var(--primary-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .toolbar-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toolbar label {
+            color: var(--secondary-color);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .toolbar select, .toolbar input {
+            background: rgba(26, 0, 51, 0.8);
+            color: var(--secondary-color);
+            border: 2px solid var(--primary-color);
+            padding: 8px;
+            font-family: var(--body-font);
+            cursor: pointer;
+            border-radius: 20px;
+        }
+
+        .toolbar input[type="color"] {
+            width: 40px;
+            height: 35px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .toolbar input[type="range"] {
+            width: 100px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(26, 0, 51, 0.9);
+            padding: 25px;
+            position: sticky;
+            top: 80px;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--secondary-color);
+            box-shadow: 0 5px 30px rgba(247, 147, 30, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--headline-font);
+            font-size: calc(3.5rem * var(--font-multiplier));
+            letter-spacing: 5px;
+            text-decoration: none;
+            position: relative;
+            display: inline-block;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: calc(1rem * var(--font-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border: none;
+            color: var(--text-color);
+            padding: 12px 25px;
+            cursor: pointer;
+            font-family: var(--body-font);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.6);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 40px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.2) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            animation: retro-pulse 4s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(transparent 0%, rgba(255, 107, 53, 0.1) 100%);
+            animation: scan-line 8s linear infinite;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .retro-title {
+            font-family: var(--headline-font);
+            font-size: calc(8rem * var(--font-multiplier));
+            line-height: 0.9;
+            margin-bottom: 20px;
+            letter-spacing: 10px;
+            text-shadow: 
+                0 0 10px rgba(255, 107, 53, 0.8),
+                0 0 20px rgba(247, 147, 30, 0.6),
+                0 0 30px rgba(193, 39, 45, 0.4);
+        }
+
+        .hero-subtitle {
+            font-size: calc(1.8rem * var(--font-multiplier));
+            color: var(--secondary-color);
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 0 0 20px rgba(247, 147, 30, 0.5);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: calc(1.2rem * var(--font-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.6);
+        }
+
+        /* Style Guide Section */
+        .style-guide {
+            padding: 100px 20px;
+            background: linear-gradient(180deg, rgba(255, 107, 53, 0.05) 0%, rgba(193, 39, 45, 0.05) 100%);
+        }
+
+        .section-title {
+            font-family: var(--headline-font);
+            font-size: calc(4.5rem * var(--font-multiplier));
+            text-align: center;
+            margin-bottom: 60px;
+            letter-spacing: 5px;
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .style-item {
+            background: rgba(26, 0, 51, 0.8);
+            border: 2px solid var(--primary-color);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .style-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+            animation: retro-pulse 5s ease-in-out infinite;
+        }
+
+        .style-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.3);
+            border-color: var(--secondary-color);
+        }
+
+        .style-item h3 {
+            font-family: var(--headline-font);
+            font-size: calc(2.5rem * var(--font-multiplier));
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 20px;
+            background: rgba(26, 0, 51, 0.9);
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: calc(1.2rem * var(--font-multiplier));
+            line-height: 1.8;
+        }
+
+        .about-visual {
+            position: relative;
+            height: 500px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(255, 107, 53, 0.4);
+        }
+
+        .about-visual::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.1) 10px,
+                rgba(255,255,255,0.1) 20px
+            );
+        }
+
+        .about-visual::after {
+            content: '1984';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: calc(6rem * var(--font-multiplier));
+            font-family: var(--headline-font);
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 10px;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 20px;
+            background: linear-gradient(180deg, rgba(247, 147, 30, 0.05) 0%, rgba(255, 107, 53, 0.05) 100%);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: rgba(26, 0, 51, 0.8);
+            border-radius: 20px;
+            padding: 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            z-index: -1;
+            margin: -2px;
+            border-radius: 20px;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.4);
+        }
+
+        .service-icon {
+            font-size: calc(4rem * var(--font-multiplier));
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.6));
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(2.2rem * var(--font-multiplier));
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 20px;
+            background: rgba(26, 0, 51, 0.95);
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-form {
+            margin-top: 50px;
+            display: grid;
+            gap: 25px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 20px;
+            background: rgba(255, 107, 53, 0.1);
+            border: 2px solid var(--primary-color);
+            border-radius: 30px;
+            color: var(--text-color);
+            font-family: var(--body-font);
+            font-size: calc(1rem * var(--font-multiplier));
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            background: rgba(247, 147, 30, 0.1);
+            box-shadow: 0 0 30px rgba(247, 147, 30, 0.3);
+        }
+
+        .form-group textarea {
+            border-radius: 20px;
+        }
+
+        .submit-btn {
+            padding: 18px 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--text-color);
+            border: none;
+            font-size: calc(1.2rem * var(--font-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            font-family: var(--body-font);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.6);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.2) 0%, rgba(193, 39, 45, 0.2) 100%);
+            border-top: 2px solid var(--primary-color);
+        }
+
+        .footer p {
+            color: var(--secondary-color);
+            font-size: calc(1.1rem * var(--font-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(247, 147, 30, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .retro-title {
+                font-size: calc(4.5rem * var(--font-multiplier));
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-item">
+            <label for="headline-font">Headline:</label>
+            <select id="headline-font">
+                <option value="'Faster One', cursive">Faster One</option>
+                <option value="'Prosto One', cursive">Prosto One</option>
+                <option value="'Aclonica', cursive">Aclonica</option>
+                <option value="'Fugaz One', cursive">Fugaz One</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Bakbak One', cursive">Bakbak One</option>
+                <option value="'Monomaniac One', sans-serif">Monomaniac</option>
+                <option value="'Bebas Neue', cursive">Bebas Neue</option>
+                <option value="'Black Ops One', cursive">Black Ops One</option>
+                <option value="'Bungee', cursive">Bungee</option>
+                <option value="'Creepster', cursive">Creepster</option>
+                <option value="'Kdam Thmor Pro', sans-serif">Kdam Thmor Pro</option>
+                <option value="'Monoton', cursive">Monoton</option>
+                <option value="'Orbitron', sans-serif">Orbitron</option>
+                <option value="'Press Start 2P', cursive">Press Start 2P</option>
+                <option value="'Righteous', cursive">Righteous</option>
+                <option value="'Rubik Glitch', cursive">Rubik Glitch</option>
+                <option value="'Sarpanch', sans-serif">Sarpanch</option>
+            </select>
+        </div>
+        <div class="toolbar-item">
+            <label for="body-font">Body:</label>
+            <select id="body-font">
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Prosto One', cursive">Prosto One</option>
+                <option value="'Aclonica', cursive">Aclonica</option>
+                <option value="'Fugaz One', cursive">Fugaz One</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Bakbak One', cursive">Bakbak One</option>
+                <option value="'Monomaniac One', sans-serif">Monomaniac</option>
+                <option value="'Bebas Neue', cursive">Bebas Neue</option>
+                <option value="'Black Ops One', cursive">Black Ops One</option>
+                <option value="'Bungee', cursive">Bungee</option>
+                <option value="'Creepster', cursive">Creepster</option>
+                <option value="'Faster One', cursive">Faster One</option>
+                <option value="'Kdam Thmor Pro', sans-serif">Kdam Thmor Pro</option>
+                <option value="'Monoton', cursive">Monoton</option>
+                <option value="'Orbitron', sans-serif">Orbitron</option>
+                <option value="'Press Start 2P', cursive">Press Start 2P</option>
+                <option value="'Righteous', cursive">Righteous</option>
+                <option value="'Rubik Glitch', cursive">Rubik Glitch</option>
+                <option value="'Sarpanch', sans-serif">Sarpanch</option>
+            </select>
+        </div>
+        <div class="toolbar-item">
+            <label for="primary-color">Primary:</label>
+            <input type="color" id="primary-color" value="#ff6b35">
+        </div>
+        <div class="toolbar-item">
+            <label for="secondary-color">Secondary:</label>
+            <input type="color" id="secondary-color" value="#f7931e">
+        </div>
+        <div class="toolbar-item">
+            <label for="accent-color">Accent:</label>
+            <input type="color" id="accent-color" value="#c1272d">
+        </div>
+        <div class="toolbar-item">
+            <label for="font-size">Font Size:</label>
+            <input type="range" id="font-size" min="0.5" max="2" step="0.1" value="1">
+            <span id="font-size-value">1x</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo chrome-text">FRAME</a>
+            <ul class="nav-links">
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#style-guide">STYLE</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#services">SERVICES</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+            <button class="theme-toggle" onclick="toggleTheme()">SWITCH ERA</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="retro-title chrome-text">FRAME</h1>
+            <p class="hero-subtitle">RETRO FUTURE DIGITAL COLLECTIVE</p>
+            <a href="#contact" class="cta-button">LAUNCH SEQUENCE</a>
+        </div>
+    </section>
+
+    <!-- Style Guide Section -->
+    <section class="style-guide" id="style-guide">
+        <h2 class="section-title chrome-text">DESIGN MANIFESTO</h2>
+        <div class="style-grid">
+            <div class="style-item">
+                <h3>SPECTRUM</h3>
+                <p>Primary: Sunset Orange<br>
+                Secondary: Golden Hour<br>
+                Accent: Crimson Dream</p>
+            </div>
+            <div class="style-item">
+                <h3>TYPOGRAPHY</h3>
+                <p>Headlines: Faster One<br>
+                Body: Anta Modern<br>
+                Chrome & Gradient Magic</p>
+            </div>
+            <div class="style-item">
+                <h3>AESTHETIC</h3>
+                <p>80s Retrofuturism<br>
+                Synthwave Inspiration<br>
+                Tomorrow's Yesterday</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h2 class="section-title chrome-text">FUTURE NOSTALGIA</h2>
+                <p>Welcome to FRAME - where the future we imagined in the past meets the technology of today. We're digital dreamers who believe the best of tomorrow was designed yesterday.</p>
+                <p>Our retro-futuristic approach creates digital experiences that feel both familiar and revolutionary. We channel the optimism of the space age with the power of modern technology.</p>
+            </div>
+            <div class="about-visual"></div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <h2 class="section-title chrome-text">CAPABILITIES</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🚀</div>
+                <h3>COSMIC WEB</h3>
+                <p>Websites that launch your brand into the stratosphere with retro-future style.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h3>ELECTRIC IDENTITY</h3>
+                <p>Brand experiences charged with nostalgia and powered by innovation.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🌟</div>
+                <h3>STELLAR MARKETING</h3>
+                <p>Campaigns that shine bright in the digital cosmos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-content">
+            <h2 class="section-title chrome-text">TRANSMISSION</h2>
+            <form class="contact-form">
+                <div class="form-group">
+                    <input type="text" placeholder="CALL SIGN" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="FREQUENCY" required>
+                </div>
+                <div class="form-group">
+                    <textarea rows="5" placeholder="MESSAGE" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">TRANSMIT</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2024 FRAME | YESTERDAY'S TOMORROW, TODAY</p>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+        }
+
+        // Font Controls
+        document.getElementById('headline-font').addEventListener('change', (e) => {
+            document.documentElement.style.setProperty('--headline-font', e.target.value);
+        });
+
+        document.getElementById('body-font').addEventListener('change', (e) => {
+            document.documentElement.style.setProperty('--body-font', e.target.value);
+        });
+
+        // Color Controls
+        document.getElementById('primary-color').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--primary-color', e.target.value);
+        });
+
+        document.getElementById('secondary-color').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--secondary-color', e.target.value);
+        });
+
+        document.getElementById('accent-color').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--accent-color', e.target.value);
+        });
+
+        // Font Size Control
+        document.getElementById('font-size').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--font-multiplier', e.target.value);
+            document.getElementById('font-size-value').textContent = e.target.value + 'x';
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Parallax Effect on Scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero::before');
+            if (parallax) {
+                const speed = 0.5;
+                parallax.style.transform = `translateY(${scrolled * speed}px)`;
+            }
+        });
+    </script>
+</body>
+</html>

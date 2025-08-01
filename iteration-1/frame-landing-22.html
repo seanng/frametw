@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Brutalist Digital Agency</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Aclonica&family=Fugaz+One&family=Racing+Sans+One&family=Anta&family=Russo+One&family=Bakbak+One&family=Monomaniac+One&family=Orbitron:wght@400;700;900&family=Black+Ops+One&family=Bungee&family=Audiowide&family=Saira+Stencil+One&family=Righteous&family=Bebas+Neue&family=Teko:wght@300;400;700&family=Barlow+Condensed:wght@400;700&family=Oswald:wght@400;700&family=Anton&family=Archivo+Black&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff0080;
+            --secondary-color: #ffff00;
+            --accent-color: #00ffff;
+            --bg-dark: #000000;
+            --bg-light: #f0f0f0;
+            --text-dark: #ffffff;
+            --text-light: #000000;
+            --font-size-multiplier: 1;
+            --headline-font: 'Black Ops One', cursive;
+            --body-font: 'Russo One', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background: var(--bg-dark);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode {
+            background: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        /* Toolbar */
+        .toolbar {
+            background: var(--primary-color);
+            padding: 15px 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            box-shadow: 0 10px 30px rgba(255, 0, 128, 0.5);
+        }
+
+        .toolbar select, .toolbar input {
+            padding: 8px 15px;
+            background: var(--bg-dark);
+            border: 3px solid var(--secondary-color);
+            color: var(--text-dark);
+            font-weight: bold;
+            cursor: pointer;
+            transform: skew(-10deg);
+        }
+
+        .toolbar label {
+            color: var(--bg-dark);
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transform: skew(-10deg);
+        }
+
+        .color-picker {
+            width: 50px;
+            height: 40px;
+            border: 3px solid var(--secondary-color);
+            cursor: pointer;
+            transform: skew(-10deg);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 70px;
+            width: 100%;
+            padding: 30px 50px;
+            background: var(--secondary-color);
+            z-index: 999;
+            transform: skew(-2deg);
+            box-shadow: 0 15px 40px rgba(255, 255, 0, 0.4);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            align-items: center;
+            transform: skew(2deg);
+        }
+
+        nav a {
+            color: var(--bg-dark);
+            text-decoration: none;
+            font-family: var(--headline-font);
+            font-size: calc(18px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            padding: 10px 20px;
+            background: transparent;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: var(--bg-dark);
+            color: var(--secondary-color);
+            border-color: var(--bg-dark);
+            transform: scale(1.1) rotate(-2deg);
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 90px;
+            right: 50px;
+            background: var(--accent-color);
+            border: 5px solid var(--bg-dark);
+            padding: 15px 30px;
+            cursor: pointer;
+            font-family: var(--headline-font);
+            color: var(--bg-dark);
+            font-weight: bold;
+            z-index: 1000;
+            transform: rotate(-5deg);
+            transition: all 0.3s ease;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: rotate(5deg) scale(1.1);
+            box-shadow: 10px 10px 0 var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 200px 50px 100px;
+            position: relative;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 20px,
+                    var(--primary-color) 20px,
+                    var(--primary-color) 22px
+                ),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 20px,
+                    var(--secondary-color) 20px,
+                    var(--secondary-color) 22px
+                );
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            background: var(--bg-dark);
+            padding: 80px;
+            border: 10px solid var(--accent-color);
+            transform: rotate(-2deg);
+            box-shadow: 20px 20px 0 var(--primary-color);
+        }
+
+        .hero h1 {
+            font-family: var(--headline-font);
+            font-size: calc(150px * var(--font-size-multiplier));
+            font-weight: 900;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 15px;
+            color: var(--secondary-color);
+            text-shadow: 
+                5px 5px 0 var(--primary-color),
+                10px 10px 0 var(--accent-color);
+            transform: skew(-5deg);
+        }
+
+        .hero p {
+            font-size: calc(32px * var(--font-size-multiplier));
+            margin-bottom: 50px;
+            color: var(--accent-color);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 30px 80px;
+            background: var(--primary-color);
+            border: 5px solid var(--secondary-color);
+            color: var(--text-dark);
+            text-decoration: none;
+            font-family: var(--headline-font);
+            font-size: calc(24px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            transform: skew(-10deg);
+            transition: all 0.3s ease;
+            box-shadow: 10px 10px 0 var(--accent-color);
+        }
+
+        .cta-button:hover {
+            transform: skew(-10deg) translate(-10px, -10px);
+            box-shadow: 20px 20px 0 var(--accent-color);
+        }
+
+        /* Style Guide Section */
+        .style-guide {
+            padding: 120px 50px;
+            background: var(--secondary-color);
+            transform: skew(-1deg);
+            margin: 50px 0;
+        }
+
+        .style-guide > * {
+            transform: skew(1deg);
+        }
+
+        .style-guide h2 {
+            font-family: var(--headline-font);
+            font-size: calc(80px * var(--font-size-multiplier));
+            text-align: center;
+            margin-bottom: 80px;
+            color: var(--bg-dark);
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            text-shadow: 5px 5px 0 var(--primary-color);
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .style-item {
+            padding: 40px;
+            background: var(--bg-dark);
+            border: 8px solid var(--primary-color);
+            transform: rotate(-2deg);
+            box-shadow: 15px 15px 0 var(--accent-color);
+        }
+
+        .style-item:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .style-item h3 {
+            font-family: var(--headline-font);
+            font-size: calc(32px * var(--font-size-multiplier));
+            margin-bottom: 30px;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            text-shadow: 3px 3px 0 var(--primary-color);
+        }
+
+        .color-swatch {
+            width: 80px;
+            height: 80px;
+            display: inline-block;
+            margin: 15px;
+            border: 5px solid var(--text-dark);
+            transform: rotate(45deg);
+            box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        /* About Section */
+        .about {
+            padding: 120px 50px;
+            position: relative;
+            background: var(--accent-color);
+            color: var(--bg-dark);
+            transform: skew(2deg);
+            margin: 50px 0;
+        }
+
+        .about > * {
+            transform: skew(-2deg);
+        }
+
+        .about h2 {
+            font-family: var(--headline-font);
+            font-size: calc(100px * var(--font-size-multiplier));
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            text-align: center;
+            text-shadow: 5px 5px 0 var(--primary-color);
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            font-size: calc(24px * var(--font-size-multiplier));
+            line-height: 1.8;
+            text-align: center;
+            font-weight: bold;
+            background: var(--bg-dark);
+            color: var(--text-dark);
+            padding: 50px;
+            border: 8px solid var(--secondary-color);
+            box-shadow: 20px 20px 0 var(--primary-color);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 120px 50px;
+            background: var(--bg-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .services::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    var(--primary-color) 0,
+                    var(--primary-color) 5px,
+                    transparent 5px,
+                    transparent 50px
+                );
+            opacity: 0.1;
+        }
+
+        .services h2 {
+            font-family: var(--headline-font);
+            font-size: calc(100px * var(--font-size-multiplier));
+            text-align: center;
+            margin-bottom: 80px;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            text-shadow: 5px 5px 0 var(--primary-color);
+            position: relative;
+            z-index: 1;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card {
+            padding: 50px;
+            background: var(--primary-color);
+            border: 10px solid var(--secondary-color);
+            transform: rotate(-3deg);
+            transition: all 0.3s ease;
+            box-shadow: 20px 20px 0 var(--accent-color);
+        }
+
+        .service-card:nth-child(even) {
+            transform: rotate(3deg);
+            background: var(--accent-color);
+        }
+
+        .service-card:hover {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 30px 30px 0 var(--secondary-color);
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(36px * var(--font-size-multiplier));
+            margin-bottom: 25px;
+            color: var(--bg-dark);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 3px 3px 0 var(--secondary-color);
+        }
+
+        .service-card p {
+            font-size: calc(18px * var(--font-size-multiplier));
+            line-height: 1.6;
+            color: var(--bg-dark);
+            font-weight: bold;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 120px 50px;
+            text-align: center;
+            background: var(--secondary-color);
+            transform: skew(-2deg);
+            margin-top: 50px;
+        }
+
+        .contact > * {
+            transform: skew(2deg);
+        }
+
+        .contact h2 {
+            font-family: var(--headline-font);
+            font-size: calc(100px * var(--font-size-multiplier));
+            margin-bottom: 60px;
+            color: var(--bg-dark);
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            text-shadow: 5px 5px 0 var(--primary-color);
+        }
+
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--bg-dark);
+            padding: 60px;
+            border: 10px solid var(--primary-color);
+            box-shadow: 25px 25px 0 var(--accent-color);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 25px;
+            margin-bottom: 30px;
+            background: transparent;
+            border: 5px solid var(--accent-color);
+            color: var(--text-dark);
+            font-family: var(--body-font);
+            font-size: calc(18px * var(--font-size-multiplier));
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: var(--primary-color);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            transform: scale(1.02);
+            box-shadow: 0 0 30px var(--secondary-color);
+        }
+
+        .contact-form button {
+            width: 100%;
+            padding: 30px;
+            background: var(--primary-color);
+            border: 5px solid var(--secondary-color);
+            color: var(--bg-dark);
+            font-family: var(--headline-font);
+            font-size: calc(28px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 10px 10px 0 var(--accent-color);
+            transform: skew(-5deg);
+        }
+
+        .contact-form button:hover {
+            transform: skew(-5deg) translate(-10px, -10px);
+            box-shadow: 20px 20px 0 var(--accent-color);
+        }
+
+        /* Light Mode Styles */
+        body.light-mode .toolbar {
+            background: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(255, 0, 128, 0.5);
+        }
+
+        body.light-mode .toolbar select,
+        body.light-mode .toolbar input {
+            background: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        body.light-mode nav {
+            background: var(--secondary-color);
+        }
+
+        body.light-mode .dark-mode-toggle {
+            background: var(--accent-color);
+            border-color: var(--text-light);
+            color: var(--text-light);
+        }
+
+        body.light-mode .hero-content {
+            background: var(--bg-light);
+        }
+
+        body.light-mode .style-item {
+            background: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        body.light-mode .about-content {
+            background: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        body.light-mode .contact-form {
+            background: var(--bg-light);
+        }
+
+        body.light-mode .contact-form input,
+        body.light-mode .contact-form textarea {
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <label>Headline Font:
+            <select id="headlineFont">
+                <option value="'Black Ops One', cursive">Black Ops One</option>
+                <option value="'Prosto One', cursive">Prosto One</option>
+                <option value="'Aclonica', sans-serif">Aclonica</option>
+                <option value="'Fugaz One', cursive">Fugaz One</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Bakbak One', cursive">Bakbak One</option>
+                <option value="'Monomaniac One', sans-serif">Monomaniac One</option>
+                <option value="'Orbitron', sans-serif">Orbitron</option>
+                <option value="'Bungee', cursive">Bungee</option>
+                <option value="'Audiowide', cursive">Audiowide</option>
+                <option value="'Saira Stencil One', cursive">Saira Stencil One</option>
+                <option value="'Righteous', cursive">Righteous</option>
+                <option value="'Bebas Neue', cursive">Bebas Neue</option>
+                <option value="'Teko', sans-serif">Teko</option>
+                <option value="'Oswald', sans-serif">Oswald</option>
+                <option value="'Anton', sans-serif">Anton</option>
+                <option value="'Archivo Black', sans-serif">Archivo Black</option>
+            </select>
+        </label>
+        
+        <label>Body Font:
+            <select id="bodyFont">
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Prosto One', cursive">Prosto One</option>
+                <option value="'Aclonica', sans-serif">Aclonica</option>
+                <option value="'Fugaz One', cursive">Fugaz One</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Bakbak One', cursive">Bakbak One</option>
+                <option value="'Monomaniac One', sans-serif">Monomaniac One</option>
+                <option value="'Orbitron', sans-serif">Orbitron</option>
+                <option value="'Black Ops One', cursive">Black Ops One</option>
+                <option value="'Bungee', cursive">Bungee</option>
+                <option value="'Audiowide', cursive">Audiowide</option>
+                <option value="'Saira Stencil One', cursive">Saira Stencil One</option>
+                <option value="'Righteous', cursive">Righteous</option>
+                <option value="'Bebas Neue', cursive">Bebas Neue</option>
+                <option value="'Teko', sans-serif">Teko</option>
+                <option value="'Barlow Condensed', sans-serif">Barlow Condensed</option>
+                <option value="'Oswald', sans-serif">Oswald</option>
+                <option value="'Anton', sans-serif">Anton</option>
+                <option value="'Archivo Black', sans-serif">Archivo Black</option>
+            </select>
+        </label>
+        
+        <label>Primary:
+            <input type="color" id="primaryColor" class="color-picker" value="#ff0080">
+        </label>
+        
+        <label>Secondary:
+            <input type="color" id="secondaryColor" class="color-picker" value="#ffff00">
+        </label>
+        
+        <label>Accent:
+            <input type="color" id="accentColor" class="color-picker" value="#00ffff">
+        </label>
+        
+        <label>Font Size:
+            <input type="range" id="fontSizeMultiplier" min="0.5" max="2" step="0.1" value="1">
+            <span id="fontSizeValue">1.0x</span>
+        </label>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#style-guide">Style Guide</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">Light/Dark</button>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>FRAME</h1>
+            <p>Brutally Bold Digital</p>
+            <a href="#contact" class="cta-button">Break Rules</a>
+        </div>
+    </section>
+
+    <!-- Style Guide Section -->
+    <section class="style-guide" id="style-guide">
+        <h2>Design DNA</h2>
+        <div class="style-grid">
+            <div class="style-item">
+                <h3>Color Chaos</h3>
+                <div>
+                    <div class="color-swatch" style="background: var(--primary-color);"></div>
+                    <div class="color-swatch" style="background: var(--secondary-color);"></div>
+                    <div class="color-swatch" style="background: var(--accent-color);"></div>
+                </div>
+            </div>
+            <div class="style-item">
+                <h3>Type Terror</h3>
+                <p style="font-family: var(--headline-font); font-size: 28px;">HEADLINE BRUTALITY</p>
+                <p style="font-family: var(--body-font); font-size: 20px;">BODY REBELLION</p>
+            </div>
+            <div class="style-item">
+                <h3>Design Doctrine</h3>
+                <p>BRUTALIST AESTHETICS. NEON AGGRESSION. UNAPOLOGETIC BOLDNESS.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2>Who We Are</h2>
+        <div class="about-content">
+            <p>FRAME is not for the faint-hearted. We're the digital agency that throws subtlety out the window and embraces chaos. We believe in designs that punch you in the face with their boldness.</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <h2>What We Do</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Web Warfare</h3>
+                <p>We don't build websites. We create digital weapons that dominate the internet battlefield.</p>
+            </div>
+            <div class="service-card">
+                <h3>Design Destruction</h3>
+                <p>Tear down the old. Build the bold. Our designs don't follow trends - they set them on fire.</p>
+            </div>
+            <div class="service-card">
+                <h3>Brand Brutality</h3>
+                <p>Your brand won't whisper. It will roar. We create identities that refuse to be ignored.</p>
+            </div>
+            <div class="service-card">
+                <h3>Digital Domination</h3>
+                <p>Strategy isn't about playing safe. It's about conquering. We help you own your space.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2>Get Loud</h2>
+        <form class="contact-form">
+            <input type="text" placeholder="NAME" required>
+            <input type="email" placeholder="EMAIL" required>
+            <textarea placeholder="MESSAGE" rows="5" required></textarea>
+            <button type="submit">SEND IT</button>
+        </form>
+    </section>
+
+    <script>
+        // Font customization
+        document.getElementById('headlineFont').addEventListener('change', function(e) {
+            document.documentElement.style.setProperty('--headline-font', e.target.value);
+        });
+
+        document.getElementById('bodyFont').addEventListener('change', function(e) {
+            document.documentElement.style.setProperty('--body-font', e.target.value);
+        });
+
+        // Color customization
+        document.getElementById('primaryColor').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--primary-color', e.target.value);
+        });
+
+        document.getElementById('secondaryColor').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--secondary-color', e.target.value);
+        });
+
+        document.getElementById('accentColor').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--accent-color', e.target.value);
+        });
+
+        // Font size multiplier
+        document.getElementById('fontSizeMultiplier').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--font-size-multiplier', e.target.value);
+            document.getElementById('fontSizeValue').textContent = e.target.value + 'x';
+        });
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('light-mode');
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

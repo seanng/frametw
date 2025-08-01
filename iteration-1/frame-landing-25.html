@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Punk Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Aclonica&family=Fugaz+One&family=Racing+Sans+One&family=Anta&family=Russo+One&family=Bakbak+One&family=Monomaniac+One&family=Orbitron:wght@400;700;900&family=Black+Ops+One&family=Bungee&family=Audiowide&family=Saira+Stencil+One&family=Righteous&family=Bebas+Neue&family=Teko:wght@300;400;700&family=Barlow+Condensed:wght@400;700&family=Oswald:wght@400;700&family=Anton&family=Archivo+Black&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff0040;
+            --secondary-color: #000000;
+            --accent-color: #ffffff;
+            --bg-dark: #1a1a1a;
+            --bg-light: #ffffff;
+            --text-dark: #ffffff;
+            --text-light: #000000;
+            --font-size-multiplier: 1;
+            --headline-font: 'Anton', sans-serif;
+            --body-font: 'Bebas Neue', cursive;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background: var(--bg-dark);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+            background-image: 
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(255, 0, 64, 0.03) 40px,
+                    rgba(255, 0, 64, 0.03) 80px
+                );
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="5" y="20" font-family="Impact" font-size="20" fill="%23ff0040" opacity="0.02" transform="rotate(-25 50 50)">ANARCHY</text><text x="30" y="60" font-family="Impact" font-size="15" fill="%23ffffff" opacity="0.02" transform="rotate(15 50 50)">REBEL</text><text x="10" y="90" font-family="Impact" font-size="18" fill="%23ff0040" opacity="0.02" transform="rotate(-10 50 50)">PUNK</text></svg>');
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body.light-mode {
+            background: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        /* Toolbar */
+        .toolbar {
+            background: var(--secondary-color);
+            padding: 15px 25px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            border-bottom: 5px solid var(--primary-color);
+            transform: skew(-1deg);
+        }
+
+        .toolbar > * {
+            transform: skew(1deg);
+        }
+
+        .toolbar select, .toolbar input {
+            padding: 8px 15px;
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-family: var(--body-font);
+            letter-spacing: 1px;
+        }
+
+        .toolbar label {
+            color: var(--accent-color);
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .color-picker {
+            width: 45px;
+            height: 35px;
+            border: 3px solid var(--primary-color);
+            cursor: pointer;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 75px;
+            width: 100%;
+            padding: 25px 50px;
+            background: var(--primary-color);
+            z-index: 999;
+            transform: rotate(-1deg);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            align-items: center;
+            transform: rotate(1deg);
+        }
+
+        nav a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-family: var(--headline-font);
+            font-size: calc(20px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            padding: 10px 20px;
+            background: var(--secondary-color);
+            transition: all 0.3s ease;
+            transform: rotate(-2deg);
+            box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        nav a:hover {
+            transform: rotate(2deg) scale(1.1);
+            box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 100px;
+            right: 50px;
+            background: var(--accent-color);
+            border: 5px solid var(--secondary-color);
+            padding: 15px 30px;
+            cursor: pointer;
+            font-family: var(--headline-font);
+            color: var(--secondary-color);
+            font-weight: bold;
+            z-index: 1000;
+            transform: rotate(5deg);
+            transition: all 0.3s ease;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 5px 5px 0 var(--primary-color);
+        }
+
+        .dark-mode-toggle:hover {
+            transform: rotate(-5deg) scale(1.1);
+            box-shadow: -5px -5px 0 var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 200px 50px 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before,
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 20px solid var(--primary-color);
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+
+        .hero::before {
+            top: -150px;
+            left: -150px;
+        }
+
+        .hero::after {
+            bottom: -150px;
+            right: -150px;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            position: relative;
+            transform: rotate(-3deg);
+        }
+
+        .hero h1 {
+            font-family: var(--headline-font);
+            font-size: calc(180px * var(--font-size-multiplier));
+            font-weight: 900;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 20px;
+            color: var(--accent-color);
+            text-shadow: 
+                10px 10px 0 var(--primary-color),
+                20px 20px 0 var(--secondary-color),
+                30px 30px 30px rgba(0, 0, 0, 0.5);
+            transform: skew(-5deg, -2deg);
+            line-height: 0.8;
+        }
+
+        .hero p {
+            font-size: calc(36px * var(--font-size-multiplier));
+            margin-bottom: 50px;
+            color: var(--primary-color);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+            transform: rotate(2deg);
+            text-shadow: 3px 3px 0 var(--secondary-color);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 30px 80px;
+            background: var(--primary-color);
+            color: var(--accent-color);
+            text-decoration: none;
+            font-family: var(--headline-font);
+            font-size: calc(28px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            transform: rotate(-5deg) skew(-10deg);
+            transition: all 0.3s ease;
+            box-shadow: 
+                10px 10px 0 var(--secondary-color),
+                20px 20px 0 var(--accent-color);
+            border: 5px solid var(--secondary-color);
+        }
+
+        .cta-button:hover {
+            transform: rotate(5deg) skew(10deg) scale(1.05);
+            box-shadow: 
+                -10px -10px 0 var(--secondary-color),
+                -20px -20px 0 var(--accent-color);
+        }
+
+        /* Style Guide Section */
+        .style-guide {
+            padding: 120px 50px;
+            background: var(--secondary-color);
+            transform: skew(0, -2deg);
+            margin: 50px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .style-guide > * {
+            transform: skew(0, 2deg);
+        }
+
+        .style-guide h2 {
+            font-family: var(--headline-font);
+            font-size: calc(90px * var(--font-size-multiplier));
+            text-align: center;
+            margin-bottom: 80px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            text-shadow: 
+                5px 5px 0 var(--primary-color),
+                10px 10px 20px rgba(255, 0, 64, 0.5);
+            transform: rotate(-2deg);
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .style-item {
+            padding: 40px;
+            background: var(--accent-color);
+            border: 8px solid var(--primary-color);
+            transform: rotate(-3deg);
+            box-shadow: 10px 10px 0 var(--primary-color);
+            color: var(--secondary-color);
+        }
+
+        .style-item:nth-child(even) {
+            transform: rotate(3deg);
+        }
+
+        .style-item h3 {
+            font-family: var(--headline-font);
+            font-size: calc(36px * var(--font-size-multiplier));
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0 var(--secondary-color);
+            letter-spacing: 3px;
+        }
+
+        .color-swatch {
+            width: 80px;
+            height: 80px;
+            display: inline-block;
+            margin: 15px;
+            border: 5px solid var(--secondary-color);
+            transform: rotate(45deg);
+            box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* About Section */
+        .about {
+            padding: 120px 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about h2 {
+            font-family: var(--headline-font);
+            font-size: calc(110px * var(--font-size-multiplier));
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            text-align: center;
+            color: var(--primary-color);
+            transform: rotate(-2deg);
+            text-shadow: 
+                5px 5px 0 var(--accent-color),
+                10px 10px 0 var(--secondary-color);
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            font-size: calc(28px * var(--font-size-multiplier));
+            line-height: 1.6;
+            text-align: center;
+            background: var(--primary-color);
+            padding: 50px;
+            transform: rotate(1deg);
+            box-shadow: 15px 15px 0 var(--secondary-color);
+            border: 5px solid var(--accent-color);
+            letter-spacing: 2px;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 120px 50px;
+            background: var(--accent-color);
+            color: var(--secondary-color);
+            transform: skew(0, 2deg);
+            margin: 50px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .services > * {
+            transform: skew(0, -2deg);
+        }
+
+        .services h2 {
+            font-family: var(--headline-font);
+            font-size: calc(110px * var(--font-size-multiplier));
+            text-align: center;
+            margin-bottom: 80px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 12px;
+            text-shadow: 
+                5px 5px 0 var(--secondary-color),
+                10px 10px 20px rgba(0, 0, 0, 0.3);
+            transform: rotate(2deg);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            padding: 50px;
+            background: var(--secondary-color);
+            color: var(--accent-color);
+            transform: rotate(-4deg);
+            transition: all 0.3s ease;
+            box-shadow: 
+                15px 15px 0 var(--primary-color);
+            border: 8px solid var(--primary-color);
+        }
+
+        .service-card:nth-child(even) {
+            transform: rotate(4deg);
+        }
+
+        .service-card:hover {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 
+                0 0 0 var(--primary-color),
+                20px 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(40px * var(--font-size-multiplier));
+            margin-bottom: 25px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 3px 3px 0 var(--primary-color);
+        }
+
+        .service-card p {
+            font-size: calc(20px * var(--font-size-multiplier));
+            line-height: 1.5;
+            letter-spacing: 1px;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 120px 50px;
+            text-align: center;
+            background: var(--primary-color);
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact h2 {
+            font-family: var(--headline-font);
+            font-size: calc(110px * var(--font-size-multiplier));
+            margin-bottom: 60px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 12px;
+            transform: rotate(-3deg);
+            text-shadow: 
+                8px 8px 0 var(--secondary-color),
+                16px 16px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--secondary-color);
+            padding: 60px;
+            transform: rotate(2deg);
+            box-shadow: 20px 20px 0 var(--accent-color);
+            border: 8px solid var(--accent-color);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 25px;
+            margin-bottom: 30px;
+            background: transparent;
+            border: 4px solid var(--accent-color);
+            color: var(--accent-color);
+            font-family: var(--body-font);
+            font-size: calc(20px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            transform: scale(1.02);
+            background: rgba(255, 0, 64, 0.1);
+        }
+
+        .contact-form button {
+            width: 100%;
+            padding: 30px;
+            background: var(--accent-color);
+            border: none;
+            color: var(--secondary-color);
+            font-family: var(--headline-font);
+            font-size: calc(32px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform: rotate(-2deg);
+            box-shadow: 10px 10px 0 var(--primary-color);
+        }
+
+        .contact-form button:hover {
+            transform: rotate(2deg) scale(1.05);
+            box-shadow: -10px -10px 0 var(--primary-color);
+        }
+
+        /* Light Mode Styles */
+        body.light-mode::before {
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="5" y="20" font-family="Impact" font-size="20" fill="%23ff0040" opacity="0.05" transform="rotate(-25 50 50)">ANARCHY</text><text x="30" y="60" font-family="Impact" font-size="15" fill="%23000000" opacity="0.05" transform="rotate(15 50 50)">REBEL</text><text x="10" y="90" font-family="Impact" font-size="18" fill="%23ff0040" opacity="0.05" transform="rotate(-10 50 50)">PUNK</text></svg>');
+        }
+
+        body.light-mode .toolbar {
+            background: var(--accent-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        body.light-mode .toolbar select,
+        body.light-mode .toolbar input {
+            background: transparent;
+            color: var(--primary-color);
+        }
+
+        body.light-mode .toolbar label {
+            color: var(--secondary-color);
+        }
+
+        body.light-mode nav {
+            background: var(--primary-color);
+        }
+
+        body.light-mode .dark-mode-toggle {
+            background: var(--secondary-color);
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        body.light-mode .hero h1 {
+            color: var(--secondary-color);
+            text-shadow: 
+                10px 10px 0 var(--primary-color),
+                20px 20px 0 var(--accent-color),
+                30px 30px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        body.light-mode .style-guide {
+            background: var(--accent-color);
+            color: var(--secondary-color);
+        }
+
+        body.light-mode .style-guide h2 {
+            color: var(--secondary-color);
+        }
+
+        body.light-mode .style-item {
+            background: var(--secondary-color);
+            color: var(--accent-color);
+            border-color: var(--primary-color);
+        }
+
+        body.light-mode .style-item h3 {
+            color: var(--primary-color);
+            text-shadow: 2px 2px 0 var(--accent-color);
+        }
+
+        body.light-mode .about-content {
+            background: var(--primary-color);
+            color: var(--accent-color);
+        }
+
+        body.light-mode .services {
+            background: var(--secondary-color);
+        }
+
+        body.light-mode .services h2 {
+            color: var(--primary-color);
+            text-shadow: 
+                5px 5px 0 var(--accent-color),
+                10px 10px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        body.light-mode .service-card {
+            background: var(--accent-color);
+            color: var(--secondary-color);
+        }
+
+        body.light-mode .service-card h3 {
+            color: var(--primary-color);
+            text-shadow: 3px 3px 0 var(--secondary-color);
+        }
+
+        body.light-mode .contact {
+            background: var(--primary-color);
+        }
+
+        body.light-mode .contact-form {
+            background: var(--accent-color);
+            border-color: var(--secondary-color);
+            box-shadow: 20px 20px 0 var(--secondary-color);
+        }
+
+        body.light-mode .contact-form input,
+        body.light-mode .contact-form textarea {
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+        }
+
+        body.light-mode .contact-form input::placeholder,
+        body.light-mode .contact-form textarea::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        body.light-mode .contact-form button {
+            background: var(--secondary-color);
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <label>Headline Font:
+            <select id="headlineFont">
+                <option value="'Anton', sans-serif">Anton</option>
+                <option value="'Prosto One', cursive">Prosto One</option>
+                <option value="'Aclonica', sans-serif">Aclonica</option>
+                <option value="'Fugaz One', cursive">Fugaz One</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Bakbak One', cursive">Bakbak One</option>
+                <option value="'Monomaniac One', sans-serif">Monomaniac One</option>
+                <option value="'Orbitron', sans-serif">Orbitron</option>
+                <option value="'Black Ops One', cursive">Black Ops One</option>
+                <option value="'Bungee', cursive">Bungee</option>
+                <option value="'Audiowide', cursive">Audiowide</option>
+                <option value="'Saira Stencil One', cursive">Saira Stencil One</option>
+                <option value="'Righteous', cursive">Righteous</option>
+                <option value="'Bebas Neue', cursive">Bebas Neue</option>
+                <option value="'Teko', sans-serif">Teko</option>
+                <option value="'Oswald', sans-serif">Oswald</option>
+                <option value="'Archivo Black', sans-serif">Archivo Black</option>
+            </select>
+        </label>
+        
+        <label>Body Font:
+            <select id="bodyFont">
+                <option value="'Bebas Neue', cursive">Bebas Neue</option>
+                <option value="'Prosto One', cursive">Prosto One</option>
+                <option value="'Aclonica', sans-serif">Aclonica</option>
+                <option value="'Fugaz One', cursive">Fugaz One</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Bakbak One', cursive">Bakbak One</option>
+                <option value="'Monomaniac One', sans-serif">Monomaniac One</option>
+                <option value="'Orbitron', sans-serif">Orbitron</option>
+                <option value="'Black Ops One', cursive">Black Ops One</option>
+                <option value="'Bungee', cursive">Bungee</option>
+                <option value="'Audiowide', cursive">Audiowide</option>
+                <option value="'Saira Stencil One', cursive">Saira Stencil One</option>
+                <option value="'Righteous', cursive">Righteous</option>
+                <option value="'Teko', sans-serif">Teko</option>
+                <option value="'Barlow Condensed', sans-serif">Barlow Condensed</option>
+                <option value="'Oswald', sans-serif">Oswald</option>
+                <option value="'Anton', sans-serif">Anton</option>
+                <option value="'Archivo Black', sans-serif">Archivo Black</option>
+            </select>
+        </label>
+        
+        <label>Primary:
+            <input type="color" id="primaryColor" class="color-picker" value="#ff0040">
+        </label>
+        
+        <label>Secondary:
+            <input type="color" id="secondaryColor" class="color-picker" value="#000000">
+        </label>
+        
+        <label>Accent:
+            <input type="color" id="accentColor" class="color-picker" value="#ffffff">
+        </label>
+        
+        <label>Font Size:
+            <input type="range" id="fontSizeMultiplier" min="0.5" max="2" step="0.1" value="1">
+            <span id="fontSizeValue">1.0x</span>
+        </label>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#style-guide">Style</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">Invert</button>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>FRAME</h1>
+            <p>Digital Anarchy</p>
+            <a href="#contact" class="cta-button">Start Riot</a>
+        </div>
+    </section>
+
+    <!-- Style Guide Section -->
+    <section class="style-guide" id="style-guide">
+        <h2>DIY Style</h2>
+        <div class="style-grid">
+            <div class="style-item">
+                <h3>Color Riot</h3>
+                <div>
+                    <div class="color-swatch" style="background: var(--primary-color);"></div>
+                    <div class="color-swatch" style="background: var(--secondary-color);"></div>
+                    <div class="color-swatch" style="background: var(--accent-color);"></div>
+                </div>
+            </div>
+            <div class="style-item">
+                <h3>Type Noise</h3>
+                <p style="font-family: var(--headline-font); font-size: 30px;">LOUD HEADLINES</p>
+                <p style="font-family: var(--body-font); font-size: 24px;">AGGRESSIVE BODY</p>
+            </div>
+            <div class="style-item">
+                <h3>Design Manifesto</h3>
+                <p>PUNK AESTHETIC. DIY ETHOS. NO COMPROMISE. MAXIMUM REBELLION.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2>The Band</h2>
+        <div class="about-content">
+            <p>FRAME DOESN'T DO CORPORATE. WE'RE THE PUNK BAND OF DIGITAL AGENCIES. RAW, LOUD, AND UNAPOLOGETIC. WE CREATE DIGITAL EXPERIENCES THAT SCREAM.</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <h2>Our Setlist</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Web Anarchy</h3>
+                <p>We don't code websites. We stage digital riots that leave audiences wanting more.</p>
+            </div>
+            <div class="service-card">
+                <h3>Design Rebellion</h3>
+                <p>Pretty is dead. We create designs that challenge, provoke, and refuse to conform.</p>
+            </div>
+            <div class="service-card">
+                <h3>Brand Revolution</h3>
+                <p>Your brand becomes a movement. A rallying cry. A middle finger to the status quo.</p>
+            </div>
+            <div class="service-card">
+                <h3>Strategy Chaos</h3>
+                <p>Predictable strategies are for sellouts. We create chaos that somehow makes perfect sense.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2>Join Us</h2>
+        <form class="contact-form">
+            <input type="text" placeholder="NAME" required>
+            <input type="email" placeholder="EMAIL" required>
+            <textarea placeholder="SHOUT AT US" rows="5" required></textarea>
+            <button type="submit">SEND IT LOUD</button>
+        </form>
+    </section>
+
+    <script>
+        // Font customization
+        document.getElementById('headlineFont').addEventListener('change', function(e) {
+            document.documentElement.style.setProperty('--headline-font', e.target.value);
+        });
+
+        document.getElementById('bodyFont').addEventListener('change', function(e) {
+            document.documentElement.style.setProperty('--body-font', e.target.value);
+        });
+
+        // Color customization
+        document.getElementById('primaryColor').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--primary-color', e.target.value);
+        });
+
+        document.getElementById('secondaryColor').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--secondary-color', e.target.value);
+        });
+
+        document.getElementById('accentColor').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--accent-color', e.target.value);
+        });
+
+        // Font size multiplier
+        document.getElementById('fontSizeMultiplier').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--font-size-multiplier', e.target.value);
+            document.getElementById('fontSizeValue').textContent = e.target.value + 'x';
+        });
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('light-mode');
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Digital Rebellion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Aclonica&family=Fugaz+One&family=Racing+Sans+One&family=Anta&family=Russo+One&family=Bakbak+One&family=Monomaniac+One&family=Orbitron:wght@400;700;900&family=Black+Ops+One&family=Bungee&family=Audiowide&family=Saira+Stencil+One&family=Righteous&family=Bebas+Neue&family=Teko:wght@300;400;700&family=Barlow+Condensed:wght@400;700&family=Oswald:wght@400;700&family=Anton&family=Archivo+Black&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00ff88;
+            --secondary-color: #ff006e;
+            --accent-color: #00ddff;
+            --bg-dark: #0a0a0a;
+            --bg-light: #ffffff;
+            --text-dark: #ffffff;
+            --text-light: #0a0a0a;
+            --font-size-multiplier: 1;
+            --headline-font: 'Orbitron', sans-serif;
+            --body-font: 'Barlow Condensed', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background: var(--bg-dark);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode {
+            background: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        /* Toolbar */
+        .toolbar {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 10px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 1px solid var(--accent-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .toolbar select, .toolbar input {
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--accent-color);
+            color: var(--text-dark);
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .toolbar label {
+            color: var(--accent-color);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .color-picker {
+            width: 40px;
+            height: 30px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 50px;
+            width: 100%;
+            padding: 20px 50px;
+            background: rgba(10, 10, 10, 0.9);
+            z-index: 999;
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-family: var(--headline-font);
+            font-size: calc(14px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 60px;
+            right: 50px;
+            background: var(--primary-color);
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 30px;
+            font-family: var(--headline-font);
+            color: var(--bg-dark);
+            font-weight: bold;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 150px 50px 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 255, 136, 0.03) 2px,
+                    rgba(0, 255, 136, 0.03) 4px
+                );
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(20px); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            max-width: 1200px;
+        }
+
+        .hero h1 {
+            font-family: var(--headline-font);
+            font-size: calc(120px * var(--font-size-multiplier));
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            position: relative;
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% {
+                text-shadow: 
+                    0.05em 0 0 var(--primary-color),
+                    -0.05em -0.025em 0 var(--secondary-color),
+                    0.025em 0.05em 0 var(--accent-color);
+            }
+            14% {
+                text-shadow: 
+                    0.05em 0 0 var(--primary-color),
+                    -0.05em -0.025em 0 var(--secondary-color),
+                    0.025em 0.05em 0 var(--accent-color);
+            }
+            15% {
+                text-shadow: 
+                    -0.05em -0.025em 0 var(--primary-color),
+                    0.025em 0.025em 0 var(--secondary-color),
+                    -0.05em -0.05em 0 var(--accent-color);
+            }
+            49% {
+                text-shadow: 
+                    -0.05em -0.025em 0 var(--primary-color),
+                    0.025em 0.025em 0 var(--secondary-color),
+                    -0.05em -0.05em 0 var(--accent-color);
+            }
+            50% {
+                text-shadow: 
+                    0.025em 0.05em 0 var(--primary-color),
+                    0.05em 0 0 var(--secondary-color),
+                    0 -0.05em 0 var(--accent-color);
+            }
+            99% {
+                text-shadow: 
+                    0.025em 0.05em 0 var(--primary-color),
+                    0.05em 0 0 var(--secondary-color),
+                    0 -0.05em 0 var(--accent-color);
+            }
+        }
+
+        .hero p {
+            font-size: calc(24px * var(--font-size-multiplier));
+            margin-bottom: 40px;
+            color: var(--accent-color);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 20px 60px;
+            background: transparent;
+            border: 3px solid var(--primary-color);
+            color: var(--primary-color);
+            text-decoration: none;
+            font-family: var(--headline-font);
+            font-size: calc(18px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-color);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover {
+            color: var(--bg-dark);
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        /* Style Guide Section */
+        .style-guide {
+            padding: 100px 50px;
+            background: rgba(0, 255, 136, 0.05);
+            border-top: 2px solid var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .style-guide h2 {
+            font-family: var(--headline-font);
+            font-size: calc(60px * var(--font-size-multiplier));
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .style-item {
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--accent-color);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .style-item h3 {
+            font-family: var(--headline-font);
+            font-size: calc(24px * var(--font-size-multiplier));
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+        }
+
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            display: inline-block;
+            margin: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 50px;
+            position: relative;
+        }
+
+        .about h2 {
+            font-family: var(--headline-font);
+            font-size: calc(80px * var(--font-size-multiplier));
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--secondary-color);
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: calc(20px * var(--font-size-multiplier));
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 50px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(255, 0, 110, 0.1));
+        }
+
+        .services h2 {
+            font-family: var(--headline-font);
+            font-size: calc(80px * var(--font-size-multiplier));
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--accent-color);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.3);
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(28px * var(--font-size-multiplier));
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .service-card p {
+            font-size: calc(16px * var(--font-size-multiplier));
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 50px;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-family: var(--headline-font);
+            font-size: calc(80px * var(--font-size-multiplier));
+            margin-bottom: 40px;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--accent-color);
+            color: var(--text-dark);
+            font-family: var(--body-font);
+            font-size: calc(16px * var(--font-size-multiplier));
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .contact-form button {
+            width: 100%;
+            padding: 20px;
+            background: var(--primary-color);
+            border: none;
+            color: var(--bg-dark);
+            font-family: var(--headline-font);
+            font-size: calc(20px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.5);
+        }
+
+        /* Light Mode Styles */
+        body.light-mode {
+            --text-dark: #0a0a0a;
+            --text-light: #ffffff;
+        }
+
+        body.light-mode .toolbar {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom-color: var(--primary-color);
+        }
+
+        body.light-mode .toolbar select,
+        body.light-mode .toolbar input {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+            border-color: var(--primary-color);
+        }
+
+        body.light-mode nav {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom-color: var(--primary-color);
+        }
+
+        body.light-mode nav a {
+            color: var(--text-light);
+        }
+
+        body.light-mode .dark-mode-toggle {
+            background: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        body.light-mode .style-guide {
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        body.light-mode .style-item {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        body.light-mode .service-card {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-light);
+        }
+
+        body.light-mode .service-card p {
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        body.light-mode .contact-form input,
+        body.light-mode .contact-form textarea {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <label>Headline Font:
+            <select id="headlineFont">
+                <option value="'Orbitron', sans-serif">Orbitron</option>
+                <option value="'Prosto One', cursive">Prosto One</option>
+                <option value="'Aclonica', sans-serif">Aclonica</option>
+                <option value="'Fugaz One', cursive">Fugaz One</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Bakbak One', cursive">Bakbak One</option>
+                <option value="'Monomaniac One', sans-serif">Monomaniac One</option>
+                <option value="'Black Ops One', cursive">Black Ops One</option>
+                <option value="'Bungee', cursive">Bungee</option>
+                <option value="'Audiowide', cursive">Audiowide</option>
+                <option value="'Saira Stencil One', cursive">Saira Stencil One</option>
+                <option value="'Righteous', cursive">Righteous</option>
+                <option value="'Bebas Neue', cursive">Bebas Neue</option>
+                <option value="'Teko', sans-serif">Teko</option>
+                <option value="'Oswald', sans-serif">Oswald</option>
+                <option value="'Anton', sans-serif">Anton</option>
+                <option value="'Archivo Black', sans-serif">Archivo Black</option>
+            </select>
+        </label>
+        
+        <label>Body Font:
+            <select id="bodyFont">
+                <option value="'Barlow Condensed', sans-serif">Barlow Condensed</option>
+                <option value="'Prosto One', cursive">Prosto One</option>
+                <option value="'Aclonica', sans-serif">Aclonica</option>
+                <option value="'Fugaz One', cursive">Fugaz One</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Bakbak One', cursive">Bakbak One</option>
+                <option value="'Monomaniac One', sans-serif">Monomaniac One</option>
+                <option value="'Orbitron', sans-serif">Orbitron</option>
+                <option value="'Black Ops One', cursive">Black Ops One</option>
+                <option value="'Bungee', cursive">Bungee</option>
+                <option value="'Audiowide', cursive">Audiowide</option>
+                <option value="'Saira Stencil One', cursive">Saira Stencil One</option>
+                <option value="'Righteous', cursive">Righteous</option>
+                <option value="'Bebas Neue', cursive">Bebas Neue</option>
+                <option value="'Teko', sans-serif">Teko</option>
+                <option value="'Oswald', sans-serif">Oswald</option>
+                <option value="'Anton', sans-serif">Anton</option>
+                <option value="'Archivo Black', sans-serif">Archivo Black</option>
+            </select>
+        </label>
+        
+        <label>Primary:
+            <input type="color" id="primaryColor" class="color-picker" value="#00ff88">
+        </label>
+        
+        <label>Secondary:
+            <input type="color" id="secondaryColor" class="color-picker" value="#ff006e">
+        </label>
+        
+        <label>Accent:
+            <input type="color" id="accentColor" class="color-picker" value="#00ddff">
+        </label>
+        
+        <label>Font Size:
+            <input type="range" id="fontSizeMultiplier" min="0.5" max="2" step="0.1" value="1">
+            <span id="fontSizeValue">1.0x</span>
+        </label>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#style-guide">Style Guide</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Mode</button>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>FRAME</h1>
+            <p>Digital Rebellion Starts Here</p>
+            <a href="#contact" class="cta-button">Hack the System</a>
+        </div>
+    </section>
+
+    <!-- Style Guide Section -->
+    <section class="style-guide" id="style-guide">
+        <h2>System Override</h2>
+        <div class="style-grid">
+            <div class="style-item">
+                <h3>Color Matrix</h3>
+                <div>
+                    <div class="color-swatch" style="background: var(--primary-color);"></div>
+                    <div class="color-swatch" style="background: var(--secondary-color);"></div>
+                    <div class="color-swatch" style="background: var(--accent-color);"></div>
+                </div>
+            </div>
+            <div class="style-item">
+                <h3>Typography Protocol</h3>
+                <p style="font-family: var(--headline-font); font-size: 24px;">Headline Font</p>
+                <p style="font-family: var(--body-font); font-size: 18px;">Body Font</p>
+            </div>
+            <div class="style-item">
+                <h3>Design Directive</h3>
+                <p>Cyberpunk aesthetic with glitch effects, neon colors, and tech-inspired elements.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2>About Frame</h2>
+        <div class="about-content">
+            <p>We are digital rebels, code warriors, and design anarchists. Frame isn't just another agency - we're a movement. We break conventions, shatter expectations, and rebuild the digital landscape one pixel at a time.</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <h2>Our Arsenal</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Web Development</h3>
+                <p>Custom-coded solutions that defy the ordinary. We build digital experiences that leave a mark.</p>
+            </div>
+            <div class="service-card">
+                <h3>UI/UX Design</h3>
+                <p>Interfaces that break the mold. User experiences that challenge convention.</p>
+            </div>
+            <div class="service-card">
+                <h3>Brand Identity</h3>
+                <p>Brands that stand out in the digital noise. Identity systems that refuse to be ignored.</p>
+            </div>
+            <div class="service-card">
+                <h3>Digital Strategy</h3>
+                <p>Strategic thinking that disrupts markets. Plans that rewrite the rules.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2>Join the Revolution</h2>
+        <form class="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Initiate Contact</button>
+        </form>
+    </section>
+
+    <script>
+        // Font customization
+        document.getElementById('headlineFont').addEventListener('change', function(e) {
+            document.documentElement.style.setProperty('--headline-font', e.target.value);
+        });
+
+        document.getElementById('bodyFont').addEventListener('change', function(e) {
+            document.documentElement.style.setProperty('--body-font', e.target.value);
+        });
+
+        // Color customization
+        document.getElementById('primaryColor').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--primary-color', e.target.value);
+        });
+
+        document.getElementById('secondaryColor').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--secondary-color', e.target.value);
+        });
+
+        document.getElementById('accentColor').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--accent-color', e.target.value);
+        });
+
+        // Font size multiplier
+        document.getElementById('fontSizeMultiplier').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--font-size-multiplier', e.target.value);
+            document.getElementById('fontSizeValue').textContent = e.target.value + 'x';
+        });
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('light-mode');
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

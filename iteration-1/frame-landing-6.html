@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Digital Glitch Agency</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Aclonica&family=Fugaz+One&family=Racing+Sans+One&family=Anta&family=Russo+One&family=Bakbak+One&family=Monomaniac+One&family=Bebas+Neue&family=Black+Ops+One&family=Bungee&family=Creepster&family=Faster+One&family=Kdam+Thmor+Pro&family=Monoton&family=Orbitron:wght@400;900&family=Press+Start+2P&family=Righteous&family=Rubik+Glitch&family=Sarpanch:wght@900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00ff41;
+            --secondary-color: #ff006e;
+            --accent-color: #00f5ff;
+            --bg-color: #0a0a0a;
+            --text-color: #ffffff;
+            --font-multiplier: 1;
+            --headline-font: 'Rubik Glitch', cursive;
+            --body-font: 'Orbitron', sans-serif;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f0f0f0;
+            --text-color: #0a0a0a;
+            --primary-color: #00cc33;
+            --secondary-color: #cc0055;
+            --accent-color: #00c5cc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Glitch Effect */
+        @keyframes glitch {
+            0%, 100% { text-shadow: -2px 0 var(--secondary-color), 2px 0 var(--accent-color); }
+            25% { text-shadow: 2px 0 var(--secondary-color), -2px 0 var(--accent-color); }
+            50% { text-shadow: -1px 0 var(--secondary-color), 1px 0 var(--accent-color); }
+            75% { text-shadow: 1px 0 var(--secondary-color), -1px 0 var(--accent-color); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            5% { opacity: 0.8; }
+            10% { opacity: 1; }
+            15% { opacity: 0.3; }
+            20% { opacity: 1; }
+        }
+
+        /* Toolbar */
+        .toolbar {
+            background: linear-gradient(90deg, #1a1a1a 0%, #2a2a2a 100%);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--primary-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .toolbar-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toolbar label {
+            color: var(--primary-color);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .toolbar select, .toolbar input {
+            background: #000;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            padding: 5px 10px;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+        }
+
+        .toolbar input[type="color"] {
+            width: 40px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        .toolbar input[type="range"] {
+            width: 100px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            position: sticky;
+            top: 60px;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--primary-color);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--headline-font);
+            font-size: calc(2rem * var(--font-multiplier));
+            color: var(--primary-color);
+            text-decoration: none;
+            animation: glitch 2s infinite;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: calc(1rem * var(--font-multiplier));
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+            animation: flicker 0.5s infinite;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 16px;
+            cursor: pointer;
+            font-family: var(--body-font);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(circle at center, rgba(0, 255, 65, 0.1) 0%, transparent 70%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 255, 65, 0.03) 2px,
+                    rgba(0, 255, 65, 0.03) 4px
+                );
+            pointer-events: none;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 20px;
+        }
+
+        .glitch-title {
+            font-family: var(--headline-font);
+            font-size: calc(6rem * var(--font-multiplier));
+            color: var(--primary-color);
+            animation: glitch 3s infinite;
+            margin-bottom: 20px;
+            letter-spacing: 5px;
+        }
+
+        .hero-subtitle {
+            font-size: calc(1.5rem * var(--font-multiplier));
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            animation: flicker 2s infinite;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: transparent;
+            color: var(--primary-color);
+            text-decoration: none;
+            border: 2px solid var(--primary-color);
+            font-size: calc(1.2rem * var(--font-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            color: var(--bg-color);
+            background: var(--primary-color);
+            box-shadow: 0 0 30px var(--primary-color), inset 0 0 30px rgba(0, 255, 65, 0.3);
+            animation: flicker 0.3s infinite;
+        }
+
+        /* Style Guide Section */
+        .style-guide {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: var(--headline-font);
+            font-size: calc(3rem * var(--font-multiplier));
+            color: var(--primary-color);
+            margin-bottom: 50px;
+            text-align: center;
+            animation: glitch 4s infinite;
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .style-item {
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid var(--primary-color);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .style-item::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .style-item:hover::before {
+            opacity: 1;
+            animation: glitch 0.5s infinite;
+        }
+
+        .style-item h3 {
+            font-family: var(--headline-font);
+            font-size: calc(1.5rem * var(--font-multiplier));
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, rgba(0, 255, 65, 0.05) 0%, rgba(255, 0, 110, 0.05) 100%);
+            position: relative;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: calc(1.1rem * var(--font-multiplier));
+            line-height: 1.8;
+        }
+
+        .about-visual {
+            position: relative;
+            height: 400px;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                var(--primary-color) 10px,
+                var(--primary-color) 20px
+            );
+            opacity: 0.1;
+            animation: glitch 5s infinite;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .service-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--primary-color);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 65, 0.3);
+            border-color: var(--accent-color);
+        }
+
+        .service-icon {
+            font-size: calc(3rem * var(--font-multiplier));
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            animation: flicker 3s infinite;
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(1.5rem * var(--font-multiplier));
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 20px;
+            background: rgba(0, 255, 65, 0.02);
+            position: relative;
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-form {
+            margin-top: 50px;
+            display: grid;
+            gap: 20px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--primary-color);
+            color: var(--text-color);
+            font-family: var(--body-font);
+            font-size: calc(1rem * var(--font-multiplier));
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+        }
+
+        .submit-btn {
+            padding: 15px 40px;
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            font-size: calc(1.2rem * var(--font-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--body-font);
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 30px var(--primary-color);
+            animation: flicker 0.3s infinite;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid var(--primary-color);
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .footer p {
+            color: var(--primary-color);
+            font-size: calc(0.9rem * var(--font-multiplier));
+            animation: flicker 5s infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .glitch-title {
+                font-size: calc(3rem * var(--font-multiplier));
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-item">
+            <label for="headline-font">Headline:</label>
+            <select id="headline-font">
+                <option value="'Rubik Glitch', cursive">Rubik Glitch</option>
+                <option value="'Prosto One', cursive">Prosto One</option>
+                <option value="'Aclonica', cursive">Aclonica</option>
+                <option value="'Fugaz One', cursive">Fugaz One</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Bakbak One', cursive">Bakbak One</option>
+                <option value="'Monomaniac One', sans-serif">Monomaniac</option>
+                <option value="'Bebas Neue', cursive">Bebas Neue</option>
+                <option value="'Black Ops One', cursive">Black Ops One</option>
+                <option value="'Bungee', cursive">Bungee</option>
+                <option value="'Creepster', cursive">Creepster</option>
+                <option value="'Faster One', cursive">Faster One</option>
+                <option value="'Kdam Thmor Pro', sans-serif">Kdam Thmor Pro</option>
+                <option value="'Monoton', cursive">Monoton</option>
+                <option value="'Orbitron', sans-serif">Orbitron</option>
+                <option value="'Press Start 2P', cursive">Press Start 2P</option>
+                <option value="'Righteous', cursive">Righteous</option>
+                <option value="'Sarpanch', sans-serif">Sarpanch</option>
+            </select>
+        </div>
+        <div class="toolbar-item">
+            <label for="body-font">Body:</label>
+            <select id="body-font">
+                <option value="'Orbitron', sans-serif">Orbitron</option>
+                <option value="'Prosto One', cursive">Prosto One</option>
+                <option value="'Aclonica', cursive">Aclonica</option>
+                <option value="'Fugaz One', cursive">Fugaz One</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Bakbak One', cursive">Bakbak One</option>
+                <option value="'Monomaniac One', sans-serif">Monomaniac</option>
+                <option value="'Bebas Neue', cursive">Bebas Neue</option>
+                <option value="'Black Ops One', cursive">Black Ops One</option>
+                <option value="'Bungee', cursive">Bungee</option>
+                <option value="'Creepster', cursive">Creepster</option>
+                <option value="'Faster One', cursive">Faster One</option>
+                <option value="'Kdam Thmor Pro', sans-serif">Kdam Thmor Pro</option>
+                <option value="'Monoton', cursive">Monoton</option>
+                <option value="'Press Start 2P', cursive">Press Start 2P</option>
+                <option value="'Righteous', cursive">Righteous</option>
+                <option value="'Rubik Glitch', cursive">Rubik Glitch</option>
+                <option value="'Sarpanch', sans-serif">Sarpanch</option>
+            </select>
+        </div>
+        <div class="toolbar-item">
+            <label for="primary-color">Primary:</label>
+            <input type="color" id="primary-color" value="#00ff41">
+        </div>
+        <div class="toolbar-item">
+            <label for="secondary-color">Secondary:</label>
+            <input type="color" id="secondary-color" value="#ff006e">
+        </div>
+        <div class="toolbar-item">
+            <label for="accent-color">Accent:</label>
+            <input type="color" id="accent-color" value="#00f5ff">
+        </div>
+        <div class="toolbar-item">
+            <label for="font-size">Font Size:</label>
+            <input type="range" id="font-size" min="0.5" max="2" step="0.1" value="1">
+            <span id="font-size-value">1x</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">FRAME</a>
+            <ul class="nav-links">
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#style-guide">STYLE</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#services">SERVICES</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+            <button class="theme-toggle" onclick="toggleTheme()">TOGGLE MODE</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="glitch-title">FRAME</h1>
+            <p class="hero-subtitle">DIGITAL DISTORTION AGENCY</p>
+            <a href="#contact" class="cta-button">GLITCH YOUR REALITY</a>
+        </div>
+    </section>
+
+    <!-- Style Guide Section -->
+    <section class="style-guide" id="style-guide">
+        <h2 class="section-title">SYSTEM OVERRIDE</h2>
+        <div class="style-grid">
+            <div class="style-item">
+                <h3>COLORS</h3>
+                <p>Primary: Electric Green<br>
+                Secondary: Hot Pink<br>
+                Accent: Cyan Blue</p>
+            </div>
+            <div class="style-item">
+                <h3>TYPOGRAPHY</h3>
+                <p>Headlines: Rubik Glitch<br>
+                Body: Orbitron<br>
+                Glitch Effects Active</p>
+            </div>
+            <div class="style-item">
+                <h3>AESTHETICS</h3>
+                <p>Digital Distortion<br>
+                Cyberpunk Influence<br>
+                Glitch Art Movement</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h2 class="section-title">ERROR 404: BORING NOT FOUND</h2>
+                <p>We are FRAME - a digital agency that exists in the glitches between reality and cyberspace. We don't just push boundaries; we corrupt them, reshape them, and create new digital dimensions.</p>
+                <p>Our team of digital rebels specializes in creating experiences that defy convention and embrace the beautiful chaos of the digital age.</p>
+            </div>
+            <div class="about-visual"></div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <h2 class="section-title">SYSTEM CAPABILITIES</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h3>WEB GLITCHING</h3>
+                <p>Creating digital experiences that break the mold and redefine web standards.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔥</div>
+                <h3>BRAND DISTORTION</h3>
+                <p>Transforming brands into digital phenomena that can't be ignored.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💀</div>
+                <h3>DIGITAL REBELLION</h3>
+                <p>Marketing strategies that hack the system and dominate the digital landscape.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-content">
+            <h2 class="section-title">INITIALIZE CONNECTION</h2>
+            <form class="contact-form">
+                <div class="form-group">
+                    <input type="text" placeholder="ENTER NAME" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="ENTER EMAIL" required>
+                </div>
+                <div class="form-group">
+                    <textarea rows="5" placeholder="TRANSMIT MESSAGE" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">SEND TRANSMISSION</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2024 FRAME DIGITAL AGENCY | SYSTEM ONLINE</p>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+        }
+
+        // Font Controls
+        document.getElementById('headline-font').addEventListener('change', (e) => {
+            document.documentElement.style.setProperty('--headline-font', e.target.value);
+        });
+
+        document.getElementById('body-font').addEventListener('change', (e) => {
+            document.documentElement.style.setProperty('--body-font', e.target.value);
+        });
+
+        // Color Controls
+        document.getElementById('primary-color').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--primary-color', e.target.value);
+        });
+
+        document.getElementById('secondary-color').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--secondary-color', e.target.value);
+        });
+
+        document.getElementById('accent-color').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--accent-color', e.target.value);
+        });
+
+        // Font Size Control
+        document.getElementById('font-size').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--font-multiplier', e.target.value);
+            document.getElementById('font-size-value').textContent = e.target.value + 'x';
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Glitch Effect on Scroll
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            document.body.style.animation = 'glitch 0.2s';
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                document.body.style.animation = '';
+            }, 200);
+        });
+    </script>
+</body>
+</html>

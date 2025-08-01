@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Game On Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Aclonica&family=Fugaz+One&family=Racing+Sans+One&family=Anta&family=Russo+One&family=Bakbak+One&family=Monomaniac+One&family=Orbitron:wght@400;700;900&family=Black+Ops+One&family=Bungee&family=Audiowide&family=Saira+Stencil+One&family=Righteous&family=Bebas+Neue&family=Teko:wght@300;400;700&family=Barlow+Condensed:wght@400;700&family=Oswald:wght@400;700&family=Anton&family=Archivo+Black&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff006e;
+            --secondary-color: #00f5ff;
+            --accent-color: #ffee00;
+            --bg-dark: #0d0221;
+            --bg-light: #f5f5f5;
+            --text-dark: #ffffff;
+            --text-light: #0d0221;
+            --font-size-multiplier: 1;
+            --headline-font: 'Audiowide', cursive;
+            --body-font: 'Orbitron', sans-serif;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background: var(--bg-dark);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 0, 110, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 245, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 238, 0, 0.1) 0%, transparent 50%);
+        }
+
+        body.light-mode {
+            background: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        /* Toolbar */
+        .toolbar {
+            background: rgba(13, 2, 33, 0.95);
+            padding: 10px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            border-bottom: 3px solid var(--accent-color);
+            box-shadow: 0 0 20px var(--accent-color);
+        }
+
+        .toolbar select, .toolbar input {
+            padding: 5px 10px;
+            background: rgba(0, 245, 255, 0.1);
+            border: 2px solid var(--secondary-color);
+            color: var(--secondary-color);
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: var(--body-font);
+            animation: flicker 3s infinite;
+        }
+
+        .toolbar label {
+            color: var(--accent-color);
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px currentColor;
+        }
+
+        .color-picker {
+            width: 40px;
+            height: 30px;
+            border: 2px solid var(--secondary-color);
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 60px;
+            width: 100%;
+            padding: 20px 50px;
+            background: rgba(13, 2, 33, 0.9);
+            z-index: 999;
+            border-bottom: 2px solid var(--primary-color);
+            box-shadow: 0 5px 20px rgba(255, 0, 110, 0.5);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-family: var(--headline-font);
+            font-size: calc(14px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        nav a::before,
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-color);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        nav a::before {
+            top: 0;
+            left: 0;
+            transform-origin: left;
+        }
+
+        nav a::after {
+            bottom: 0;
+            right: 0;
+            transform-origin: right;
+        }
+
+        nav a:hover::before,
+        nav a:hover::after {
+            transform: scaleX(1);
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+            animation: pulse 0.5s ease-in-out;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 70px;
+            right: 50px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: 3px solid var(--accent-color);
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-family: var(--headline-font);
+            color: var(--text-dark);
+            font-weight: bold;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px currentColor;
+            animation: flicker 2s infinite;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px currentColor;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 150px 50px 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before,
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(255, 0, 110, 0.03) 50px,
+                    rgba(255, 0, 110, 0.03) 51px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(0, 245, 255, 0.03) 50px,
+                    rgba(0, 245, 255, 0.03) 51px
+                );
+            animation: scan 20s linear infinite;
+        }
+
+        .hero::after {
+            animation-direction: reverse;
+            opacity: 0.5;
+        }
+
+        @keyframes scan {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: var(--headline-font);
+            font-size: calc(120px * var(--font-size-multiplier));
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            text-shadow: 
+                0 0 30px var(--primary-color),
+                0 0 60px var(--secondary-color);
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        .hero h1::before {
+            content: 'FRAME';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            z-index: -1;
+            -webkit-text-fill-color: var(--primary-color);
+            opacity: 0.5;
+        }
+
+        .hero p {
+            font-size: calc(24px * var(--font-size-multiplier));
+            margin-bottom: 40px;
+            color: var(--accent-color);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px currentColor;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 20px 60px;
+            background: transparent;
+            border: 3px solid var(--accent-color);
+            color: var(--accent-color);
+            text-decoration: none;
+            font-family: var(--headline-font);
+            font-size: calc(18px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 0 20px rgba(255, 238, 0, 0.5),
+                inset 0 0 20px rgba(255, 238, 0, 0.1);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--accent-color);
+            transform: translate(-50%, -50%);
+            transition: all 0.5s ease;
+            border-radius: 50%;
+        }
+
+        .cta-button:hover {
+            color: var(--bg-dark);
+            text-shadow: none;
+            box-shadow: 0 0 40px var(--accent-color);
+        }
+
+        .cta-button:hover::before {
+            width: 100%;
+            height: 100%;
+            padding: 20px 60px;
+        }
+
+        /* Style Guide Section */
+        .style-guide {
+            padding: 100px 50px;
+            background: rgba(255, 0, 110, 0.05);
+            border-top: 2px solid var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            position: relative;
+        }
+
+        .style-guide h2 {
+            font-family: var(--headline-font);
+            font-size: calc(60px * var(--font-size-multiplier));
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 0 0 30px currentColor;
+            animation: flicker 2s infinite;
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .style-item {
+            padding: 30px;
+            background: rgba(0, 245, 255, 0.05);
+            border: 2px solid var(--secondary-color);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+        }
+
+        .style-item::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .style-item:hover::before {
+            opacity: 1;
+        }
+
+        .style-item:hover {
+            background: rgba(13, 2, 33, 0.9);
+        }
+
+        .style-item h3 {
+            font-family: var(--headline-font);
+            font-size: calc(24px * var(--font-size-multiplier));
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            display: inline-block;
+            margin: 10px;
+            border-radius: 5px;
+            border: 2px solid currentColor;
+            box-shadow: 0 0 20px currentColor;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 50px;
+            position: relative;
+            text-align: center;
+        }
+
+        .about h2 {
+            font-family: var(--headline-font);
+            font-size: calc(80px * var(--font-size-multiplier));
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--secondary-color);
+            text-shadow: 0 0 30px currentColor;
+            animation: flicker 1.5s infinite;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: calc(20px * var(--font-size-multiplier));
+            line-height: 1.8;
+            color: var(--text-dark);
+            text-shadow: 0 0 5px currentColor;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 50px;
+            background: rgba(0, 245, 255, 0.05);
+            position: relative;
+        }
+
+        .services h2 {
+            font-family: var(--headline-font);
+            font-size: calc(80px * var(--font-size-multiplier));
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 0 0 30px currentColor;
+            animation: flicker 2s infinite;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            padding: 40px;
+            background: rgba(13, 2, 33, 0.8);
+            border: 3px solid var(--primary-color);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.3);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 238, 0, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 0, 110, 0.5);
+            border-color: var(--accent-color);
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(28px * var(--font-size-multiplier));
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px currentColor;
+        }
+
+        .service-card p {
+            font-size: calc(16px * var(--font-size-multiplier));
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 50px;
+            text-align: center;
+            background: rgba(255, 0, 110, 0.05);
+        }
+
+        .contact h2 {
+            font-family: var(--headline-font);
+            font-size: calc(80px * var(--font-size-multiplier));
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 0 0 30px currentColor;
+            animation: flicker 1.5s infinite;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: rgba(0, 245, 255, 0.05);
+            border: 2px solid var(--secondary-color);
+            color: var(--text-dark);
+            font-family: var(--body-font);
+            font-size: calc(16px * var(--font-size-multiplier));
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 245, 255, 0.2);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 30px rgba(255, 238, 0, 0.5);
+            background: rgba(255, 238, 0, 0.05);
+        }
+
+        .contact-form button {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: var(--text-dark);
+            font-family: var(--headline-font);
+            font-size: calc(20px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
+        }
+
+        .contact-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(255, 0, 110, 0.7);
+        }
+
+        /* Light Mode Styles */
+        body.light-mode {
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 0, 110, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 245, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 238, 0, 0.05) 0%, transparent 50%);
+        }
+
+        body.light-mode .toolbar {
+            background: rgba(245, 245, 245, 0.95);
+            border-bottom-color: var(--primary-color);
+        }
+
+        body.light-mode .toolbar select,
+        body.light-mode .toolbar input {
+            background: rgba(255, 0, 110, 0.1);
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        body.light-mode .toolbar label {
+            color: var(--primary-color);
+        }
+
+        body.light-mode nav {
+            background: rgba(245, 245, 245, 0.95);
+        }
+
+        body.light-mode nav a {
+            color: var(--text-light);
+            text-shadow: 0 0 5px rgba(255, 0, 110, 0.3);
+        }
+
+        body.light-mode .dark-mode-toggle {
+            color: var(--text-dark);
+        }
+
+        body.light-mode .style-guide {
+            background: rgba(255, 0, 110, 0.05);
+        }
+
+        body.light-mode .style-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: var(--primary-color);
+        }
+
+        body.light-mode .style-item:hover {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        body.light-mode .about-content {
+            color: var(--text-light);
+            text-shadow: none;
+        }
+
+        body.light-mode .services {
+            background: rgba(0, 245, 255, 0.05);
+        }
+
+        body.light-mode .service-card {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-light);
+        }
+
+        body.light-mode .service-card p {
+            color: rgba(13, 2, 33, 0.8);
+        }
+
+        body.light-mode .contact {
+            background: rgba(255, 0, 110, 0.05);
+        }
+
+        body.light-mode .contact-form input,
+        body.light-mode .contact-form textarea {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-light);
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <label>Headline Font:
+            <select id="headlineFont">
+                <option value="'Audiowide', cursive">Audiowide</option>
+                <option value="'Prosto One', cursive">Prosto One</option>
+                <option value="'Aclonica', sans-serif">Aclonica</option>
+                <option value="'Fugaz One', cursive">Fugaz One</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Bakbak One', cursive">Bakbak One</option>
+                <option value="'Monomaniac One', sans-serif">Monomaniac One</option>
+                <option value="'Orbitron', sans-serif">Orbitron</option>
+                <option value="'Black Ops One', cursive">Black Ops One</option>
+                <option value="'Bungee', cursive">Bungee</option>
+                <option value="'Saira Stencil One', cursive">Saira Stencil One</option>
+                <option value="'Righteous', cursive">Righteous</option>
+                <option value="'Bebas Neue', cursive">Bebas Neue</option>
+                <option value="'Teko', sans-serif">Teko</option>
+                <option value="'Oswald', sans-serif">Oswald</option>
+                <option value="'Anton', sans-serif">Anton</option>
+                <option value="'Archivo Black', sans-serif">Archivo Black</option>
+            </select>
+        </label>
+        
+        <label>Body Font:
+            <select id="bodyFont">
+                <option value="'Orbitron', sans-serif">Orbitron</option>
+                <option value="'Prosto One', cursive">Prosto One</option>
+                <option value="'Aclonica', sans-serif">Aclonica</option>
+                <option value="'Fugaz One', cursive">Fugaz One</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Bakbak One', cursive">Bakbak One</option>
+                <option value="'Monomaniac One', sans-serif">Monomaniac One</option>
+                <option value="'Black Ops One', cursive">Black Ops One</option>
+                <option value="'Bungee', cursive">Bungee</option>
+                <option value="'Audiowide', cursive">Audiowide</option>
+                <option value="'Saira Stencil One', cursive">Saira Stencil One</option>
+                <option value="'Righteous', cursive">Righteous</option>
+                <option value="'Bebas Neue', cursive">Bebas Neue</option>
+                <option value="'Teko', sans-serif">Teko</option>
+                <option value="'Barlow Condensed', sans-serif">Barlow Condensed</option>
+                <option value="'Oswald', sans-serif">Oswald</option>
+                <option value="'Anton', sans-serif">Anton</option>
+                <option value="'Archivo Black', sans-serif">Archivo Black</option>
+            </select>
+        </label>
+        
+        <label>Primary:
+            <input type="color" id="primaryColor" class="color-picker" value="#ff006e">
+        </label>
+        
+        <label>Secondary:
+            <input type="color" id="secondaryColor" class="color-picker" value="#00f5ff">
+        </label>
+        
+        <label>Accent:
+            <input type="color" id="accentColor" class="color-picker" value="#ffee00">
+        </label>
+        
+        <label>Font Size:
+            <input type="range" id="fontSizeMultiplier" min="0.5" max="2" step="0.1" value="1">
+            <span id="fontSizeValue">1.0x</span>
+        </label>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#style-guide">Style Guide</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">Mode</button>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>FRAME</h1>
+            <p>Insert Coin to Continue</p>
+            <a href="#contact" class="cta-button">Start Game</a>
+        </div>
+    </section>
+
+    <!-- Style Guide Section -->
+    <section class="style-guide" id="style-guide">
+        <h2>Power-Ups</h2>
+        <div class="style-grid">
+            <div class="style-item">
+                <h3>Color Combos</h3>
+                <div>
+                    <div class="color-swatch" style="background: var(--primary-color);"></div>
+                    <div class="color-swatch" style="background: var(--secondary-color);"></div>
+                    <div class="color-swatch" style="background: var(--accent-color);"></div>
+                </div>
+            </div>
+            <div class="style-item">
+                <h3>Font Select</h3>
+                <p style="font-family: var(--headline-font); font-size: 24px;">Player 1 Font</p>
+                <p style="font-family: var(--body-font); font-size: 18px;">Player 2 Font</p>
+            </div>
+            <div class="style-item">
+                <h3>Game Rules</h3>
+                <p>Retro arcade aesthetic. Neon glow effects. 8-bit inspired. Maximum score design.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2>High Score</h2>
+        <div class="about-content">
+            <p>Frame plays the digital game differently. We're the arcade masters of web design, creating experiences that make users want to insert another coin. Our work is addictive, engaging, and always sets the high score.</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <h2>Game Menu</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Web Development</h3>
+                <p>Level up your online presence with pixel-perfect code that performs like a speed run champion.</p>
+            </div>
+            <div class="service-card">
+                <h3>UI/UX Design</h3>
+                <p>Interfaces that feel like your favorite game controller - intuitive, responsive, and impossible to put down.</p>
+            </div>
+            <div class="service-card">
+                <h3>Brand Power-Up</h3>
+                <p>Transform your brand into the final boss of your industry. Memorable, powerful, unbeatable.</p>
+            </div>
+            <div class="service-card">
+                <h3>Strategy Mode</h3>
+                <p>Game-winning strategies that help you dominate the digital leaderboard.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2>Join Game</h2>
+        <form class="contact-form">
+            <input type="text" placeholder="Enter Player Name" required>
+            <input type="email" placeholder="Enter Email Address" required>
+            <textarea placeholder="Enter Your Message" rows="5" required></textarea>
+            <button type="submit">Press Start</button>
+        </form>
+    </section>
+
+    <script>
+        // Font customization
+        document.getElementById('headlineFont').addEventListener('change', function(e) {
+            document.documentElement.style.setProperty('--headline-font', e.target.value);
+        });
+
+        document.getElementById('bodyFont').addEventListener('change', function(e) {
+            document.documentElement.style.setProperty('--body-font', e.target.value);
+        });
+
+        // Color customization
+        document.getElementById('primaryColor').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--primary-color', e.target.value);
+        });
+
+        document.getElementById('secondaryColor').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--secondary-color', e.target.value);
+        });
+
+        document.getElementById('accentColor').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--accent-color', e.target.value);
+        });
+
+        // Font size multiplier
+        document.getElementById('fontSizeMultiplier').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--font-size-multiplier', e.target.value);
+            document.getElementById('fontSizeValue').textContent = e.target.value + 'x';
+        });
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('light-mode');
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

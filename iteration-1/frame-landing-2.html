@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Glitch the System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Aclonica&family=Fugaz+One&family=Racing+Sans+One&family=Anta&family=Russo+One&family=Bakbak+One&family=Monomaniac+One&family=Bungee&family=Bungee+Shade&family=Rubik+Mono+One&family=Monoton&family=Bungee+Inline&family=Kalam:wght@700&family=Permanent+Marker&family=Creepster&family=Nosifer&family=Bowlby+One&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00FF88;
+            --secondary-color: #FF00FF;
+            --accent-color: #00FFFF;
+            --bg-color: #0A0A0A;
+            --text-color: #FFFFFF;
+            --font-multiplier: 1;
+            --headline-font: 'Monoton', cursive;
+            --body-font: 'Russo One', sans-serif;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #FFFFFF;
+            --text-color: #0A0A0A;
+            --primary-color: #00CC66;
+            --secondary-color: #CC00CC;
+            --accent-color: #0099CC;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255,255,255,0.03) 2px,
+                    rgba(255,255,255,0.03) 4px
+                );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1001;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 1px solid var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+
+        .toolbar-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .toolbar select, .toolbar input[type="color"], .toolbar input[type="range"] {
+            padding: 8px;
+            border: 1px solid var(--primary-color);
+            background: rgba(0,255,136,0.1);
+            color: var(--primary-color);
+            cursor: pointer;
+            font-family: var(--body-font);
+            transition: all 0.3s ease;
+        }
+
+        .toolbar select:hover, .toolbar input[type="color"]:hover {
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .toolbar label {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .toolbar input[type="color"] {
+            width: 50px;
+            height: 35px;
+        }
+
+        .toolbar input[type="range"] {
+            width: 100px;
+        }
+
+        /* Navbar */
+        nav {
+            background: var(--bg-color);
+            padding: 20px 40px;
+            position: fixed;
+            top: 70px;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-family: var(--headline-font);
+            font-size: calc(3rem * var(--font-multiplier));
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            animation: neon 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes neon {
+            from {
+                text-shadow: 0 0 10px var(--primary-color), 
+                           0 0 20px var(--primary-color), 
+                           0 0 30px var(--primary-color);
+            }
+            to {
+                text-shadow: 0 0 20px var(--primary-color), 
+                           0 0 30px var(--primary-color), 
+                           0 0 40px var(--primary-color);
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: calc(1rem * var(--font-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .dark-mode-toggle {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            padding: 10px 20px;
+            color: var(--primary-color);
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark-mode-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-color);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .dark-mode-toggle:hover::before {
+            left: 0;
+        }
+
+        .dark-mode-toggle:hover {
+            color: black;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 150px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before,
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.5;
+        }
+
+        .hero::before {
+            background: var(--primary-color);
+            top: -150px;
+            right: -150px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            background: var(--secondary-color);
+            bottom: -150px;
+            left: -150px;
+            animation: float 6s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 40px;
+        }
+
+        .glitch {
+            font-family: var(--headline-font);
+            font-size: calc(6rem * var(--font-multiplier));
+            color: var(--primary-color);
+            position: relative;
+            text-transform: uppercase;
+            animation: glitch-anim 2s infinite;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: 'FRAME';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            animation: glitch-anim-1 0.5s infinite;
+            color: var(--accent-color);
+            z-index: -1;
+        }
+
+        .glitch::after {
+            animation: glitch-anim-2 0.5s infinite;
+            color: var(--secondary-color);
+            z-index: -2;
+        }
+
+        @keyframes glitch-anim {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        @keyframes glitch-anim-1 {
+            0% { clip-path: inset(20% 0 30% 0); transform: translate(-2px); }
+            100% { clip-path: inset(10% 0 40% 0); transform: translate(2px); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% { clip-path: inset(50% 0 10% 0); transform: translate(2px); }
+            100% { clip-path: inset(40% 0 20% 0); transform: translate(-2px); }
+        }
+
+        .hero p {
+            font-size: calc(1.3rem * var(--font-multiplier));
+            color: var(--text-color);
+            margin: 30px 0 50px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .cta-button {
+            background: transparent;
+            color: var(--primary-color);
+            padding: 20px 50px;
+            font-size: calc(1.1rem * var(--font-multiplier));
+            font-weight: 600;
+            border: 2px solid var(--primary-color);
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--primary-color);
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            width: 110%;
+            height: 110%;
+        }
+
+        .cta-button:hover {
+            color: black;
+            box-shadow: 0 0 30px var(--primary-color);
+        }
+
+        /* Style Guide Section */
+        .style-guide {
+            padding: 100px 40px;
+            background: var(--bg-color);
+            position: relative;
+        }
+
+        .style-guide::before {
+            content: 'STYLE';
+            position: absolute;
+            top: 50px;
+            left: -100px;
+            font-size: 200px;
+            font-family: var(--headline-font);
+            color: rgba(0,255,136,0.05);
+            transform: rotate(-90deg);
+            z-index: 0;
+        }
+
+        .style-guide h2 {
+            font-family: var(--headline-font);
+            font-size: calc(3rem * var(--font-multiplier));
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .style-elements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .style-element {
+            padding: 30px;
+            border: 1px solid var(--primary-color);
+            background: rgba(0,255,136,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .style-element::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color), var(--secondary-color));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .style-element:hover::before {
+            opacity: 1;
+        }
+
+        .style-element:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,255,136,0.3);
+        }
+
+        .style-element h3 {
+            font-family: var(--headline-font);
+            font-size: calc(1.8rem * var(--font-multiplier));
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        .color-box {
+            width: 100%;
+            height: 80px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 1px solid currentColor;
+            transition: all 0.3s ease;
+        }
+
+        .color-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 40px;
+            background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(255,0,255,0.1));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(0,255,136,0.1) 10px,
+                    rgba(0,255,136,0.1) 20px
+                );
+            animation: slide 10s linear infinite;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about h2 {
+            font-family: var(--headline-font);
+            font-size: calc(3rem * var(--font-multiplier));
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            text-shadow: 0 0 30px var(--primary-color);
+        }
+
+        .about p {
+            font-size: calc(1.1rem * var(--font-multiplier));
+            line-height: 1.8;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 40px;
+            background: var(--bg-color);
+            position: relative;
+        }
+
+        .services h2 {
+            font-family: var(--headline-font);
+            font-size: calc(3rem * var(--font-multiplier));
+            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: rgba(255,0,255,0.05);
+            border: 1px solid var(--secondary-color);
+            padding: 40px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, var(--secondary-color) 0%, transparent 70%);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .service-card:hover::before {
+            opacity: 0.1;
+            top: -150%;
+            left: -150%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+            box-shadow: 0 20px 40px rgba(255,0,255,0.3);
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(2rem * var(--font-multiplier));
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .service-card p {
+            font-size: calc(1rem * var(--font-multiplier));
+            line-height: 1.6;
+            letter-spacing: 1px;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 40px;
+            background: linear-gradient(135deg, rgba(0,255,255,0.1), rgba(255,0,255,0.1));
+            position: relative;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact h2 {
+            font-family: var(--headline-font);
+            font-size: calc(3rem * var(--font-multiplier));
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 40px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 15px;
+            border: 1px solid var(--accent-color);
+            background: rgba(0,255,255,0.05);
+            color: var(--text-color);
+            font-family: var(--body-font);
+            font-size: calc(1rem * var(--font-multiplier));
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(0,255,136,0.3);
+            background: rgba(0,255,136,0.05);
+        }
+
+        .contact-form button {
+            background: transparent;
+            color: var(--primary-color);
+            padding: 20px;
+            border: 2px solid var(--primary-color);
+            font-family: var(--headline-font);
+            font-size: calc(1.5rem * var(--font-multiplier));
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-form button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .contact-form button:hover::before {
+            left: 100%;
+        }
+
+        .contact-form button:hover {
+            text-shadow: 0 0 20px var(--primary-color);
+            box-shadow: 0 0 30px var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background: black;
+            color: var(--primary-color);
+            text-align: center;
+            padding: 40px;
+            font-size: calc(0.9rem * var(--font-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-top: 1px solid var(--primary-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .toolbar {
+                position: relative;
+            }
+            
+            nav {
+                top: 0;
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            main {
+                margin-top: 120px;
+            }
+            
+            .glitch {
+                font-size: calc(4rem * var(--font-multiplier));
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-section">
+            <label>Headline Font:</label>
+            <select id="headlineFont">
+                <option value="'Monoton', cursive">Monoton</option>
+                <option value="'Fugaz One', cursive">Fugaz One</option>
+                <option value="'Prosto One', cursive">Prosto One</option>
+                <option value="'Aclonica', cursive">Aclonica</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Bakbak One', cursive">Bakbak One</option>
+                <option value="'Monomaniac One', cursive">Monomaniac One</option>
+                <option value="'Bungee', cursive">Bungee</option>
+                <option value="'Bungee Shade', cursive">Bungee Shade</option>
+                <option value="'Rubik Mono One', sans-serif">Rubik Mono One</option>
+                <option value="'Bungee Inline', cursive">Bungee Inline</option>
+                <option value="'Kalam', cursive">Kalam</option>
+                <option value="'Permanent Marker', cursive">Permanent Marker</option>
+                <option value="'Creepster', cursive">Creepster</option>
+                <option value="'Nosifer', cursive">Nosifer</option>
+                <option value="'Bowlby One', cursive">Bowlby One</option>
+            </select>
+        </div>
+        
+        <div class="toolbar-section">
+            <label>Body Font:</label>
+            <select id="bodyFont">
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Inter', sans-serif">Inter</option>
+                <option value="'Prosto One', cursive">Prosto One</option>
+                <option value="'Aclonica', cursive">Aclonica</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Bakbak One', cursive">Bakbak One</option>
+                <option value="'Monomaniac One', cursive">Monomaniac One</option>
+                <option value="'Bungee', cursive">Bungee</option>
+                <option value="'Rubik Mono One', sans-serif">Rubik Mono One</option>
+                <option value="'Kalam', cursive">Kalam</option>
+                <option value="'Permanent Marker', cursive">Permanent Marker</option>
+                <option value="'Bowlby One', cursive">Bowlby One</option>
+            </select>
+        </div>
+        
+        <div class="toolbar-section">
+            <label>Primary:</label>
+            <input type="color" id="primaryColor" value="#00FF88">
+            <label>Secondary:</label>
+            <input type="color" id="secondaryColor" value="#FF00FF">
+            <label>Accent:</label>
+            <input type="color" id="accentColor" value="#00FFFF">
+        </div>
+        
+        <div class="toolbar-section">
+            <label>Font Size:</label>
+            <input type="range" id="fontMultiplier" min="0.8" max="1.5" step="0.1" value="1">
+            <span id="fontMultiplierValue" style="color: var(--primary-color);">1x</span>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav>
+        <a href="#" class="logo">FRAME</a>
+        <div class="nav-links">
+            <a href="#style-guide">Style Guide</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()">Light Mode</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="hero-content">
+                <h1 class="glitch">FRAME</h1>
+                <p>System.override(conventional_design)</p>
+                <button class="cta-button">EXECUTE_REBELLION.exe</button>
+            </div>
+        </section>
+
+        <!-- Style Guide Section -->
+        <section class="style-guide" id="style-guide">
+            <h2>SYSTEM_AESTHETICS</h2>
+            <div class="style-elements">
+                <div class="style-element">
+                    <h3>TYPE_HIERARCHY</h3>
+                    <p style="font-family: var(--headline-font); font-size: calc(2rem * var(--font-multiplier));">DISPLAY.FONT</p>
+                    <p style="font-size: calc(1.2rem * var(--font-multiplier));">body.typography = clean + bold</p>
+                </div>
+                <div class="style-element">
+                    <h3>COLOR_MATRIX</h3>
+                    <div class="color-box" style="background: var(--primary-color); color: black;">PRIMARY_HEX</div>
+                    <div class="color-box" style="background: var(--secondary-color); color: white;">SECONDARY_HEX</div>
+                    <div class="color-box" style="background: var(--accent-color); color: black;">ACCENT_HEX</div>
+                </div>
+                <div class="style-element">
+                    <h3>DESIGN_PROTOCOL</h3>
+                    <p>function design() {</p>
+                    <p>&nbsp;&nbsp;return bold && unconventional;</p>
+                    <p>}</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about" id="about">
+            <div class="about-content">
+                <h2>WHO_WE_ARE</h2>
+                <p>We are the glitch in your perfectly ordered digital world. The unexpected error that turns into innovation.</p>
+                <p>Frame isn't just another agency. We're digital architects who believe that the best designs are the ones that make you stop, stare, and question everything.</p>
+                <p>Welcome to the new paradigm. Welcome to Frame.</p>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services" id="services">
+            <h2>SERVICE_MODULES</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>BRAND.HACK</h3>
+                    <p>Infiltrating minds with unforgettable identities. We don't just create brands, we engineer experiences.</p>
+                </div>
+                <div class="service-card">
+                    <h3>WEB.SYNTHESIS</h3>
+                    <p>Building digital ecosystems that defy expectations. Fast, fluid, and impossible to ignore.</p>
+                </div>
+                <div class="service-card">
+                    <h3>VIRAL.INJECTION</h3>
+                    <p>Marketing campaigns that spread like wildfire. We don't follow algorithms, we break them.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <div class="contact-content">
+                <h2>INITIALIZE_CONTACT</h2>
+                <form class="contact-form">
+                    <input type="text" placeholder="user.name" required>
+                    <input type="email" placeholder="user.email" required>
+                    <textarea rows="5" placeholder="message.content" required></textarea>
+                    <button type="submit">TRANSMIT_DATA</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 FRAME // Breaking systems since initialization</p>
+    </footer>
+
+    <script>
+        // Dark mode toggle
+        function toggleDarkMode() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            const button = document.querySelector('.dark-mode-toggle');
+            button.textContent = newTheme === 'light' ? 'Dark Mode' : 'Light Mode';
+        }
+
+        // Set initial theme
+        document.documentElement.setAttribute('data-theme', 'dark');
+
+        // Font and color controls
+        document.getElementById('headlineFont').addEventListener('change', (e) => {
+            document.documentElement.style.setProperty('--headline-font', e.target.value);
+        });
+
+        document.getElementById('bodyFont').addEventListener('change', (e) => {
+            document.documentElement.style.setProperty('--body-font', e.target.value);
+        });
+
+        document.getElementById('primaryColor').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--primary-color', e.target.value);
+        });
+
+        document.getElementById('secondaryColor').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--secondary-color', e.target.value);
+        });
+
+        document.getElementById('accentColor').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--accent-color', e.target.value);
+        });
+
+        document.getElementById('fontMultiplier').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--font-multiplier', e.target.value);
+            document.getElementById('fontMultiplierValue').textContent = e.target.value + 'x';
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Glitch effect on hover
+        const glitchElements = document.querySelectorAll('.glitch');
+        glitchElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                element.style.animation = 'glitch-anim 0.2s infinite';
+            });
+            element.addEventListener('mouseleave', () => {
+                element.style.animation = 'glitch-anim 2s infinite';
+            });
+        });
+    </script>
+</body>
+</html>

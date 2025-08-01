@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Street Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Aclonica&family=Fugaz+One&family=Racing+Sans+One&family=Anta&family=Russo+One&family=Bakbak+One&family=Monomaniac+One&family=Orbitron:wght@400;700;900&family=Black+Ops+One&family=Bungee&family=Audiowide&family=Saira+Stencil+One&family=Righteous&family=Bebas+Neue&family=Teko:wght@300;400;700&family=Barlow+Condensed:wght@400;700&family=Oswald:wght@400;700&family=Anton&family=Archivo+Black&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff3366;
+            --secondary-color: #33ff99;
+            --accent-color: #ffcc00;
+            --bg-dark: #1a1a1a;
+            --bg-light: #fafafa;
+            --text-dark: #ffffff;
+            --text-light: #1a1a1a;
+            --font-size-multiplier: 1;
+            --headline-font: 'Bungee', cursive;
+            --body-font: 'Righteous', cursive;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background: var(--bg-dark);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 35px,
+                    rgba(255, 255, 255, 0.01) 35px,
+                    rgba(255, 255, 255, 0.01) 70px
+                );
+        }
+
+        body.light-mode {
+            background: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        /* Toolbar */
+        .toolbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 12px 25px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            border-bottom: 4px solid var(--accent-color);
+        }
+
+        .toolbar select, .toolbar input {
+            padding: 6px 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--accent-color);
+            color: var(--text-dark);
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .toolbar label {
+            color: var(--text-dark);
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .color-picker {
+            width: 45px;
+            height: 35px;
+            border: 2px solid var(--accent-color);
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 65px;
+            width: 100%;
+            padding: 25px 50px;
+            background: var(--bg-dark);
+            z-index: 999;
+            border-bottom: 3px solid var(--primary-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 45px;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-family: var(--headline-font);
+            font-size: calc(16px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            padding: 5px 15px;
+            transition: all 0.3s ease;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: var(--secondary-color);
+            transform: rotate(-2deg);
+            z-index: -1;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover::before {
+            opacity: 1;
+            transform: rotate(2deg);
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 80px;
+            right: 50px;
+            background: var(--accent-color);
+            border: 3px solid var(--bg-dark);
+            padding: 12px 25px;
+            cursor: pointer;
+            border-radius: 30px;
+            font-family: var(--headline-font);
+            color: var(--bg-dark);
+            font-weight: bold;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            transform: rotate(-10deg);
+            box-shadow: 5px 5px 0 var(--primary-color);
+        }
+
+        .dark-mode-toggle:hover {
+            transform: rotate(10deg) scale(1.1);
+            box-shadow: -5px -5px 0 var(--secondary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 180px 50px 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: 'FRAME';
+            position: absolute;
+            font-size: 300px;
+            font-family: var(--headline-font);
+            color: rgba(255, 255, 255, 0.02);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            z-index: 0;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: var(--headline-font);
+            font-size: calc(140px * var(--font-size-multiplier));
+            font-weight: 900;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 
+                4px 4px 0 rgba(0, 0, 0, 0.3),
+                8px 8px 0 rgba(0, 0, 0, 0.2);
+            transform: rotate(-5deg);
+        }
+
+        .hero h1::after {
+            content: 'FRAME';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            z-index: -1;
+            color: var(--accent-color);
+            -webkit-text-fill-color: var(--accent-color);
+        }
+
+        .hero p {
+            font-size: calc(28px * var(--font-size-multiplier));
+            margin-bottom: 45px;
+            color: var(--secondary-color);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            transform: rotate(2deg);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 25px 70px;
+            background: var(--primary-color);
+            color: var(--text-dark);
+            text-decoration: none;
+            font-family: var(--headline-font);
+            font-size: calc(20px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            overflow: hidden;
+            transform: rotate(-3deg);
+            transition: all 0.3s ease;
+            box-shadow: 
+                5px 5px 0 var(--secondary-color),
+                10px 10px 0 var(--accent-color);
+        }
+
+        .cta-button:hover {
+            transform: rotate(3deg) scale(1.05);
+            box-shadow: 
+                -5px -5px 0 var(--secondary-color),
+                -10px -10px 0 var(--accent-color);
+        }
+
+        /* Style Guide Section */
+        .style-guide {
+            padding: 100px 50px;
+            background: 
+                linear-gradient(135deg, rgba(255, 51, 102, 0.1), rgba(51, 255, 153, 0.1)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="10" y="50" font-family="Arial" font-size="80" opacity="0.05" transform="rotate(-45 50 50)">STYLE</text></svg>');
+            position: relative;
+        }
+
+        .style-guide h2 {
+            font-family: var(--headline-font);
+            font-size: calc(70px * var(--font-size-multiplier));
+            text-align: center;
+            margin-bottom: 70px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            transform: rotate(-2deg);
+            text-shadow: 
+                3px 3px 0 var(--secondary-color),
+                6px 6px 0 var(--accent-color);
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .style-item {
+            padding: 35px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 3px solid var(--secondary-color);
+            border-radius: 20px;
+            transform: rotate(-1deg);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .style-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-color);
+            transform: rotate(45deg);
+            opacity: 0.1;
+        }
+
+        .style-item:nth-child(even) {
+            transform: rotate(1deg);
+        }
+
+        .style-item:hover {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 51, 102, 0.3);
+        }
+
+        .style-item h3 {
+            font-family: var(--headline-font);
+            font-size: calc(28px * var(--font-size-multiplier));
+            margin-bottom: 25px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        .color-swatch {
+            width: 70px;
+            height: 70px;
+            display: inline-block;
+            margin: 10px;
+            border-radius: 50%;
+            border: 4px solid var(--text-dark);
+            box-shadow: 
+                3px 3px 0 rgba(0, 0, 0, 0.3),
+                inset 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about::after {
+            content: 'REBELS';
+            position: absolute;
+            font-size: 200px;
+            font-family: var(--headline-font);
+            color: rgba(255, 255, 255, 0.03);
+            bottom: -50px;
+            right: -100px;
+            transform: rotate(90deg);
+        }
+
+        .about h2 {
+            font-family: var(--headline-font);
+            font-size: calc(90px * var(--font-size-multiplier));
+            margin-bottom: 45px;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            text-align: center;
+            color: var(--secondary-color);
+            transform: rotate(-3deg);
+            text-shadow: 
+                4px 4px 0 var(--primary-color),
+                8px 8px 0 var(--accent-color);
+        }
+
+        .about-content {
+            max-width: 850px;
+            margin: 0 auto;
+            font-size: calc(22px * var(--font-size-multiplier));
+            line-height: 1.8;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 3px dashed var(--primary-color);
+            border-radius: 20px;
+            transform: rotate(1deg);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 50px;
+            background: linear-gradient(180deg, rgba(255, 204, 0, 0.1), rgba(255, 51, 102, 0.1));
+            position: relative;
+        }
+
+        .services h2 {
+            font-family: var(--headline-font);
+            font-size: calc(90px * var(--font-size-multiplier));
+            text-align: center;
+            margin-bottom: 70px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            transform: rotate(2deg);
+            text-shadow: 
+                4px 4px 0 var(--primary-color),
+                8px 8px 0 var(--secondary-color);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 50px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            padding: 45px;
+            background: var(--bg-dark);
+            border: 4px solid var(--primary-color);
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            transform: rotate(-2deg);
+            transition: all 0.3s ease;
+            box-shadow: 
+                8px 8px 0 var(--secondary-color),
+                16px 16px 0 var(--accent-color);
+        }
+
+        .service-card:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 80px;
+            height: 80px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        .service-card:hover {
+            transform: rotate(0deg) translateY(-10px);
+            box-shadow: 
+                0 20px 0 var(--secondary-color),
+                0 40px 0 var(--accent-color);
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(32px * var(--font-size-multiplier));
+            margin-bottom: 25px;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card p {
+            font-size: calc(18px * var(--font-size-multiplier));
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 50px;
+            text-align: center;
+            background: var(--bg-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact::before {
+            content: 'CONTACT';
+            position: absolute;
+            font-size: 250px;
+            font-family: var(--headline-font);
+            color: rgba(255, 255, 255, 0.02);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        .contact h2 {
+            font-family: var(--headline-font);
+            font-size: calc(90px * var(--font-size-multiplier));
+            margin-bottom: 50px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            transform: rotate(-2deg);
+            text-shadow: 
+                4px 4px 0 var(--secondary-color),
+                8px 8px 0 var(--accent-color);
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-form {
+            max-width: 650px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 22px;
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 3px solid var(--secondary-color);
+            color: var(--text-dark);
+            font-family: var(--body-font);
+            font-size: calc(17px * var(--font-size-multiplier));
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            transform: rotate(-1deg);
+        }
+
+        .contact-form input:nth-child(even),
+        .contact-form textarea:nth-child(even) {
+            transform: rotate(1deg);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            transform: rotate(0deg) scale(1.02);
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.3);
+        }
+
+        .contact-form button {
+            width: 100%;
+            padding: 25px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: var(--text-dark);
+            font-family: var(--headline-font);
+            font-size: calc(24px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            transform: rotate(-2deg);
+            box-shadow: 
+                5px 5px 0 var(--accent-color),
+                10px 10px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-form button:hover {
+            transform: rotate(2deg) translateY(-5px);
+            box-shadow: 
+                0 15px 0 var(--accent-color),
+                0 30px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        /* Light Mode Styles */
+        body.light-mode {
+            background-color: var(--bg-light);
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 35px,
+                    rgba(0, 0, 0, 0.02) 35px,
+                    rgba(0, 0, 0, 0.02) 70px
+                );
+        }
+
+        body.light-mode .toolbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        body.light-mode nav {
+            background: var(--bg-light);
+            border-bottom-color: var(--primary-color);
+        }
+
+        body.light-mode nav a {
+            color: var(--text-light);
+        }
+
+        body.light-mode .dark-mode-toggle {
+            background: var(--accent-color);
+            color: var(--text-light);
+            border-color: var(--text-light);
+        }
+
+        body.light-mode .style-item {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-light);
+        }
+
+        body.light-mode .about-content {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-light);
+        }
+
+        body.light-mode .service-card {
+            background: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        body.light-mode .service-card p {
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        body.light-mode .contact {
+            background: var(--bg-light);
+        }
+
+        body.light-mode .contact-form input,
+        body.light-mode .contact-form textarea {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <label>Headline Font:
+            <select id="headlineFont">
+                <option value="'Bungee', cursive">Bungee</option>
+                <option value="'Prosto One', cursive">Prosto One</option>
+                <option value="'Aclonica', sans-serif">Aclonica</option>
+                <option value="'Fugaz One', cursive">Fugaz One</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Bakbak One', cursive">Bakbak One</option>
+                <option value="'Monomaniac One', sans-serif">Monomaniac One</option>
+                <option value="'Orbitron', sans-serif">Orbitron</option>
+                <option value="'Black Ops One', cursive">Black Ops One</option>
+                <option value="'Audiowide', cursive">Audiowide</option>
+                <option value="'Saira Stencil One', cursive">Saira Stencil One</option>
+                <option value="'Righteous', cursive">Righteous</option>
+                <option value="'Bebas Neue', cursive">Bebas Neue</option>
+                <option value="'Teko', sans-serif">Teko</option>
+                <option value="'Oswald', sans-serif">Oswald</option>
+                <option value="'Anton', sans-serif">Anton</option>
+                <option value="'Archivo Black', sans-serif">Archivo Black</option>
+            </select>
+        </label>
+        
+        <label>Body Font:
+            <select id="bodyFont">
+                <option value="'Righteous', cursive">Righteous</option>
+                <option value="'Prosto One', cursive">Prosto One</option>
+                <option value="'Aclonica', sans-serif">Aclonica</option>
+                <option value="'Fugaz One', cursive">Fugaz One</option>
+                <option value="'Racing Sans One', cursive">Racing Sans One</option>
+                <option value="'Anta', sans-serif">Anta</option>
+                <option value="'Russo One', sans-serif">Russo One</option>
+                <option value="'Bakbak One', cursive">Bakbak One</option>
+                <option value="'Monomaniac One', sans-serif">Monomaniac One</option>
+                <option value="'Orbitron', sans-serif">Orbitron</option>
+                <option value="'Black Ops One', cursive">Black Ops One</option>
+                <option value="'Bungee', cursive">Bungee</option>
+                <option value="'Audiowide', cursive">Audiowide</option>
+                <option value="'Saira Stencil One', cursive">Saira Stencil One</option>
+                <option value="'Bebas Neue', cursive">Bebas Neue</option>
+                <option value="'Teko', sans-serif">Teko</option>
+                <option value="'Barlow Condensed', sans-serif">Barlow Condensed</option>
+                <option value="'Oswald', sans-serif">Oswald</option>
+                <option value="'Anton', sans-serif">Anton</option>
+                <option value="'Archivo Black', sans-serif">Archivo Black</option>
+            </select>
+        </label>
+        
+        <label>Primary:
+            <input type="color" id="primaryColor" class="color-picker" value="#ff3366">
+        </label>
+        
+        <label>Secondary:
+            <input type="color" id="secondaryColor" class="color-picker" value="#33ff99">
+        </label>
+        
+        <label>Accent:
+            <input type="color" id="accentColor" class="color-picker" value="#ffcc00">
+        </label>
+        
+        <label>Font Size:
+            <input type="range" id="fontSizeMultiplier" min="0.5" max="2" step="0.1" value="1">
+            <span id="fontSizeValue">1.0x</span>
+        </label>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#style-guide">Style Guide</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">Day/Night</button>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>FRAME</h1>
+            <p>Street Smart Digital</p>
+            <a href="#contact" class="cta-button">Tag the Web</a>
+        </div>
+    </section>
+
+    <!-- Style Guide Section -->
+    <section class="style-guide" id="style-guide">
+        <h2>Style Tags</h2>
+        <div class="style-grid">
+            <div class="style-item">
+                <h3>Color Spray</h3>
+                <div>
+                    <div class="color-swatch" style="background: var(--primary-color);"></div>
+                    <div class="color-swatch" style="background: var(--secondary-color);"></div>
+                    <div class="color-swatch" style="background: var(--accent-color);"></div>
+                </div>
+            </div>
+            <div class="style-item">
+                <h3>Type Art</h3>
+                <p style="font-family: var(--headline-font); font-size: 26px;">Headline Graffiti</p>
+                <p style="font-family: var(--body-font); font-size: 19px;">Body Street Style</p>
+            </div>
+            <div class="style-item">
+                <h3>Design Rules</h3>
+                <p>Street art inspired. Bold colors. Rebellious attitude. Spray paint aesthetic.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2>The Crew</h2>
+        <div class="about-content">
+            <p>Frame brings street culture to the digital world. We're artists, rebels, and digital vandals who believe the web needs more attitude. We don't just build websites - we create digital graffiti that can't be ignored.</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <h2>Our Game</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Web Bombing</h3>
+                <p>We don't just develop websites. We drop digital bombs that explode with creativity and innovation.</p>
+            </div>
+            <div class="service-card">
+                <h3>Design Tagging</h3>
+                <p>Our designs leave a mark. Bold, unapologetic, and impossible to wash off. This is permanent art.</p>
+            </div>
+            <div class="service-card">
+                <h3>Brand Graffiti</h3>
+                <p>Your brand becomes street legend. We create identities that stick in minds like paint on walls.</p>
+            </div>
+            <div class="service-card">
+                <h3>Digital Vandalism</h3>
+                <p>Strategic disruption of the status quo. We don't follow rules - we write new ones in spray paint.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2>Hit Us Up</h2>
+        <form class="contact-form">
+            <input type="text" placeholder="Your Tag" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Drop Your Line</button>
+        </form>
+    </section>
+
+    <script>
+        // Font customization
+        document.getElementById('headlineFont').addEventListener('change', function(e) {
+            document.documentElement.style.setProperty('--headline-font', e.target.value);
+        });
+
+        document.getElementById('bodyFont').addEventListener('change', function(e) {
+            document.documentElement.style.setProperty('--body-font', e.target.value);
+        });
+
+        // Color customization
+        document.getElementById('primaryColor').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--primary-color', e.target.value);
+        });
+
+        document.getElementById('secondaryColor').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--secondary-color', e.target.value);
+        });
+
+        document.getElementById('accentColor').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--accent-color', e.target.value);
+        });
+
+        // Font size multiplier
+        document.getElementById('fontSizeMultiplier').addEventListener('input', function(e) {
+            document.documentElement.style.setProperty('--font-size-multiplier', e.target.value);
+            document.getElementById('fontSizeValue').textContent = e.target.value + 'x';
+        });
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('light-mode');
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
