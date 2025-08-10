@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frame - Brutalist Technical</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Aclonica&family=Fugaz+One&family=Racing+Sans+One&family=Anta&family=Russo+One&family=Bakbak+One&family=Monomaniac+One&family=Space+Grotesk:wght@400;700&family=Inter:wght@400;600;800&family=Bebas+Neue&family=Oswald:wght@400;600&family=Archivo:wght@400;700;900&family=Barlow:wght@400;700;900&family=Work+Sans:wght@400;700;900&family=Manrope:wght@400;700;800&family=Syne:wght@400;700;800&family=DM+Sans:wght@400;700&family=Plus+Jakarta+Sans:wght@400;700;800&family=Lexend:wght@400;700;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Aclonica&family=Fugaz+One&family=Racing+Sans+One&family=Anta&family=Russo+One&family=Bakbak+One&family=Monomaniac+One&family=Space+Grotesk:wght@400;700&family=Inter:wght@400;600;800&family=Bebas+Neue&family=Oswald:wght@400;600&family=Archivo:wght@400;700;900&family=Barlow:wght@400;700;900&family=Work+Sans:wght@400;700;900&family=Manrope:wght@400;700;800&family=Syne:wght@400;700;800&family=DM+Sans:wght@400;700&family=Plus+Jakarta+Sans:wght@400;700;800&family=Lexend:wght@400;700;900&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary-color: #1a1a1a;
-            --secondary-color: #f0f0f0;
+            --secondary-color: #e0e0e0;
             --accent-color: #00ff00;
             --text-color: #1a1a1a;
             --bg-color: #f0f0f0;
@@ -25,19 +28,6 @@
             --body-font: 'Barlow', sans-serif;
         }
 
-        [data-theme="dark"] {
-            --primary-color: #f0f0f0;
-            --secondary-color: #1a1a1a;
-            --accent-color: #00ff00;
-            --text-color: #f0f0f0;
-            --bg-color: #1a1a1a;
-            --gray-100: #2a2a2a;
-            --gray-200: #3a3a3a;
-            --gray-300: #4a4a4a;
-            --gray-400: #5a5a5a;
-            --gray-500: #6a6a6a;
-            --gray-600: #7a7a7a;
-        }
 
         * {
             margin: 0;
@@ -95,18 +85,6 @@
             height: 32px;
             cursor: pointer;
             border-radius: 0;
-        }
-
-        .theme-toggle {
-            background: var(--accent-color);
-            border: none;
-            color: var(--primary-color);
-            padding: 8px 20px;
-            cursor: pointer;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 900;
         }
 
         /* Navigation */
@@ -250,13 +228,25 @@
         }
 
         @keyframes frame-rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
         }
 
         /* Buttons */
@@ -305,7 +295,7 @@
         /* Style Guide Section */
         .style-guide {
             padding: 96px 0;
-            background-color: var(--gray-100);
+            background-color: var(--secondary-color);
         }
 
         .section-header {
@@ -429,7 +419,7 @@
         /* Services Section */
         .services {
             padding: 96px 0;
-            background-color: var(--gray-100);
+            background-color: var(--secondary-color);
         }
 
         .services-grid {
@@ -486,7 +476,7 @@
         }
 
         .contact-form {
-            background-color: var(--gray-100);
+            background-color: var(--secondary-color);
             padding: 48px;
             border: 4px solid var(--primary-color);
         }
@@ -588,6 +578,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Toolbar -->
     <div class="toolbar">
@@ -628,7 +619,7 @@
         </div>
         <div class="toolbar-group">
             <label for="secondary-color">Secondary:</label>
-            <input type="color" id="secondary-color" value="#f0f0f0">
+            <input type="color" id="secondary-color" value="#e0e0e0">
         </div>
         <div class="toolbar-group">
             <label for="accent-color">Accent:</label>
@@ -639,7 +630,6 @@
             <input type="range" id="font-size" min="0.8" max="1.2" step="0.1" value="1">
             <span id="font-size-value">1.0</span>
         </div>
-        <button class="theme-toggle" onclick="toggleTheme()">Dark Mode</button>
     </div>
 
     <!-- Navigation -->
@@ -661,7 +651,8 @@
             <div class="hero-grid">
                 <div class="hero-text">
                     <h1>DIGITAL<br><span class="hero-accent">BRUTALISM</span><br>AGENCY</h1>
-                    <p>We build raw, powerful digital experiences that cut through the noise. No decoration. Just impact.</p>
+                    <p>We build raw, powerful digital experiences that cut through the noise. No decoration. Just
+                        impact.</p>
                     <div class="btn-group">
                         <a href="#contact" class="btn btn-primary">INITIATE PROJECT</a>
                         <a href="#services" class="btn btn-secondary">VIEW WORK</a>
@@ -713,8 +704,10 @@
             <div class="about-content">
                 <div class="about-text">
                     <p>Frame is not your typical digital agency. We believe in the power of raw, unfiltered design.</p>
-                    <p>Our approach strips away the unnecessary, leaving only what matters: functionality, impact, and results. We don't hide behind pretty pixels or trendy effects.</p>
-                    <p>Every project is an exercise in digital brutalism - honest, powerful, and impossible to ignore. We build experiences that demand attention and deliver results.</p>
+                    <p>Our approach strips away the unnecessary, leaving only what matters: functionality, impact, and
+                        results. We don't hide behind pretty pixels or trendy effects.</p>
+                    <p>Every project is an exercise in digital brutalism - honest, powerful, and impossible to ignore.
+                        We build experiences that demand attention and deliver results.</p>
                 </div>
                 <div class="about-stats">
                     <div class="stat-item">
@@ -810,39 +803,32 @@
     </footer>
 
     <script>
-        // Theme Toggle
-        function toggleTheme() {
-            const body = document.body;
-            const currentTheme = body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            body.setAttribute('data-theme', newTheme);
-            document.querySelector('.theme-toggle').textContent = newTheme === 'dark' ? 'LIGHT MODE' : 'DARK MODE';
-        }
+
 
         // Font Controls
-        document.getElementById('headline-font').addEventListener('change', function(e) {
+        document.getElementById('headline-font').addEventListener('change', function (e) {
             document.documentElement.style.setProperty('--headline-font', e.target.value);
         });
 
-        document.getElementById('body-font').addEventListener('change', function(e) {
+        document.getElementById('body-font').addEventListener('change', function (e) {
             document.documentElement.style.setProperty('--body-font', e.target.value);
         });
 
         // Color Controls
-        document.getElementById('primary-color').addEventListener('input', function(e) {
+        document.getElementById('primary-color').addEventListener('input', function (e) {
             document.documentElement.style.setProperty('--primary-color', e.target.value);
         });
 
-        document.getElementById('secondary-color').addEventListener('input', function(e) {
+        document.getElementById('secondary-color').addEventListener('input', function (e) {
             document.documentElement.style.setProperty('--secondary-color', e.target.value);
         });
 
-        document.getElementById('accent-color').addEventListener('input', function(e) {
+        document.getElementById('accent-color').addEventListener('input', function (e) {
             document.documentElement.style.setProperty('--accent-color', e.target.value);
         });
 
         // Font Size Control
-        document.getElementById('font-size').addEventListener('input', function(e) {
+        document.getElementById('font-size').addEventListener('input', function (e) {
             document.documentElement.style.setProperty('--font-size-multiplier', e.target.value);
             document.getElementById('font-size-value').textContent = e.target.value;
         });
@@ -858,4 +844,5 @@
         });
     </script>
 </body>
+
 </html>
