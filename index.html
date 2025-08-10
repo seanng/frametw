@@ -12,9 +12,9 @@
         rel="stylesheet">
     <style>
         :root {
-            --primary-color: #1a1a1a;
+            --primary-color: #322f2f;
             --secondary-color: #e0e0e0;
-            --accent-color: #00ff00;
+            --accent-color: #ffb600;
             --text-color: #1a1a1a;
             --bg-color: #f0f0f0;
             --gray-100: #e0e0e0;
@@ -360,7 +360,7 @@
         /* About Section */
         .about {
             padding: 96px 0;
-            background-color: var(--bg-color);
+            background-color: var(--secondary-color);
         }
 
         .about-content {
@@ -414,6 +414,72 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 700;
+        }
+
+        /* Our Work Section */
+        .our-work {
+            padding: 96px 0;
+            background-color: var(--bg-color);
+        }
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 48px;
+        }
+
+        .work-item {
+            background-color: var(--bg-color);
+            padding: 48px;
+            border: 4px solid var(--primary-color);
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .work-item:hover {
+            transform: translate(-8px, -8px);
+            box-shadow: 8px 8px 0 var(--primary-color);
+        }
+
+        .work-number {
+            font-family: var(--headline-font);
+            font-size: calc(24px * var(--font-size-multiplier));
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+
+        .work-item h3 {
+            font-family: var(--headline-font);
+            font-size: calc(32px * var(--font-size-multiplier));
+            margin-bottom: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .work-item p {
+            font-size: calc(16px * var(--font-size-multiplier));
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+
+        .work-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: calc(14px * var(--font-size-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: inline-block;
+            padding: 8px 0;
+            border-bottom: 3px solid var(--accent-color);
+            transition: all 0.2s ease;
+        }
+
+        .work-link:hover {
+            color: var(--accent-color);
+            transform: translateX(8px);
         }
 
         /* Services Section */
@@ -668,31 +734,6 @@
         </div>
     </section>
 
-    <!-- Style Guide Section -->
-    <section class="style-guide">
-        <div class="container">
-            <div class="section-header">
-                <h2>DESIGN SYSTEM</h2>
-                <p>RAW MATERIALS FOR DIGITAL CONSTRUCTION</p>
-            </div>
-            <div class="style-grid">
-                <div class="style-item">
-                    <h3>COLORS</h3>
-                    <div class="color-block" style="background-color: var(--primary-color);"></div>
-                    <p>PRIMARY: INDUSTRIAL BLACK</p>
-                </div>
-                <div class="style-item">
-                    <h3>TYPOGRAPHY</h3>
-                    <p style="font-family: var(--headline-font); font-size: 32px; font-weight: 600;">HEADLINE</p>
-                    <p style="font-family: var(--body-font); font-size: 18px;">Body Text Sample</p>
-                </div>
-                <div class="style-item">
-                    <h3>STRUCTURE</h3>
-                    <p>RIGID GRID SYSTEM<br>NO CURVES<br>MAXIMUM IMPACT</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- About Section -->
     <section class="about" id="about">
@@ -722,6 +763,44 @@
                         <div class="stat-number">100%</div>
                         <div class="stat-label">Client Satisfaction</div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Work Section -->
+    <section class="our-work" id="work">
+        <div class="container">
+            <div class="section-header">
+                <h2>OUR WORK</h2>
+                <p>PROJECTS THAT DEFINE DIGITAL BRUTALISM</p>
+            </div>
+            <div class="work-grid">
+                <div class="work-item">
+                    <div class="work-number">001</div>
+                    <h3>TECH STARTUP</h3>
+                    <p>Complete brand overhaul for a Silicon Valley disruptor. Raw aesthetics meets cutting-edge
+                        technology.</p>
+                    <a href="#" class="work-link">VIEW PROJECT →</a>
+                </div>
+                <div class="work-item">
+                    <div class="work-number">002</div>
+                    <h3>FASHION BRAND</h3>
+                    <p>E-commerce platform that breaks every rule. Brutalist design driving 300% conversion increase.
+                    </p>
+                    <a href="#" class="work-link">VIEW PROJECT →</a>
+                </div>
+                <div class="work-item">
+                    <div class="work-number">003</div>
+                    <h3>ARCHITECTURE FIRM</h3>
+                    <p>Portfolio site that mirrors their concrete aesthetic. Form follows function, always.</p>
+                    <a href="#" class="work-link">VIEW PROJECT →</a>
+                </div>
+                <div class="work-item">
+                    <div class="work-number">004</div>
+                    <h3>MUSIC LABEL</h3>
+                    <p>Underground sound meets underground design. A digital experience as raw as the music.</p>
+                    <a href="#" class="work-link">VIEW PROJECT →</a>
                 </div>
             </div>
         </div>
