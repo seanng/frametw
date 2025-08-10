@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Hero Variation 3 - Layered Brutalist Blocks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;900&family=Barlow:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #322f2f;
+            --secondary-color: #e0e0e0;
+            --accent-color: #ffb600;
+            --text-color: #1a1a1a;
+            --bg-color: #f0f0f0;
+            --headline-font: 'Archivo', sans-serif;
+            --body-font: 'Barlow', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--bg-color);
+            padding: 32px 48px;
+            position: relative;
+            z-index: 1000;
+            border-bottom: 4px solid var(--primary-color);
+        }
+
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--headline-font);
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            color: var(--primary-color);
+            border: 3px solid var(--primary-color);
+            padding: 8px 16px;
+            background-color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 12px 24px;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            border-color: var(--primary-color);
+        }
+
+        /* Hero Section - Layered Brutalist Blocks */
+        .hero {
+            min-height: calc(100vh - 100px);
+            position: relative;
+            background: linear-gradient(135deg, var(--bg-color) 0%, var(--secondary-color) 100%);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Grid Background Pattern */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(50, 47, 47, 0.05) 39px, rgba(50, 47, 47, 0.05) 40px),
+                repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(50, 47, 47, 0.05) 39px, rgba(50, 47, 47, 0.05) 40px);
+            z-index: 0;
+        }
+
+        /* Container for all blocks */
+        .blocks-container {
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            height: 600px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
+
+        /* Individual Blocks */
+        .block {
+            position: absolute;
+            border: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Main Content Block */
+        .block-main {
+            width: 60%;
+            height: 400px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--primary-color);
+            z-index: 5;
+            padding: 60px;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .block-main:hover {
+            transform: translate(-50%, -50%) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Accent Block 1 */
+        .block-accent-1 {
+            width: 35%;
+            height: 250px;
+            top: 10%;
+            right: 5%;
+            background-color: var(--accent-color);
+            z-index: 3;
+            transform: rotate(-2deg);
+        }
+
+        .block-accent-1:hover {
+            transform: rotate(-2deg) translateY(-10px);
+        }
+
+        /* Accent Block 2 */
+        .block-accent-2 {
+            width: 30%;
+            height: 200px;
+            bottom: 15%;
+            left: 8%;
+            background-color: var(--bg-color);
+            z-index: 4;
+            transform: rotate(1deg);
+        }
+
+        .block-accent-2:hover {
+            transform: rotate(1deg) translateX(-10px);
+        }
+
+        /* Pattern Block */
+        .block-pattern {
+            width: 25%;
+            height: 300px;
+            top: 20%;
+            left: 10%;
+            background: repeating-linear-gradient(
+                -45deg,
+                var(--primary-color),
+                var(--primary-color) 10px,
+                var(--accent-color) 10px,
+                var(--accent-color) 20px
+            );
+            z-index: 2;
+            opacity: 0.8;
+        }
+
+        .block-pattern:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* Small Floating Blocks */
+        .block-small-1 {
+            width: 120px;
+            height: 120px;
+            bottom: 10%;
+            right: 15%;
+            background-color: var(--secondary-color);
+            z-index: 6;
+            animation: float-1 15s ease-in-out infinite;
+        }
+
+        .block-small-2 {
+            width: 80px;
+            height: 80px;
+            top: 15%;
+            left: 45%;
+            background-color: var(--accent-color);
+            z-index: 6;
+            animation: float-2 12s ease-in-out infinite;
+        }
+
+        @keyframes float-1 {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+
+        @keyframes float-2 {
+            0%, 100% {
+                transform: translateX(0) rotate(0deg);
+            }
+            50% {
+                transform: translateX(20px) rotate(-10deg);
+            }
+        }
+
+        /* Typography in blocks */
+        .hero h1 {
+            font-family: var(--headline-font);
+            font-size: clamp(48px, 6vw, 96px);
+            font-weight: 900;
+            line-height: 0.9;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            color: var(--bg-color);
+            letter-spacing: -4px;
+        }
+
+        .hero-accent {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 4px 12px;
+            display: inline-block;
+            margin: 8px 0;
+            transform: skewX(-8deg);
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 40px;
+            font-weight: 500;
+            max-width: 500px;
+            color: var(--secondary-color);
+            line-height: 1.5;
+        }
+
+        /* Block Labels */
+        .block-label {
+            position: absolute;
+            font-family: var(--headline-font);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.3;
+        }
+
+        .block-accent-1 .block-label {
+            font-size: 72px;
+            color: var(--primary-color);
+            transform: rotate(90deg);
+        }
+
+        .block-accent-2 .block-label {
+            font-size: 48px;
+            color: var(--primary-color);
+        }
+
+        .block-small-1 .block-label,
+        .block-small-2 .block-label {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-block;
+            border: 3px solid;
+            position: relative;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            border-color: var(--accent-color);
+        }
+
+        .btn-primary:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 4px 4px 0 var(--bg-color);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--bg-color);
+            border-color: var(--bg-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            transform: translate(-4px, -4px);
+            box-shadow: 4px 4px 0 var(--accent-color);
+        }
+
+        /* Numbers/Index */
+        .block-index {
+            position: absolute;
+            font-family: var(--headline-font);
+            font-size: 180px;
+            font-weight: 900;
+            color: var(--primary-color);
+            opacity: 0.05;
+            z-index: 1;
+            line-height: 1;
+        }
+
+        .index-01 {
+            top: 5%;
+            right: 10%;
+        }
+
+        .index-02 {
+            bottom: 5%;
+            left: 5%;
+        }
+
+        .index-03 {
+            top: 40%;
+            right: 40%;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .blocks-container {
+                height: 500px;
+            }
+
+            .block-main {
+                width: 70%;
+                height: 350px;
+                padding: 40px;
+            }
+
+            .hero h1 {
+                font-size: clamp(40px, 8vw, 72px);
+            }
+
+            .block-accent-1 {
+                width: 40%;
+                height: 200px;
+            }
+
+            .block-accent-2 {
+                width: 35%;
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .blocks-container {
+                height: auto;
+                padding: 0 24px;
+            }
+
+            .block {
+                position: static !important;
+                transform: none !important;
+                width: 100% !important;
+                margin-bottom: 20px;
+                animation: none !important;
+            }
+
+            .block-main {
+                height: auto;
+                padding: 40px 24px;
+                margin-top: 40px;
+            }
+
+            .block-accent-1,
+            .block-accent-2,
+            .block-pattern {
+                display: none;
+            }
+
+            .block-small-1,
+            .block-small-2 {
+                display: none;
+            }
+
+            .block-index {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: clamp(36px, 10vw, 56px);
+                letter-spacing: -2px;
+            }
+
+            .hero {
+                min-height: calc(100vh - 80px);
+                padding: 40px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">FRAME</div>
+            <ul class="nav-links">
+                <li><a href="#home">001/HOME</a></li>
+                <li><a href="#about">002/ABOUT</a></li>
+                <li><a href="#services">003/SERVICES</a></li>
+                <li><a href="#contact">004/CONTACT</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <!-- Background Index Numbers -->
+        <div class="block-index index-01">01</div>
+        <div class="block-index index-02">02</div>
+        <div class="block-index index-03">X</div>
+
+        <!-- Blocks Container -->
+        <div class="blocks-container">
+            <!-- Pattern Block -->
+            <div class="block block-pattern"></div>
+
+            <!-- Accent Block 1 -->
+            <div class="block block-accent-1">
+                <div class="block-label">BOLD</div>
+            </div>
+
+            <!-- Accent Block 2 -->
+            <div class="block block-accent-2">
+                <div class="block-label">RAW</div>
+            </div>
+
+            <!-- Small Floating Blocks -->
+            <div class="block block-small-1">
+                <div class="block-label">X</div>
+            </div>
+            <div class="block block-small-2">
+                <div class="block-label">Y</div>
+            </div>
+
+            <!-- Main Content Block -->
+            <div class="block block-main">
+                <h1>
+                    DIGITAL<br>
+                    <span class="hero-accent">BRUTALISM</span><br>
+                    AGENCY
+                </h1>
+                <p>We build raw, powerful digital experiences that cut through the noise. No decoration. Just impact.</p>
+                <div class="btn-group">
+                    <a href="#contact" class="btn btn-primary">INITIATE PROJECT</a>
+                    <a href="#services" class="btn btn-secondary">VIEW WORK</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

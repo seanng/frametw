@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Hero Variation 2 - Full Width Animated</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;900&family=Barlow:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #322f2f;
+            --secondary-color: #e0e0e0;
+            --accent-color: #ffb600;
+            --text-color: #1a1a1a;
+            --bg-color: #f0f0f0;
+            --headline-font: 'Archivo', sans-serif;
+            --body-font: 'Barlow', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: transparent;
+            padding: 32px 48px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--headline-font);
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            color: var(--bg-color);
+            border: 3px solid var(--accent-color);
+            padding: 8px 16px;
+            background-color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--bg-color);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 12px 24px;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-links a:hover {
+            border-color: var(--accent-color);
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        /* Hero Section - Full Width with Animated Background */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-color: var(--primary-color);
+            overflow: hidden;
+        }
+
+        /* Animated Background Elements */
+        .bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .geometric-shape {
+            position: absolute;
+            border: 3px solid var(--accent-color);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            top: 10%;
+            left: -100px;
+            transform: rotate(45deg);
+            animation-delay: 0s;
+            background: linear-gradient(45deg, transparent 48%, var(--accent-color) 48%, var(--accent-color) 52%, transparent 52%);
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            top: 50%;
+            right: -50px;
+            border-radius: 50%;
+            animation-delay: 5s;
+            background: radial-gradient(circle at center, transparent 70%, var(--accent-color) 70%, var(--accent-color) 73%, transparent 73%);
+        }
+
+        .shape-3 {
+            width: 250px;
+            height: 250px;
+            bottom: 10%;
+            left: 10%;
+            animation-delay: 10s;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            background-color: rgba(255, 182, 0, 0.1);
+        }
+
+        .shape-4 {
+            width: 350px;
+            height: 350px;
+            top: 20%;
+            right: 20%;
+            transform: rotate(30deg);
+            animation-delay: 15s;
+            background: repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 20px,
+                    rgba(255, 182, 0, 0.05) 20px,
+                    rgba(255, 182, 0, 0.05) 40px);
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+
+            25% {
+                transform: translateY(-30px) rotate(90deg) scale(1.1);
+            }
+
+            50% {
+                transform: translateY(20px) rotate(180deg) scale(0.95);
+            }
+
+            75% {
+                transform: translateY(-20px) rotate(270deg) scale(1.05);
+            }
+        }
+
+        /* Hero Content */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 48px;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .hero h1 {
+            font-family: var(--headline-font);
+            font-size: clamp(60px, 12vw, 180px);
+            font-weight: 900;
+            line-height: 0.8;
+            margin-bottom: 48px;
+            text-transform: uppercase;
+            color: var(--bg-color);
+            letter-spacing: -8px;
+            position: relative;
+        }
+
+        .hero-line {
+            display: block;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .hero-line:hover {
+            transform: skewX(-5deg) translateX(20px);
+        }
+
+        .hero-accent {
+            color: var(--accent-color);
+            display: inline-block;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            margin-bottom: 48px;
+            font-weight: 500;
+            color: var(--secondary-color);
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+            padding: 0 40px;
+        }
+
+        .hero-subtitle::before,
+        .hero-subtitle::after {
+            content: '//';
+            position: absolute;
+            color: var(--accent-color);
+            font-weight: 900;
+        }
+
+        .hero-subtitle::before {
+            left: 0;
+        }
+
+        .hero-subtitle::after {
+            right: 0;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 64px;
+            font-weight: 400;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--secondary-color);
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 24px 56px;
+            font-size: 14px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: 4px solid;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            border-color: var(--accent-color);
+        }
+
+        .btn-primary::before {
+            background-color: var(--bg-color);
+        }
+
+        .btn-primary:hover {
+            transform: translate(-8px, -8px);
+            box-shadow: 8px 8px 0 var(--accent-color);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--bg-color);
+            border-color: var(--bg-color);
+        }
+
+        .btn-secondary::before {
+            background-color: var(--bg-color);
+        }
+
+        .btn-secondary:hover {
+            color: var(--primary-color);
+            transform: translate(-8px, -8px);
+            box-shadow: 8px 8px 0 var(--bg-color);
+        }
+
+        /* Corner Markers */
+        .corner-marker {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--accent-color);
+            z-index: 3;
+        }
+
+        .corner-marker.top-left {
+            top: 40px;
+            left: 40px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .corner-marker.top-right {
+            top: 40px;
+            right: 40px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .corner-marker.bottom-left {
+            bottom: 40px;
+            left: 40px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .corner-marker.bottom-right {
+            bottom: 40px;
+            right: 40px;
+            border-left: none;
+            border-top: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: clamp(50px, 10vw, 120px);
+                letter-spacing: -4px;
+            }
+
+            .geometric-shape {
+                opacity: 0.5;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                padding: 0 24px;
+            }
+
+            .hero h1 {
+                font-size: clamp(40px, 12vw, 80px);
+                letter-spacing: -2px;
+                margin-bottom: 32px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+                letter-spacing: 4px;
+            }
+
+            .hero p {
+                font-size: 18px;
+                margin-bottom: 48px;
+            }
+
+            .btn {
+                padding: 20px 40px;
+                font-size: 12px;
+            }
+
+            .corner-marker {
+                width: 40px;
+                height: 40px;
+            }
+
+            .corner-marker.top-left,
+            .corner-marker.top-right {
+                top: 20px;
+            }
+
+            .corner-marker.bottom-left,
+            .corner-marker.bottom-right {
+                bottom: 20px;
+            }
+
+            .corner-marker.top-left,
+            .corner-marker.bottom-left {
+                left: 20px;
+            }
+
+            .corner-marker.top-right,
+            .corner-marker.bottom-right {
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">FRAME</div>
+            <ul class="nav-links">
+                <li><a href="#home">001/HOME</a></li>
+                <li><a href="#about">002/ABOUT</a></li>
+                <li><a href="#services">003/SERVICES</a></li>
+                <li><a href="#contact">004/CONTACT</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <!-- Animated Background -->
+        <div class="bg-animation">
+            <div class="geometric-shape shape-1"></div>
+            <div class="geometric-shape shape-2"></div>
+            <div class="geometric-shape shape-3"></div>
+            <div class="geometric-shape shape-4"></div>
+        </div>
+
+        <!-- Corner Markers -->
+        <div class="corner-marker top-left"></div>
+        <div class="corner-marker top-right"></div>
+        <div class="corner-marker bottom-left"></div>
+        <div class="corner-marker bottom-right"></div>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <div class="hero-subtitle">EST. 2024</div>
+            <h1>
+                <span class="hero-line">DIGITAL</span>
+                <span class="hero-line hero-accent">BRUTALISM</span>
+                <span class="hero-line">AGENCY</span>
+            </h1>
+            <p>We build raw, powerful digital experiences that cut through the noise. No decoration. Just impact.</p>
+            <div class="btn-group">
+                <a href="#contact" class="btn btn-primary">
+                    <span>INITIATE PROJECT</span>
+                </a>
+                <a href="#services" class="btn btn-secondary">
+                    <span>VIEW WORK</span>
+                </a>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

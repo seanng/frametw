@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Hero Variation 1 - Split Asymmetric Grid</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;900&family=Barlow:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #322f2f;
+            --secondary-color: #e0e0e0;
+            --accent-color: #ffb600;
+            --text-color: #1a1a1a;
+            --bg-color: #f0f0f0;
+            --headline-font: 'Archivo', sans-serif;
+            --body-font: 'Barlow', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: transparent;
+            padding: 32px 48px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            mix-blend-mode: difference;
+        }
+
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--headline-font);
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            color: white;
+            border: 3px solid white;
+            padding: 8px 16px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 12px 24px;
+            transition: all 0.2s ease;
+        }
+
+        /* Hero Section - Split Asymmetric Grid */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            position: relative;
+        }
+
+        .hero-left {
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            padding: 120px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-left::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 40px,
+                rgba(255, 182, 0, 0.05) 40px,
+                rgba(255, 182, 0, 0.05) 80px
+            );
+            animation: slide 20s linear infinite;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(80px, 80px);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-family: var(--headline-font);
+            font-size: clamp(60px, 8vw, 120px);
+            font-weight: 900;
+            line-height: 0.85;
+            margin-bottom: 32px;
+            text-transform: uppercase;
+            color: var(--bg-color);
+        }
+
+        .hero-accent {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 0 12px;
+            display: inline-block;
+            transform: skewX(-5deg);
+            margin: 8px 0;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 48px;
+            font-weight: 500;
+            max-width: 500px;
+            color: var(--secondary-color);
+            line-height: 1.4;
+        }
+
+        .hero-right {
+            background-color: var(--accent-color);
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr;
+            position: relative;
+        }
+
+        .grid-block {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .grid-block:nth-child(1) {
+            background-color: var(--bg-color);
+        }
+
+        .grid-block:nth-child(2) {
+            background-color: var(--accent-color);
+        }
+
+        .grid-block:nth-child(3) {
+            background-color: var(--primary-color);
+        }
+
+        .grid-block:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .block-content {
+            font-family: var(--headline-font);
+            font-size: 72px;
+            font-weight: 900;
+            color: var(--accent-color);
+            transform: rotate(-90deg);
+            letter-spacing: -4px;
+            opacity: 0.3;
+        }
+
+        .grid-block:nth-child(2) .block-content {
+            color: var(--primary-color);
+            transform: rotate(0deg);
+            font-size: 120px;
+        }
+
+        .grid-block:nth-child(3) .block-content {
+            color: var(--bg-color);
+            transform: rotate(45deg);
+            font-size: 96px;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 20px 48px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-block;
+            border: 3px solid var(--accent-color);
+            position: relative;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            transform: translate(-6px, -6px);
+            box-shadow: 6px 6px 0 var(--bg-color);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--bg-color);
+            border-color: var(--bg-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            transform: translate(-6px, -6px);
+            box-shadow: 6px 6px 0 var(--accent-color);
+        }
+
+        /* Floating Elements */
+        .floating-number {
+            position: absolute;
+            font-family: var(--headline-font);
+            font-size: 200px;
+            font-weight: 900;
+            opacity: 0.05;
+            color: var(--accent-color);
+            z-index: 0;
+        }
+
+        .floating-number:nth-child(1) {
+            top: 10%;
+            right: 10%;
+        }
+
+        .floating-number:nth-child(2) {
+            bottom: 10%;
+            left: 5%;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                grid-template-rows: 2fr 1fr;
+            }
+
+            .hero-left {
+                padding: 120px 48px;
+            }
+
+            .hero-right {
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-left {
+                padding: 100px 24px;
+            }
+
+            .hero h1 {
+                font-size: clamp(48px, 10vw, 80px);
+            }
+
+            .hero-right {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(3, 150px);
+            }
+
+            .block-content {
+                font-size: 48px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">FRAME</div>
+            <ul class="nav-links">
+                <li><a href="#home">001/HOME</a></li>
+                <li><a href="#about">002/ABOUT</a></li>
+                <li><a href="#services">003/SERVICES</a></li>
+                <li><a href="#contact">004/CONTACT</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-left">
+            <div class="floating-number">01</div>
+            <div class="floating-number">X</div>
+            <div class="hero-content">
+                <h1>
+                    DIGITAL<br>
+                    <span class="hero-accent">BRUTALISM</span><br>
+                    AGENCY
+                </h1>
+                <p>We build raw, powerful digital experiences that cut through the noise. No decoration. Just impact.</p>
+                <div class="btn-group">
+                    <a href="#contact" class="btn btn-primary">INITIATE PROJECT</a>
+                    <a href="#services" class="btn btn-secondary">VIEW WORK</a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="grid-block">
+                <div class="block-content">BOLD</div>
+            </div>
+            <div class="grid-block">
+                <div class="block-content">X</div>
+            </div>
+            <div class="grid-block">
+                <div class="block-content">RAW</div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
