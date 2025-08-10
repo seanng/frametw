@@ -12,9 +12,9 @@
         rel="stylesheet">
     <style>
         :root {
-            --primary-color: #322f2f;
+            --primary-color: #232222;
             --secondary-color: #e0e0e0;
-            --accent-color: #ffb600;
+            --accent-color: #20d9bc;
             --text-color: #1a1a1a;
             --bg-color: #f0f0f0;
             --gray-100: #e0e0e0;
@@ -37,68 +37,25 @@
 
         body {
             font-family: var(--body-font);
-            background-color: var(--bg-color);
+            background-color: var(--primary-color);
             color: var(--text-color);
             line-height: 1.5;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        /* Toolbar */
-        .toolbar {
-            background-color: var(--primary-color);
-            color: var(--bg-color);
-            padding: 12px 24px;
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            align-items: center;
-            flex-wrap: wrap;
-            border-bottom: 4px solid var(--accent-color);
-        }
-
-        .toolbar-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .toolbar label {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .toolbar select,
-        .toolbar input[type="color"],
-        .toolbar input[type="range"] {
-            padding: 6px;
-            border: 2px solid var(--accent-color);
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .toolbar input[type="color"] {
-            width: 48px;
-            height: 32px;
-            cursor: pointer;
-            border-radius: 0;
+            overflow-x: hidden;
         }
 
         /* Navigation */
         nav {
-            background-color: var(--bg-color);
+            background-color: transparent;
             padding: 32px 48px;
-            border-bottom: 2px solid var(--primary-color);
-            position: sticky;
+            position: absolute;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
         }
 
         .nav-container {
-            max-width: 1600px;
+            max-width: 1800px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -107,11 +64,13 @@
 
         .logo {
             font-family: var(--headline-font);
-            font-size: calc(32px * var(--font-size-multiplier));
-            font-weight: 600;
+            font-size: 32px;
+            font-weight: 900;
             letter-spacing: -2px;
-            border: 2px solid var(--primary-color);
+            color: var(--bg-color);
+            border: 3px solid var(--accent-color);
             padding: 8px 16px;
+            background-color: var(--primary-color);
         }
 
         .nav-links {
@@ -121,21 +80,21 @@
         }
 
         .nav-links a {
-            color: var(--text-color);
+            color: var(--bg-color);
             text-decoration: none;
             font-weight: 700;
-            font-size: calc(13px * var(--font-size-multiplier));
+            font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 2px;
             padding: 12px 24px;
-            border: 2px solid transparent;
             transition: all 0.2s ease;
+            border: 2px solid transparent;
         }
 
         .nav-links a:hover {
-            background-color: var(--primary-color);
-            color: var(--bg-color);
-            border-color: var(--primary-color);
+            border-color: var(--accent-color);
+            background-color: var(--accent-color);
+            color: var(--primary-color);
         }
 
         /* Container */
@@ -145,151 +104,282 @@
             padding: 0 48px;
         }
 
-        /* Hero Section */
+        /* Hero Section - Full Width with Animated Background */
         .hero {
-            padding: 96px 0;
-            background-color: var(--bg-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
+            background-color: var(--primary-color);
             overflow: hidden;
         }
 
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 48px;
-            align-items: center;
+        /* Animated Background Elements */
+        .bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .geometric-shape {
+            position: absolute;
+            border: 3px solid var(--accent-color);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            top: 10%;
+            left: -100px;
+            transform: rotate(45deg);
+            animation-delay: 0s;
+            background: linear-gradient(45deg, transparent 48%, var(--accent-color) 48%, var(--accent-color) 52%, transparent 52%);
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            top: 50%;
+            right: -50px;
+            border-radius: 50%;
+            animation-delay: 5s;
+            background: radial-gradient(circle at center, transparent 70%, var(--accent-color) 70%, var(--accent-color) 73%, transparent 73%);
+        }
+
+        .shape-3 {
+            width: 250px;
+            height: 250px;
+            bottom: 10%;
+            left: 10%;
+            animation-delay: 10s;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            background-color: rgba(32, 217, 188, 0.1);
+        }
+
+        .shape-4 {
+            width: 350px;
+            height: 350px;
+            top: 20%;
+            right: 20%;
+            transform: rotate(30deg);
+            animation-delay: 15s;
+            background: repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 20px,
+                    rgba(32, 217, 188, 0.05) 20px,
+                    rgba(32, 217, 188, 0.05) 40px);
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+
+            25% {
+                transform: translateY(-30px) rotate(90deg) scale(1.1);
+            }
+
+            50% {
+                transform: translateY(20px) rotate(180deg) scale(0.95);
+            }
+
+            75% {
+                transform: translateY(-20px) rotate(270deg) scale(1.05);
+            }
+        }
+
+        /* Hero Content */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 48px;
+            max-width: 1400px;
+            width: 100%;
         }
 
         .hero h1 {
             font-family: var(--headline-font);
-            font-size: calc(96px * var(--font-size-multiplier));
-            font-weight: 600;
-            line-height: 0.9;
-            margin-bottom: 24px;
-            text-transform: uppercase;
-        }
-
-        .hero-accent {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-            padding: 0 8px;
-            display: inline-block;
-        }
-
-        .hero p {
-            font-size: calc(20px * var(--font-size-multiplier));
+            font-size: clamp(60px, 12vw, 180px);
+            font-weight: 900;
+            line-height: 0.8;
             margin-bottom: 48px;
-            font-weight: 500;
-            max-width: 600px;
-        }
-
-        .hero-visual {
+            text-transform: uppercase;
+            color: var(--bg-color);
+            letter-spacing: -8px;
             position: relative;
-            height: 500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .visual-frame {
-            position: absolute;
-            border: 2px solid var(--primary-color);
+        .hero-line {
+            display: block;
+            position: relative;
             transition: all 0.3s ease;
         }
 
-        .visual-frame:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            transform: rotate(0deg);
-            animation: frame-rotate 20s linear infinite;
+        .hero-line:hover {
+            transform: skewX(-5deg) translateX(20px);
         }
 
-        .visual-frame:nth-child(2) {
-            width: 250px;
-            height: 250px;
-            transform: rotate(45deg);
-            animation: frame-rotate 25s linear infinite reverse;
-        }
-
-        .visual-frame:nth-child(3) {
-            width: 200px;
-            height: 200px;
-            transform: rotate(90deg);
-            animation: frame-rotate 30s linear infinite;
-        }
-
-        .visual-center {
-            width: 80px;
-            height: 80px;
-            background: var(--primary-color);
+        .hero-accent {
+            color: var(--accent-color);
+            display: inline-block;
             position: relative;
-            z-index: 1;
-            animation: pulse 2s ease-in-out infinite;
+            padding: 0 20px;
         }
 
-        @keyframes frame-rotate {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
+        .hero-subtitle {
+            font-size: 24px;
+            margin-bottom: 48px;
+            font-weight: 500;
+            color: var(--secondary-color);
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+            padding: 0 40px;
         }
 
-        @keyframes pulse {
+        .hero-subtitle::before,
+        .hero-subtitle::after {
+            content: '//';
+            position: absolute;
+            color: var(--accent-color);
+            font-weight: 900;
+        }
 
-            0%,
-            100% {
-                transform: scale(1);
-            }
+        .hero-subtitle::before {
+            left: 0;
+        }
 
-            50% {
-                transform: scale(1.1);
-            }
+        .hero-subtitle::after {
+            right: 0;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 64px;
+            font-weight: 400;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--secondary-color);
+            line-height: 1.6;
+        }
+
+        /* Corner Markers */
+        .corner-marker {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--accent-color);
+            z-index: 3;
+        }
+
+        .corner-marker.top-left {
+            top: 40px;
+            left: 40px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .corner-marker.top-right {
+            top: 40px;
+            right: 40px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .corner-marker.bottom-left {
+            bottom: 40px;
+            left: 40px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .corner-marker.bottom-right {
+            bottom: 40px;
+            right: 40px;
+            border-left: none;
+            border-top: none;
         }
 
         /* Buttons */
         .btn-group {
             display: flex;
-            gap: 16px;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .btn {
-            padding: 20px 48px;
-            font-size: calc(14px * var(--font-size-multiplier));
-            font-weight: 600;
+            padding: 24px 56px;
+            font-size: 14px;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-decoration: none;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             display: inline-block;
-            border: 1px solid var(--primary-color);
+            border: 4px solid;
             position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
         }
 
         .btn-primary {
-            background-color: var(--primary-color);
-            color: var(--bg-color);
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            border-color: var(--accent-color);
+        }
+
+        .btn-primary::before {
+            background-color: var(--bg-color);
         }
 
         .btn-primary:hover {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-            transform: translate(-4px, -4px);
-            box-shadow: 4px 4px 0 var(--primary-color);
+            transform: translate(-8px, -8px);
+            box-shadow: 8px 8px 0 var(--accent-color);
         }
 
         .btn-secondary {
             background-color: transparent;
-            color: var(--text-color);
+            color: var(--bg-color);
+            border-color: var(--bg-color);
+        }
+
+        .btn-secondary::before {
+            background-color: var(--bg-color);
         }
 
         .btn-secondary:hover {
-            background-color: var(--primary-color);
-            color: var(--bg-color);
-            transform: translate(-4px, -4px);
-            box-shadow: 4px 4px 0 var(--accent-color);
+            color: var(--primary-color);
+            transform: translate(-8px, -8px);
+            box-shadow: 8px 8px 0 var(--bg-color);
         }
 
         /* Style Guide Section */
@@ -622,12 +712,22 @@
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: clamp(50px, 10vw, 120px);
+                letter-spacing: -4px;
+            }
+
+            .geometric-shape {
+                opacity: 0.5;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
 
-            .hero-grid,
             .style-grid,
             .services-grid {
                 grid-template-columns: 1fr;
@@ -638,66 +738,60 @@
                 grid-template-columns: 1fr;
             }
 
+            .hero-content {
+                padding: 0 24px;
+            }
+
             .hero h1 {
-                font-size: calc(64px * var(--font-size-multiplier));
+                font-size: clamp(40px, 12vw, 80px);
+                letter-spacing: -2px;
+                margin-bottom: 32px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+                letter-spacing: 4px;
+            }
+
+            .hero p {
+                font-size: 18px;
+                margin-bottom: 48px;
+            }
+
+            .btn {
+                padding: 20px 40px;
+                font-size: 12px;
+            }
+
+            .corner-marker {
+                width: 40px;
+                height: 40px;
+            }
+
+            .corner-marker.top-left,
+            .corner-marker.top-right {
+                top: 20px;
+            }
+
+            .corner-marker.bottom-left,
+            .corner-marker.bottom-right {
+                bottom: 20px;
+            }
+
+            .corner-marker.top-left,
+            .corner-marker.bottom-left {
+                left: 20px;
+            }
+
+            .corner-marker.top-right,
+            .corner-marker.bottom-right {
+                right: 20px;
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- Toolbar -->
-    <div class="toolbar">
-        <div class="toolbar-group">
-            <label for="headline-font">Headline Font:</label>
-            <select id="headline-font">
-                <option value="'Archivo', sans-serif">Archivo</option>
-                <option value="'Prosto One', display">Prosto One</option>
-                <option value="'Aclonica', display">Aclonica</option>
-                <option value="'Fugaz One', display">Fugaz One</option>
-                <option value="'Racing Sans One', display">Racing Sans One</option>
-                <option value="'Anta', sans-serif">Anta</option>
-                <option value="'Russo One', sans-serif">Russo One</option>
-                <option value="'Bakbak One', display">Bakbak One</option>
-                <option value="'Monomaniac One', sans-serif">Monomaniac One</option>
-                <option value="'Bebas Neue', display">Bebas Neue</option>
-                <option value="'Oswald', sans-serif">Oswald</option>
-                <option value="'Syne', sans-serif">Syne</option>
-                <option value="'Work Sans', sans-serif">Work Sans</option>
-            </select>
-        </div>
-        <div class="toolbar-group">
-            <label for="body-font">Body Font:</label>
-            <select id="body-font">
-                <option value="'Barlow', sans-serif">Barlow</option>
-                <option value="'Inter', sans-serif">Inter</option>
-                <option value="'DM Sans', sans-serif">DM Sans</option>
-                <option value="'Work Sans', sans-serif">Work Sans</option>
-                <option value="'Manrope', sans-serif">Manrope</option>
-                <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
-                <option value="'Lexend', sans-serif">Lexend</option>
-                <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
-            </select>
-        </div>
-        <div class="toolbar-group">
-            <label for="primary-color">Primary:</label>
-            <input type="color" id="primary-color" value="#1a1a1a">
-        </div>
-        <div class="toolbar-group">
-            <label for="secondary-color">Secondary:</label>
-            <input type="color" id="secondary-color" value="#e0e0e0">
-        </div>
-        <div class="toolbar-group">
-            <label for="accent-color">Accent:</label>
-            <input type="color" id="accent-color" value="#00ff00">
-        </div>
-        <div class="toolbar-group">
-            <label for="font-size">Font Size:</label>
-            <input type="range" id="font-size" min="0.8" max="1.2" step="0.1" value="1">
-            <span id="font-size-value">1.0</span>
-        </div>
-    </div>
-
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
@@ -713,23 +807,36 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-grid">
-                <div class="hero-text">
-                    <h1>DIGITAL<br><span class="hero-accent">BRUTALISM</span><br>AGENCY</h1>
-                    <p>We build raw, powerful digital experiences that cut through the noise. No decoration. Just
-                        impact.</p>
-                    <div class="btn-group">
-                        <a href="#contact" class="btn btn-primary">INITIATE PROJECT</a>
-                        <a href="#services" class="btn btn-secondary">VIEW WORK</a>
-                    </div>
-                </div>
-                <div class="hero-visual">
-                    <div class="visual-frame"></div>
-                    <div class="visual-frame"></div>
-                    <div class="visual-frame"></div>
-                    <div class="visual-center"></div>
-                </div>
+        <!-- Animated Background -->
+        <div class="bg-animation">
+            <div class="geometric-shape shape-1"></div>
+            <div class="geometric-shape shape-2"></div>
+            <div class="geometric-shape shape-3"></div>
+            <div class="geometric-shape shape-4"></div>
+        </div>
+
+        <!-- Corner Markers -->
+        <div class="corner-marker top-left"></div>
+        <div class="corner-marker top-right"></div>
+        <div class="corner-marker bottom-left"></div>
+        <div class="corner-marker bottom-right"></div>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <div class="hero-subtitle">&nbsp;DIGITAL DESIGN &nbsp;</div>
+            <h1>
+                <span class="hero-line">SCALE</span>
+                <span class="hero-line hero-accent">BEYOND</span>
+                <span class="hero-line">LIMITS</span>
+            </h1>
+            <p>We build raw, powerful digital experiences that cut through the noise. No decoration. Just impact.</p>
+            <div class="btn-group">
+                <a href="#contact" class="btn btn-primary">
+                    <span>INITIATE PROJECT</span>
+                </a>
+                <a href="#services" class="btn btn-secondary">
+                    <span>VIEW WORK</span>
+                </a>
             </div>
         </div>
     </section>
@@ -883,34 +990,6 @@
 
     <script>
 
-
-        // Font Controls
-        document.getElementById('headline-font').addEventListener('change', function (e) {
-            document.documentElement.style.setProperty('--headline-font', e.target.value);
-        });
-
-        document.getElementById('body-font').addEventListener('change', function (e) {
-            document.documentElement.style.setProperty('--body-font', e.target.value);
-        });
-
-        // Color Controls
-        document.getElementById('primary-color').addEventListener('input', function (e) {
-            document.documentElement.style.setProperty('--primary-color', e.target.value);
-        });
-
-        document.getElementById('secondary-color').addEventListener('input', function (e) {
-            document.documentElement.style.setProperty('--secondary-color', e.target.value);
-        });
-
-        document.getElementById('accent-color').addEventListener('input', function (e) {
-            document.documentElement.style.setProperty('--accent-color', e.target.value);
-        });
-
-        // Font Size Control
-        document.getElementById('font-size').addEventListener('input', function (e) {
-            document.documentElement.style.setProperty('--font-size-multiplier', e.target.value);
-            document.getElementById('font-size-value').textContent = e.target.value;
-        });
 
         // Smooth Scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
