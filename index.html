@@ -206,32 +206,57 @@
         }
 
         .hero-visual {
-            background-color: var(--primary-color);
-            height: 500px;
             position: relative;
-            overflow: hidden;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .tech-pattern {
+        .visual-frame {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                repeating-linear-gradient(
-                    0deg,
-                    var(--accent-color),
-                    var(--accent-color) 2px,
-                    transparent 2px,
-                    transparent 20px
-                ),
-                repeating-linear-gradient(
-                    90deg,
-                    var(--accent-color),
-                    var(--accent-color) 2px,
-                    transparent 2px,
-                    transparent 20px
-                );
-            opacity: 0.3;
+            border: 2px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .visual-frame:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            transform: rotate(0deg);
+            animation: frame-rotate 20s linear infinite;
+        }
+
+        .visual-frame:nth-child(2) {
+            width: 250px;
+            height: 250px;
+            transform: rotate(45deg);
+            animation: frame-rotate 25s linear infinite reverse;
+        }
+
+        .visual-frame:nth-child(3) {
+            width: 200px;
+            height: 200px;
+            transform: rotate(90deg);
+            animation: frame-rotate 30s linear infinite;
+        }
+
+        .visual-center {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-color);
+            position: relative;
+            z-index: 1;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes frame-rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         /* Buttons */
@@ -643,7 +668,10 @@
                     </div>
                 </div>
                 <div class="hero-visual">
-                    <div class="tech-pattern"></div>
+                    <div class="visual-frame"></div>
+                    <div class="visual-frame"></div>
+                    <div class="visual-frame"></div>
+                    <div class="visual-center"></div>
                 </div>
             </div>
         </div>
