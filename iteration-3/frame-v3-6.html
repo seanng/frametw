@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Oblique Design Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Anta&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FF00FF;
+            --secondary-color: #FFFFFF;
+            --accent-color: #FFFF00;
+            --bg-color: #000000;
+            --text-color: #FFFFFF;
+            --gray-dark: #111111;
+            --gray-medium: #222222;
+            --headline-font: 'Anta', sans-serif;
+            --body-font: 'Inter', sans-serif;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #FFFFFF;
+            --text-color: #000000;
+            --primary-color: #FF00FF;
+            --secondary-color: #000000;
+            --accent-color: #0000FF;
+            --gray-dark: #EEEEEE;
+            --gray-medium: #DDDDDD;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* Navbar - Inter font capitalized with slant */
+        nav {
+            background: var(--bg-color);
+            padding: 25px 50px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary-color);
+            transition: all 0.3s ease;
+            opacity: 0.98;
+            backdrop-filter: blur(20px);
+            transform: rotate(-0.5deg);
+        }
+
+        nav::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--primary-color));
+            animation: gradient-slide 3s ease-in-out infinite;
+        }
+
+        @keyframes gradient-slide {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(20px); }
+        }
+
+        .logo {
+            font-family: var(--body-font);
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: 4px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            text-transform: uppercase;
+            transform: rotate(0.5deg) skewX(-10deg);
+        }
+
+        .logo:hover {
+            letter-spacing: 6px;
+            transform: rotate(-0.5deg) skewX(10deg);
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 45px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            transition: all 0.3s ease;
+            font-family: var(--body-font);
+            transform: rotate(-1deg);
+            padding: 5px 10px;
+        }
+
+        .nav-links a:hover {
+            transform: rotate(1deg) scale(1.1);
+            color: var(--primary-color);
+        }
+
+        .nav-links a::before,
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a::before {
+            top: -5px;
+            left: 0;
+            transform: skewX(-45deg);
+        }
+
+        .nav-links a::after {
+            bottom: -5px;
+            right: 0;
+            transform: skewX(45deg);
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .dark-mode-toggle {
+            background: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            color: var(--bg-color);
+            padding: 12px 30px;
+            cursor: pointer;
+            font-family: var(--body-font);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            transform: rotate(-2deg) skewX(-10deg);
+        }
+
+        .dark-mode-toggle:hover {
+            background: transparent;
+            color: var(--primary-color);
+            transform: rotate(2deg) skewX(10deg) scale(1.05);
+        }
+
+        /* Hero Section - Geometric shapes with extreme angles */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-color);
+            padding: 0 40px;
+            margin-top: 100px;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 20px,
+                    var(--gray-dark) 20px,
+                    var(--gray-dark) 21px
+                );
+            opacity: 0.3;
+        }
+
+        .hero-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            border: 3px solid var(--primary-color);
+            background: transparent;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .shape-1 {
+            width: 500px;
+            height: 500px;
+            top: 5%;
+            right: 5%;
+            transform: rotate(45deg) skewX(-15deg);
+            border-color: var(--primary-color);
+            animation: float-1 8s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            width: 350px;
+            height: 350px;
+            bottom: 10%;
+            left: 10%;
+            transform: rotate(30deg) skewY(-15deg);
+            border-color: var(--accent-color);
+            animation: float-2 10s ease-in-out infinite;
+        }
+
+        .shape-3 {
+            width: 250px;
+            height: 250px;
+            top: 40%;
+            left: 45%;
+            transform: translate(-50%, -50%) rotate(60deg) skewX(20deg);
+            border-color: var(--primary-color);
+            animation: float-3 6s ease-in-out infinite;
+        }
+
+        @keyframes float-1 {
+            0%, 100% { transform: rotate(45deg) skewX(-15deg) translateY(0); }
+            50% { transform: rotate(50deg) skewX(-20deg) translateY(-20px); }
+        }
+
+        @keyframes float-2 {
+            0%, 100% { transform: rotate(30deg) skewY(-15deg) translateX(0); }
+            50% { transform: rotate(25deg) skewY(-10deg) translateX(20px); }
+        }
+
+        @keyframes float-3 {
+            0%, 100% { transform: translate(-50%, -50%) rotate(60deg) skewX(20deg) scale(1); }
+            50% { transform: translate(-50%, -50%) rotate(65deg) skewX(25deg) scale(1.1); }
+        }
+
+        .hero:hover .shape-1 {
+            transform: rotate(225deg) skewX(15deg) scale(1.2);
+            background: var(--primary-color);
+            opacity: 0.2;
+        }
+
+        .hero:hover .shape-2 {
+            transform: rotate(-45deg) skewY(15deg) scale(0.8);
+            background: var(--accent-color);
+            opacity: 0.2;
+        }
+
+        .hero:hover .shape-3 {
+            transform: translate(-50%, -50%) rotate(180deg) skewX(-20deg) scale(1.3);
+            background: var(--primary-color);
+            opacity: 0.2;
+        }
+
+        .hero-content {
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero h1 {
+            font-family: var(--headline-font);
+            font-size: 9rem;
+            color: var(--text-color);
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: -4px;
+            line-height: 0.8;
+            transition: all 0.3s ease;
+            transform: rotate(-2deg) skewX(-5deg);
+            text-shadow: 
+                2px 2px 0 var(--primary-color),
+                4px 4px 0 var(--accent-color);
+        }
+
+        .hero h1 span {
+            display: block;
+            font-size: 3.5rem;
+            font-weight: 400;
+            letter-spacing: 8px;
+            margin-top: 15px;
+            font-family: var(--body-font);
+            color: var(--primary-color);
+            transform: rotate(2deg) skewX(5deg);
+            text-shadow: none;
+        }
+
+        .hero h1:hover {
+            transform: rotate(2deg) skewX(5deg);
+            text-shadow: 
+                -2px -2px 0 var(--accent-color),
+                -4px -4px 0 var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            margin-bottom: 60px;
+            font-weight: 400;
+            max-width: 700px;
+            opacity: 0.9;
+            line-height: 1.6;
+            transform: rotate(-0.5deg);
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            color: var(--bg-color);
+            padding: 25px 70px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-decoration: none;
+            display: inline-block;
+            transform: rotate(-3deg) skewX(-15deg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+            transition: left 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: rotate(3deg) skewX(15deg) scale(1.05);
+            border-color: var(--primary-color);
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* WE ARE FRAME Section with extreme slants */
+        .about {
+            padding: 250px 40px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 50%, var(--primary-color) 100%);
+            clip-path: polygon(0 15%, 100% 0, 100% 85%, 0 100%);
+            position: relative;
+            transform: rotate(-1deg);
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 30px,
+                    rgba(0,0,0,0.1) 30px,
+                    rgba(0,0,0,0.1) 31px
+                );
+        }
+
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+            color: var(--bg-color);
+            transform: rotate(1deg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .about h2 {
+            font-family: var(--headline-font);
+            font-size: 6rem;
+            margin-bottom: 60px;
+            transform: rotate(-3deg) skewX(-10deg);
+            text-shadow: 
+                5px 5px 0 rgba(0,0,0,0.3),
+                10px 10px 0 rgba(0,0,0,0.2);
+            letter-spacing: 3px;
+        }
+
+        .about p {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 500;
+            transform: rotate(0.5deg);
+        }
+
+        /* Style Guide with oblique elements */
+        .style-guide {
+            padding: 150px 40px;
+            background: var(--bg-color);
+            clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 92%);
+        }
+
+        .style-guide h2 {
+            font-family: var(--headline-font);
+            font-size: 5rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 100px;
+            transform: rotate(-2deg) skewX(-8deg);
+            text-shadow: 3px 3px 0 var(--accent-color);
+        }
+
+        .style-elements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .style-element {
+            padding: 60px;
+            border: 4px solid var(--primary-color);
+            background: var(--gray-medium);
+            transform: rotate(3deg) skewY(-3deg);
+            transition: all 0.3s ease;
+            clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .style-element::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 40%, var(--primary-color) 50%, transparent 60%);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .style-element:nth-child(2) {
+            transform: rotate(-3deg) skewY(3deg);
+            clip-path: polygon(0 0, 92% 0, 100% 100%, 8% 100%);
+        }
+
+        .style-element:nth-child(3) {
+            transform: rotate(3deg) skewY(-3deg);
+            clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
+        }
+
+        .style-element:hover {
+            transform: rotate(0deg) skewY(0deg) scale(1.05);
+            background: var(--primary-color);
+            color: var(--bg-color);
+        }
+
+        .style-element:hover::before {
+            opacity: 0.3;
+            animation: shine 0.5s ease;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(45deg) translateX(-100%); }
+            100% { transform: rotate(45deg) translateX(100%); }
+        }
+
+        .style-element h3 {
+            font-family: var(--headline-font);
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .style-element:hover h3 {
+            color: var(--bg-color);
+        }
+
+        .style-element > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Services with extreme oblique cards */
+        .services {
+            padding: 150px 40px;
+            background: var(--gray-dark);
+            clip-path: polygon(0 10%, 100% 0, 100% 90%, 0 100%);
+        }
+
+        .services h2 {
+            font-family: var(--headline-font);
+            font-size: 5rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 100px;
+            transform: rotate(2deg) skewX(5deg);
+            text-shadow: -3px -3px 0 var(--accent-color);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, var(--gray-medium) 0%, var(--bg-color) 100%);
+            color: var(--text-color);
+            padding: 80px;
+            transform: rotate(-5deg) skewX(-10deg) skewY(-2deg);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 4px solid var(--primary-color);
+            clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+        }
+
+        .service-card:nth-child(2) {
+            transform: rotate(5deg) skewX(10deg) skewY(2deg);
+            clip-path: polygon(0 0, 85% 0, 100% 100%, 15% 100%);
+            border-color: var(--accent-color);
+        }
+
+        .service-card:nth-child(3) {
+            transform: rotate(-5deg) skewX(-10deg) skewY(-2deg);
+            clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .service-card:hover {
+            transform: rotate(0deg) skewX(0deg) skewY(0deg) scale(1.08);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            background: var(--primary-color);
+            color: var(--bg-color);
+        }
+
+        .service-card:hover::before {
+            opacity: 0.2;
+            top: -50%;
+            left: -50%;
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: 3rem;
+            margin-bottom: 30px;
+            transform: rotate(2deg);
+        }
+
+        .service-card p {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            transform: rotate(-1deg);
+        }
+
+        /* Contact Section - Exact from frame-landing-1 with extreme modifications */
+        .contact {
+            padding: 150px 40px;
+            background: var(--accent-color);
+            clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+            transform: rotate(-1deg);
+            position: relative;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    60deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(0,0,0,0.1) 40px,
+                    rgba(0,0,0,0.1) 41px
+                );
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            transform: rotate(1deg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact h2 {
+            font-family: var(--headline-font);
+            font-size: 5rem;
+            color: black;
+            margin-bottom: 60px;
+            transform: rotate(-3deg) skewX(-5deg);
+            text-shadow: 3px 3px 0 var(--primary-color);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 25px;
+            border: 4px solid black;
+            background: rgba(255,255,255,0.95);
+            font-family: var(--body-font);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            transform: rotate(-2deg) skewX(-5deg);
+        }
+
+        .contact-form input:nth-child(2) {
+            transform: rotate(2deg) skewX(5deg);
+        }
+
+        .contact-form textarea {
+            transform: rotate(-2deg) skewX(-5deg);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            transform: scale(1.05) rotate(0deg) skewX(0deg);
+            background: white;
+            border-color: var(--primary-color);
+        }
+
+        .contact-form button {
+            background: black;
+            color: var(--accent-color);
+            padding: 30px;
+            border: none;
+            font-family: var(--headline-font);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            transform: rotate(-3deg) skewX(-10deg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-form button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-color);
+            transition: left 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            transform: scale(1.08) rotate(3deg) skewX(10deg);
+            color: white;
+        }
+
+        .contact-form button:hover::before {
+            left: 0;
+        }
+
+        .contact-form button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: var(--bg-color);
+            text-align: center;
+            padding: 100px 40px;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+                transform: rotate(0);
+            }
+            
+            .hero h1 {
+                font-size: 5rem;
+            }
+            
+            .hero h1 span {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+            
+            .services-grid,
+            .style-elements {
+                grid-template-columns: 1fr;
+            }
+            
+            .service-card,
+            .style-element {
+                transform: rotate(-2deg) skewX(0deg) skewY(0deg);
+                clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+            }
+            
+            .shape-1 {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .shape-2 {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .shape-3 {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <a href="#" class="logo">FRAME</a>
+        <div class="nav-links">
+            <a href="#style-guide">STYLE GUIDE</a>
+            <a href="#about">ABOUT</a>
+            <a href="#services">SERVICES</a>
+            <a href="#contact">CONTACT</a>
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()">LIGHT MODE</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Extreme Geometric Shapes -->
+    <section class="hero" id="hero">
+        <div class="hero-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+        <div class="hero-content">
+            <h1>OBLIQUE<span>DESIGN STUDIO</span></h1>
+            <p>Defying perpendicular. Embracing the angular. Creating experiences that tilt perspectives and shift paradigms.</p>
+            <a href="#contact" class="cta-button"><span>SHIFT REALITY</span></a>
+        </div>
+    </section>
+
+    <!-- Style Guide Section -->
+    <section class="style-guide" id="style-guide">
+        <h2>ANGULAR AESTHETICS</h2>
+        <div class="style-elements">
+            <div class="style-element">
+                <h3>Typographic Tilt</h3>
+                <p style="font-family: var(--headline-font); font-size: 3rem; transform: rotate(-2deg);">OBLIQUE HEADLINES</p>
+                <p style="font-size: 1.4rem; transform: rotate(1deg);">Body text that refuses to sit straight.</p>
+            </div>
+            <div class="style-element">
+                <h3>Chromatic Angles</h3>
+                <div style="height: 120px; background: var(--primary-color); margin: 20px 0; transform: skewX(-10deg);"></div>
+                <div style="height: 120px; background: var(--accent-color); margin: 20px 0; transform: skewX(10deg);"></div>
+            </div>
+            <div class="style-element">
+                <h3>Design Doctrine</h3>
+                <p>Oblique. Dynamic. Unforgettable.</p>
+                <p>Every angle calculated for disruption. Every tilt designed for impact.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section with Extreme Slants -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <h2>WE ARE FRAME</h2>
+            <p>Masters of the oblique. Architects of the angular. We don't just break the grid - we shatter it into a thousand beautiful pieces.</p>
+            <p>In a world of straight lines, we bring curves. In a sea of right angles, we deliver acute perspectives.</p>
+            <p>This is Frame. Where every angle tells a story.</p>
+        </div>
+    </section>
+
+    <!-- Services Section with Extreme Slanted Cards -->
+    <section class="services" id="services">
+        <h2>OBLIQUE OFFERINGS</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>ANGULAR IDENTITY</h3>
+                <p>Brand systems that refuse to be boxed in. Identities that tilt, shift, and transform.</p>
+            </div>
+            <div class="service-card">
+                <h3>SKEWED INTERFACES</h3>
+                <p>Web experiences that challenge perpendicular thinking. Digital spaces that defy gravity.</p>
+            </div>
+            <div class="service-card">
+                <h3>TILTED STRATEGIES</h3>
+                <p>Marketing that approaches from unexpected angles. Campaigns that shift perspectives.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section with Extreme Slanted Background -->
+    <section class="contact" id="contact">
+        <div class="contact-content">
+            <h2>TILT THE CONVERSATION</h2>
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea rows="5" placeholder="Your Angular Vision" required></textarea>
+                <button type="submit"><span>OBLITERATE</span></button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 FRAME. Perpendicular is overrated.</p>
+    </footer>
+
+    <script>
+        // Dark/Light mode toggle
+        function toggleDarkMode() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? '' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            const button = document.querySelector('.dark-mode-toggle');
+            button.textContent = newTheme === 'light' ? 'DARK MODE' : 'LIGHT MODE';
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Enhanced parallax for shapes
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const shapes = document.querySelectorAll('.shape');
+            
+            shapes.forEach((shape, index) => {
+                const speed = 0.2 + (index * 0.15);
+                const rotationBase = index === 0 ? 45 : index === 1 ? 30 : 60;
+                const skewBase = index === 0 ? -15 : index === 1 ? 0 : 20;
+                const rotation = rotationBase + (scrolled * 0.1);
+                const skew = skewBase + (scrolled * 0.02);
+                
+                if (index === 0) {
+                    shape.style.transform = `translateY(${scrolled * speed * 0.2}px) rotate(${rotation}deg) skewX(${skew}deg)`;
+                } else if (index === 1) {
+                    shape.style.transform = `translateX(${scrolled * speed * 0.1}px) rotate(${rotation}deg) skewY(${skew}deg)`;
+                } else {
+                    shape.style.transform = `translate(-50%, calc(-50% + ${scrolled * speed * 0.15}px)) rotate(${rotation}deg) skewX(${skew}deg)`;
+                }
+            });
+        });
+
+        // Interactive hover effects
+        const interactiveElements = document.querySelectorAll('.service-card, .style-element');
+        interactiveElements.forEach(element => {
+            element.addEventListener('mousemove', (e) => {
+                const rect = element.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                element.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>

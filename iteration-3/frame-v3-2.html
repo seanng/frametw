@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Angular Digital Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Anta&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1A1A1A;
+            --secondary-color: #FFFFFF;
+            --accent-color: #00FF00;
+            --bg-color: #FFFFFF;
+            --text-color: #1A1A1A;
+            --gray-light: #F0F0F0;
+            --font-multiplier: 1;
+            --headline-font: 'Anta', sans-serif;
+            --body-font: 'Inter', sans-serif;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0A0A0A;
+            --text-color: #FFFFFF;
+            --primary-color: #FFFFFF;
+            --secondary-color: #0A0A0A;
+            --accent-color: #00FF00;
+            --gray-light: #1A1A1A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* Navbar - Based on v2-7 style with Inter font */
+        nav {
+            background: var(--bg-color);
+            padding: 25px 50px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--primary-color);
+            transition: all 0.3s ease;
+            opacity: 0.95;
+            backdrop-filter: blur(20px);
+        }
+
+        .logo {
+            font-family: var(--body-font);
+            font-size: calc(2rem * var(--font-multiplier));
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: 3px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .logo:hover {
+            letter-spacing: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: calc(1rem * var(--font-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            transition: all 0.3s ease;
+            font-family: var(--body-font);
+        }
+
+        .nav-links a::before,
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a::before {
+            top: -5px;
+            left: 0;
+        }
+
+        .nav-links a::after {
+            bottom: -5px;
+            right: 0;
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .dark-mode-toggle {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 10px 25px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            font-size: calc(14px * var(--font-multiplier));
+            border-radius: 0;
+        }
+
+        .dark-mode-toggle:hover {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+        }
+
+        /* Hero Section - Based on v2-4 with geometric shapes */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-color);
+            padding: 0 40px;
+            margin-top: 80px;
+        }
+
+        .hero-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            border: 1px solid var(--primary-color);
+            background: transparent;
+            transition: all 0.5s ease;
+            border-radius: 0;
+        }
+
+        .shape-1 {
+            width: 500px;
+            height: 500px;
+            top: 20%;
+            right: 5%;
+            transform: rotate(45deg);
+            background: linear-gradient(45deg, transparent 48%, var(--accent-color) 48%, var(--accent-color) 52%, transparent 52%);
+        }
+
+        .shape-2 {
+            width: 350px;
+            height: 350px;
+            bottom: 10%;
+            left: 10%;
+            transform: rotate(15deg);
+        }
+
+        .shape-3 {
+            width: 250px;
+            height: 250px;
+            top: 40%;
+            left: 40%;
+            transform: translate(-50%, -50%) rotate(30deg);
+        }
+
+        .hero:hover .shape-1 {
+            transform: rotate(90deg) scale(1.1);
+            opacity: 0.8;
+        }
+
+        .hero:hover .shape-2 {
+            transform: rotate(-30deg) scale(0.9);
+            background: var(--primary-color);
+            opacity: 0.1;
+        }
+
+        .hero:hover .shape-3 {
+            transform: translate(-50%, -50%) rotate(180deg) scale(1.2);
+            background: var(--accent-color);
+            opacity: 0.2;
+        }
+
+        .hero-content {
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero h1 {
+            font-family: var(--headline-font);
+            font-size: calc(8rem * var(--font-multiplier));
+            color: var(--text-color);
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: -3px;
+            line-height: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .hero h1 span {
+            display: block;
+            font-size: calc(3.5rem * var(--font-multiplier));
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-top: 20px;
+            color: var(--accent-color);
+        }
+
+        .hero p {
+            font-size: calc(1.3rem * var(--font-multiplier));
+            color: var(--text-color);
+            margin-bottom: 50px;
+            font-weight: 300;
+            max-width: 600px;
+            opacity: 0.7;
+            line-height: 1.6;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .cta-button,
+        .cta-secondary {
+            padding: 20px 50px;
+            font-size: calc(1rem * var(--font-multiplier));
+            font-weight: 500;
+            border: 2px solid var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 0;
+            transform: rotate(-3deg);
+        }
+
+        .cta-button {
+            background: var(--primary-color);
+            color: var(--bg-color);
+        }
+
+        .cta-button:hover {
+            background: var(--accent-color);
+            color: var(--primary-color);
+            transform: rotate(3deg) scale(1.05);
+            border-color: var(--accent-color);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--primary-color);
+        }
+
+        .cta-secondary:hover {
+            background: var(--primary-color);
+            color: var(--bg-color);
+            transform: rotate(3deg) scale(1.05);
+        }
+
+        /* Style Section with slanted elements */
+        .style-section {
+            padding: 150px 40px;
+            background: var(--gray-light);
+            clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 95%);
+            position: relative;
+        }
+
+        .style-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .style-section h2 {
+            font-family: var(--headline-font);
+            font-size: calc(4rem * var(--font-multiplier));
+            margin-bottom: 60px;
+            text-align: center;
+            color: var(--primary-color);
+            transform: rotate(-1deg);
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 50px;
+        }
+
+        .style-card {
+            background: var(--bg-color);
+            padding: 40px;
+            border: 2px solid var(--primary-color);
+            transform: rotate(-2deg);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .style-card:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .style-card:hover {
+            transform: rotate(0deg) scale(1.02);
+            border-color: var(--accent-color);
+            box-shadow: 10px 10px 0 var(--accent-color);
+        }
+
+        .style-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(2.5rem * var(--font-multiplier));
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .style-card p {
+            font-size: calc(1.1rem * var(--font-multiplier));
+            line-height: 1.7;
+            opacity: 0.8;
+        }
+
+        /* About Section with angular design */
+        .about {
+            padding: 150px 40px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            clip-path: polygon(0 0, 100% 10%, 100% 90%, 0 100%);
+            position: relative;
+            color: white;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about h2 {
+            font-family: var(--headline-font);
+            font-size: calc(5rem * var(--font-multiplier));
+            margin-bottom: 50px;
+            transform: rotate(-3deg);
+            text-shadow: 5px 5px 0 rgba(0,0,0,0.3);
+        }
+
+        .about p {
+            font-size: calc(1.3rem * var(--font-multiplier));
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 120px 40px;
+            background: var(--bg-color);
+        }
+
+        .services h2 {
+            font-family: var(--headline-font);
+            font-size: calc(4rem * var(--font-multiplier));
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 80px;
+            letter-spacing: 3px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--bg-color);
+            color: var(--text-color);
+            padding: 50px;
+            border: 3px solid var(--primary-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            transform: rotate(-2deg);
+            clip-path: polygon(0 0, 100% 3%, 100% 97%, 0 100%);
+        }
+
+        .service-card:nth-child(2) {
+            transform: rotate(2deg);
+            clip-path: polygon(0 3%, 100% 0, 100% 100%, 0 97%);
+        }
+
+        .service-card:nth-child(3) {
+            transform: rotate(-2deg);
+            clip-path: polygon(0 0, 100% 3%, 100% 97%, 0 100%);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-color);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .service-card:hover::before {
+            left: 0;
+        }
+
+        .service-card:hover {
+            transform: rotate(0deg) scale(1.05);
+            color: var(--primary-color);
+            border-color: var(--accent-color);
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(2.5rem * var(--font-multiplier));
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+
+        .service-card p {
+            font-size: calc(1.1rem * var(--font-multiplier));
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        /* Contact Section - Exact design from frame-landing-1 */
+        .contact {
+            padding: 100px 40px;
+            background: var(--accent-color);
+            clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-family: var(--headline-font);
+            font-size: calc(3rem * var(--font-multiplier));
+            color: black;
+            margin-bottom: 40px;
+            transform: rotate(-1deg);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 15px;
+            border: 3px solid black;
+            background: rgba(255,255,255,0.8);
+            font-family: var(--body-font);
+            font-size: calc(1rem * var(--font-multiplier));
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            transform: scale(1.02);
+            background: white;
+        }
+
+        .contact-form button {
+            background: black;
+            color: var(--accent-color);
+            padding: 20px;
+            border: none;
+            font-family: var(--headline-font);
+            font-size: calc(1.5rem * var(--font-multiplier));
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .contact-form button:hover {
+            transform: scale(1.05) rotate(-2deg);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: var(--bg-color);
+            text-align: center;
+            padding: 60px 40px;
+            font-size: calc(0.9rem * var(--font-multiplier));
+            letter-spacing: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .hero {
+                margin-top: 120px;
+            }
+            
+            .hero h1 {
+                font-size: calc(4.5rem * var(--font-multiplier));
+            }
+            
+            .hero h1 span {
+                font-size: calc(2rem * var(--font-multiplier));
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+            
+            .cta-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .cta-button,
+            .cta-secondary {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .style-grid,
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .shape-1 {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .shape-2 {
+                width: 175px;
+                height: 175px;
+            }
+            
+            .shape-3 {
+                width: 125px;
+                height: 125px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <a href="#" class="logo">FRAME</a>
+        <div class="nav-links">
+            <a href="#style">STYLE</a>
+            <a href="#about">ABOUT</a>
+            <a href="#services">SERVICES</a>
+            <a href="#contact">CONTACT</a>
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()">DARK MODE</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="hero-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+            <div class="hero-content">
+                <h1>ANGULAR<span>PRECISION</span></h1>
+                <p>Digital experiences crafted with mathematical precision and creative rebellion. Where sharp angles meet sharper thinking.</p>
+                <div class="cta-group">
+                    <a href="#contact" class="cta-button">BEGIN PROJECT</a>
+                    <a href="#services" class="cta-secondary">VIEW WORK</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Style Section -->
+        <section class="style-section" id="style">
+            <div class="style-content">
+                <h2>DESIGN MANIFESTO</h2>
+                <div class="style-grid">
+                    <div class="style-card">
+                        <h3>ANGULAR TYPOGRAPHY</h3>
+                        <p>Bold headlines that cut through noise. Typography that speaks with authority and demands attention.</p>
+                    </div>
+                    <div class="style-card">
+                        <h3>GEOMETRIC SYSTEMS</h3>
+                        <p>Every element calculated. Every angle purposeful. Design systems built on mathematical precision.</p>
+                    </div>
+                    <div class="style-card">
+                        <h3>DYNAMIC MOTION</h3>
+                        <p>Interactions that surprise and delight. Movement that adds meaning, not just decoration.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about" id="about">
+            <div class="about-content">
+                <h2>WE ARE FRAME</h2>
+                <p>Born from the collision of art and algorithms, we're the digital architects who refuse to color inside the lines.</p>
+                <p>We believe in angles that challenge, colors that clash beautifully, and experiences that leave lasting impressions.</p>
+                <p>This is Frame. Where convention meets its match.</p>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services" id="services">
+            <h2>CREATIVE ARSENAL</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>BRAND GEOMETRY</h3>
+                    <p>Identity systems built on angular precision. Brands that cut through market noise with surgical accuracy.</p>
+                </div>
+                <div class="service-card">
+                    <h3>WEB ARCHITECTURE</h3>
+                    <p>Digital structures that defy gravity. Websites engineered for impact, optimized for conversion.</p>
+                </div>
+                <div class="service-card">
+                    <h3>STRATEGIC ANGLES</h3>
+                    <p>Sharp thinking for complex problems. Strategy that finds the perfect angle of attack.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <div class="contact-content">
+                <h2>CONNECT THE ANGLES</h2>
+                <form class="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea rows="5" placeholder="Your Project Vision" required></textarea>
+                    <button type="submit">ACTIVATE</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 FRAME STUDIO. Cutting edge design, literally.</p>
+    </footer>
+
+    <script>
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.documentElement.setAttribute('data-theme', 
+                document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+            );
+            const button = document.querySelector('.dark-mode-toggle');
+            button.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? 'LIGHT MODE' : 'DARK MODE';
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Dynamic shape animation on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const shapes = document.querySelectorAll('.shape');
+            
+            shapes.forEach((shape, index) => {
+                const speed = 0.3 + (index * 0.2);
+                shape.style.transform = `translateY(${scrolled * speed * 0.1}px) rotate(${45 + (index * 15) + (scrolled * 0.08)}deg)`;
+            });
+        });
+
+        // Service card hover effects
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                const index = Array.from(this.parentNode.children).indexOf(this);
+                if (index % 2 === 0) {
+                    this.style.clipPath = 'polygon(0 0, 100% 3%, 100% 97%, 0 100%)';
+                } else {
+                    this.style.clipPath = 'polygon(0 3%, 100% 0, 100% 100%, 0 97%)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Oblique Digital Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Anta&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0066FF;
+            --secondary-color: #FFFFFF;
+            --accent-color: #FFD700;
+            --bg-color: #FFFFFF;
+            --text-color: #000000;
+            --gray-light: #F5F5F5;
+            --headline-font: 'Anta', sans-serif;
+            --body-font: 'Inter', sans-serif;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0A0A0A;
+            --text-color: #FFFFFF;
+            --primary-color: #4488FF;
+            --secondary-color: #0A0A0A;
+            --accent-color: #FFD700;
+            --gray-light: #1A1A1A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* Navbar - frame-landing-v2-7 style with Inter font (capitalized) */
+        nav {
+            background: var(--bg-color);
+            padding: 25px 50px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--primary-color);
+            transition: all 0.3s ease;
+            opacity: 0.95;
+            backdrop-filter: blur(20px);
+            transform: skewY(-1deg);
+        }
+
+        nav > * {
+            transform: skewY(1deg);
+        }
+
+        .logo {
+            font-family: var(--body-font);
+            font-size: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: 3px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .logo:hover {
+            letter-spacing: 5px;
+            transform: skewY(1deg) rotate(-5deg);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            transition: all 0.3s ease;
+            font-family: var(--body-font);
+        }
+
+        .nav-links a::before,
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a::before {
+            top: -5px;
+            left: 0;
+        }
+
+        .nav-links a::after {
+            bottom: -5px;
+            right: 0;
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .dark-mode-toggle {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 10px 25px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            transform: skewX(-10deg);
+        }
+
+        .dark-mode-toggle:hover {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            transform: skewX(10deg);
+        }
+
+        /* Hero Section - frame-landing-v2-4 style with geometric shapes */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-color);
+            padding: 0 40px;
+            margin-top: 80px;
+        }
+
+        .hero-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            border: 2px solid var(--primary-color);
+            background: transparent;
+            transition: all 0.5s ease;
+            transform-origin: center;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            top: 10%;
+            right: 10%;
+            transform: rotate(45deg) skewX(-10deg);
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            bottom: 15%;
+            left: 5%;
+            transform: rotate(15deg) skewY(-10deg);
+        }
+
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(30deg) skew(-5deg, -5deg);
+        }
+
+        .hero:hover .shape-1 {
+            transform: rotate(90deg) scale(1.1) skewX(-10deg);
+            background: var(--primary-color);
+            opacity: 0.1;
+        }
+
+        .hero:hover .shape-2 {
+            transform: rotate(-30deg) scale(0.9) skewY(-10deg);
+            background: var(--accent-color);
+            opacity: 0.1;
+        }
+
+        .hero:hover .shape-3 {
+            transform: translate(-50%, -50%) rotate(180deg) scale(1.2) skew(-5deg, -5deg);
+            background: var(--primary-color);
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero h1 {
+            font-family: var(--headline-font);
+            font-size: 7rem;
+            color: var(--text-color);
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 0.85;
+            transition: all 0.3s ease;
+            transform: skewX(-5deg);
+        }
+
+        .hero h1 span {
+            display: block;
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            margin-top: 10px;
+            transform: skewX(5deg);
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-color);
+            margin-bottom: 50px;
+            font-weight: 300;
+            max-width: 500px;
+            opacity: 0.7;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 20px 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            border: 1px solid var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            display: inline-block;
+            transform: skewX(-10deg) rotate(-2deg);
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--primary-color);
+            transform: skewX(10deg) rotate(2deg) scale(1.05);
+        }
+
+        /* Slanted Sections */
+        .slanted-section {
+            padding: 120px 40px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            clip-path: polygon(0 10%, 100% 0, 100% 90%, 0 100%);
+            position: relative;
+            margin: 50px 0;
+        }
+
+        .slanted-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            color: white;
+        }
+
+        .slanted-section h2 {
+            font-family: var(--headline-font);
+            font-size: 4rem;
+            margin-bottom: 40px;
+            transform: rotate(-3deg) skewY(-2deg);
+            text-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+        }
+
+        .slanted-section p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            transform: skewX(-2deg);
+        }
+
+        /* Services with slanted cards */
+        .services {
+            padding: 100px 40px;
+            background: var(--bg-color);
+            position: relative;
+        }
+
+        .services::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: var(--gray-light);
+            transform: skewY(-2deg);
+            z-index: -1;
+        }
+
+        .services h2 {
+            font-family: var(--headline-font);
+            font-size: 3rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 60px;
+            transform: rotate(2deg) skewX(-5deg);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--bg-color);
+            border: 2px solid var(--primary-color);
+            color: var(--text-color);
+            padding: 40px;
+            transform: rotate(-5deg) skewY(-2deg);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 5px 5px 0 var(--primary-color);
+        }
+
+        .service-card:nth-child(even) {
+            transform: rotate(5deg) skewY(2deg);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--primary-color);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .service-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .service-card:hover {
+            transform: rotate(0deg) scale(1.05) skewY(0deg);
+            box-shadow: 8px 8px 0 var(--accent-color);
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: 2rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card p {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Style Guide */
+        .style-guide {
+            padding: 100px 40px;
+            background: var(--bg-color);
+            clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 95%);
+        }
+
+        .style-guide h2 {
+            font-family: var(--headline-font);
+            font-size: 3rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 80px;
+            transform: rotate(-2deg) skewX(-5deg);
+        }
+
+        .style-elements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .style-element {
+            padding: 60px;
+            border: 2px solid var(--primary-color);
+            background: var(--bg-color);
+            transition: all 0.3s ease;
+            transform: rotate(3deg) skewY(-2deg);
+            box-shadow: 5px 5px 0 var(--accent-color);
+        }
+
+        .style-element:nth-child(even) {
+            transform: rotate(-3deg) skewY(2deg);
+        }
+
+        .style-element:hover {
+            transform: rotate(0deg) scale(1.02) skewY(0deg);
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 8px 8px 0 var(--accent-color);
+        }
+
+        /* Contact Section - exact design from frame-landing-1.html */
+        .contact {
+            padding: 100px 40px;
+            background: var(--accent-color);
+            clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-family: var(--headline-font);
+            font-size: 3rem;
+            color: black;
+            margin-bottom: 40px;
+            transform: rotate(-1deg);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 15px;
+            border: 3px solid black;
+            background: rgba(255,255,255,0.8);
+            font-family: var(--body-font);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            transform: scale(1.02);
+            background: white;
+        }
+
+        .contact-form button {
+            background: black;
+            color: var(--accent-color);
+            padding: 20px;
+            border: none;
+            font-family: var(--headline-font);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .contact-form button:hover {
+            transform: scale(1.05) rotate(-2deg);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            text-align: center;
+            padding: 60px 40px;
+            font-size: 1rem;
+            clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
+            margin-top: -30px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+                transform: skewY(0deg);
+            }
+
+            nav > * {
+                transform: skewY(0deg);
+            }
+            
+            .hero h1 {
+                font-size: 4rem;
+                transform: skewX(-2deg);
+            }
+            
+            .hero h1 span {
+                font-size: 2rem;
+                transform: skewX(2deg);
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+            
+            .shape-1 {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .shape-2 {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .shape-3 {
+                width: 100px;
+                height: 100px;
+            }
+
+            .service-card {
+                transform: rotate(-2deg) skewY(-1deg);
+            }
+
+            .service-card:nth-child(even) {
+                transform: rotate(2deg) skewY(1deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <a href="#" class="logo">FRAME</a>
+        <div class="nav-links">
+            <a href="#style-guide">STYLE GUIDE</a>
+            <a href="#about">ABOUT</a>
+            <a href="#services">SERVICES</a>
+            <a href="#contact">CONTACT</a>
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()">DARK MODE</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="hero-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+            <div class="hero-content">
+                <h1>OBLIQUE<span>DIGITAL PERSPECTIVES</span></h1>
+                <p>Breaking parallel lines since day one. We see the world from a different angle - literally.</p>
+                <a href="#contact" class="cta-button">TILT YOUR VISION</a>
+            </div>
+        </section>
+
+        <!-- Style Guide Section -->
+        <section class="style-guide" id="style-guide">
+            <h2>ANGULAR DESIGN SYSTEM</h2>
+            <div class="style-elements">
+                <div class="style-element">
+                    <h3>Typography</h3>
+                    <p style="font-family: var(--headline-font); font-size: 2.5rem; font-weight: 700; margin: 20px 0;">ANTA Headlines</p>
+                    <p style="font-size: 1.4rem; margin: 10px 0;">Subheadline Text</p>
+                    <p style="font-size: 1rem; opacity: 0.8;">Body copy set in Inter for optimal readability at any angle.</p>
+                </div>
+                <div class="style-element">
+                    <h3>Oblique Philosophy</h3>
+                    <p style="font-size: 1.2rem; margin-bottom: 15px;">Never Straight, Always Forward</p>
+                    <p>We believe in the power of perspective. Every skew, every tilt, every angle creates new possibilities.</p>
+                </div>
+                <div class="style-element">
+                    <h3>Color Dynamics</h3>
+                    <div style="width: 100%; height: 80px; background: var(--primary-color); margin: 10px 0; display: flex; align-items: center; justify-content: center; color: white; transform: skewX(-5deg);">Primary Blue</div>
+                    <div style="width: 100%; height: 80px; background: var(--accent-color); margin: 10px 0; display: flex; align-items: center; justify-content: center; color: black; transform: skewX(5deg);">Accent Gold</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section - Slanted -->
+        <section class="slanted-section" id="about">
+            <div class="slanted-content">
+                <h2>WE ARE FRAME</h2>
+                <p>Founded on the principle that the best view comes from an unexpected angle.</p>
+                <p>We're not just designers and developers - we're perspective shifters, angle benders, and vision tilters.</p>
+                <p>Welcome to Frame. Where oblique is the new straight.</p>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services" id="services">
+            <h2>ANGULAR EXPERTISE</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>SKEWED BRANDING</h3>
+                    <p>Brand identities that refuse to conform. We create visual languages that speak in angles and communicate in tilts.</p>
+                </div>
+                <div class="service-card">
+                    <h3>OBLIQUE DEVELOPMENT</h3>
+                    <p>Websites that challenge conventional layouts. Every element positioned with purpose, every angle calculated for impact.</p>
+                </div>
+                <div class="service-card">
+                    <h3>DIAGONAL STRATEGY</h3>
+                    <p>Marketing approaches that cut across traditional boundaries. We find the shortest path by going sideways.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <div class="contact-content">
+                <h2>JOIN THE UPRISING</h2>
+                <form class="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea rows="5" placeholder="Your Revolutionary Ideas" required></textarea>
+                    <button type="submit">IGNITE</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 FRAME. Tilting perspectives, shifting paradigms.</p>
+    </footer>
+
+    <script>
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.documentElement.setAttribute('data-theme', 
+                document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+            );
+            const button = document.querySelector('.dark-mode-toggle');
+            button.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? 'LIGHT MODE' : 'DARK MODE';
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Enhanced parallax effect for shapes with rotation
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const shapes = document.querySelectorAll('.shape');
+            
+            shapes.forEach((shape, index) => {
+                const speed = 0.5 + (index * 0.2);
+                const rotationBase = 45 + (index * 15);
+                const skewAmount = 10 + (index * 5);
+                shape.style.transform = `translateY(${scrolled * speed * 0.1}px) rotate(${rotationBase + (scrolled * 0.05)}deg) skew(${Math.sin(scrolled * 0.001) * skewAmount}deg)`;
+            });
+        });
+
+        // Hover effect for service cards
+        const serviceCards = document.querySelectorAll('.service-card');
+        serviceCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.zIndex = '10';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+        });
+    </script>
+</body>
+</html>

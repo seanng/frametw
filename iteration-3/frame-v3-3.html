@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Disrupted Digital Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Anta&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0000FF;
+            --secondary-color: #FFFFFF;
+            --accent-color: #FF00FF;
+            --bg-color: #FFFFFF;
+            --text-color: #000000;
+            --gray-light: #EEEEEE;
+            --font-multiplier: 1;
+            --headline-font: 'Anta', sans-serif;
+            --body-font: 'Inter', sans-serif;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #000000;
+            --text-color: #FFFFFF;
+            --primary-color: #00FFFF;
+            --secondary-color: #000000;
+            --accent-color: #FFFF00;
+            --gray-light: #222222;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* Navbar - Based on v2-7 style with Inter font */
+        nav {
+            background: var(--bg-color);
+            padding: 25px 50px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--primary-color);
+            transition: all 0.3s ease;
+            opacity: 0.95;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-family: var(--body-font);
+            font-size: calc(2rem * var(--font-multiplier));
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: 3px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            transform: skewX(-10deg);
+        }
+
+        .logo:hover {
+            letter-spacing: 5px;
+            transform: skewX(-15deg) scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: calc(1rem * var(--font-multiplier));
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            transition: all 0.3s ease;
+            font-family: var(--body-font);
+        }
+
+        .nav-links a::before,
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a::before {
+            top: -5px;
+            left: 0;
+        }
+
+        .nav-links a::after {
+            bottom: -5px;
+            right: 0;
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .dark-mode-toggle {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 10px 25px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            font-size: calc(14px * var(--font-multiplier));
+            border-radius: 0;
+            transform: skewX(-10deg);
+        }
+
+        .dark-mode-toggle:hover {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            transform: skewX(-10deg) scale(1.05);
+        }
+
+        /* Hero Section - Based on v2-4 with geometric shapes */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-color);
+            padding: 0 40px;
+            margin-top: 80px;
+        }
+
+        .hero-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            border: 2px solid var(--primary-color);
+            background: transparent;
+            transition: all 0.5s ease;
+            border-radius: 0;
+        }
+
+        .shape-1 {
+            width: 600px;
+            height: 600px;
+            top: -10%;
+            right: -10%;
+            transform: rotate(45deg);
+            background: linear-gradient(45deg, transparent 45%, var(--primary-color) 45%, var(--primary-color) 55%, transparent 55%);
+            opacity: 0.3;
+        }
+
+        .shape-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -5%;
+            left: -5%;
+            transform: rotate(15deg);
+            border-color: var(--accent-color);
+        }
+
+        .shape-3 {
+            width: 300px;
+            height: 300px;
+            top: 30%;
+            left: 35%;
+            transform: translate(-50%, -50%) rotate(30deg);
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                var(--accent-color) 10px,
+                var(--accent-color) 12px
+            );
+            opacity: 0.2;
+        }
+
+        .hero:hover .shape-1 {
+            transform: rotate(135deg) scale(1.2);
+            opacity: 0.5;
+        }
+
+        .hero:hover .shape-2 {
+            transform: rotate(-45deg) scale(0.8);
+            background: var(--accent-color);
+            opacity: 0.1;
+        }
+
+        .hero:hover .shape-3 {
+            transform: translate(-50%, -50%) rotate(210deg) scale(1.3);
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero h1 {
+            font-family: var(--headline-font);
+            font-size: calc(9rem * var(--font-multiplier));
+            color: var(--text-color);
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: -4px;
+            line-height: 0.75;
+            transition: all 0.3s ease;
+            transform: skewY(-5deg);
+        }
+
+        .hero h1 span {
+            display: block;
+            font-size: calc(4rem * var(--font-multiplier));
+            font-weight: 400;
+            letter-spacing: 0px;
+            margin-top: 20px;
+            color: var(--primary-color);
+            transform: skewY(5deg);
+        }
+
+        .hero p {
+            font-size: calc(1.4rem * var(--font-multiplier));
+            color: var(--text-color);
+            margin-bottom: 60px;
+            font-weight: 300;
+            max-width: 700px;
+            opacity: 0.8;
+            line-height: 1.6;
+            transform: skewX(-2deg);
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .cta-button,
+        .cta-secondary {
+            padding: 25px 60px;
+            font-size: calc(1.1rem * var(--font-multiplier));
+            font-weight: 600;
+            border: 3px solid var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 0;
+            transform: rotate(-5deg) skewX(-10deg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button {
+            background: var(--primary-color);
+            color: var(--bg-color);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-color);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button:hover {
+            transform: rotate(5deg) skewX(10deg) scale(1.1);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--primary-color);
+        }
+
+        .cta-secondary:hover {
+            background: var(--primary-color);
+            color: var(--bg-color);
+            transform: rotate(5deg) skewX(10deg) scale(1.1);
+        }
+
+        /* Innovation Section with extreme slants */
+        .innovation {
+            padding: 200px 40px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            clip-path: polygon(0 15%, 100% 0, 100% 85%, 0 100%);
+            position: relative;
+            color: white;
+            text-align: center;
+        }
+
+        .innovation-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .innovation h2 {
+            font-family: var(--headline-font);
+            font-size: calc(6rem * var(--font-multiplier));
+            margin-bottom: 50px;
+            transform: rotate(-5deg) skewX(-15deg);
+            text-shadow: 10px 10px 0 rgba(0,0,0,0.2);
+        }
+
+        .innovation-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 80px;
+        }
+
+        .innovation-item {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            transform: rotate(-3deg);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .innovation-item:nth-child(2) {
+            transform: rotate(3deg) translateY(-20px);
+        }
+
+        .innovation-item:nth-child(3) {
+            transform: rotate(-3deg) translateY(20px);
+        }
+
+        .innovation-item:hover {
+            transform: rotate(0deg) scale(1.1);
+            background: rgba(255,255,255,0.2);
+        }
+
+        .innovation-item h3 {
+            font-family: var(--headline-font);
+            font-size: calc(2rem * var(--font-multiplier));
+            margin-bottom: 20px;
+        }
+
+        /* About Section with extreme angles */
+        .about {
+            padding: 180px 40px;
+            background: var(--gray-light);
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 90%);
+            position: relative;
+        }
+
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-family: var(--headline-font);
+            font-size: calc(5rem * var(--font-multiplier));
+            margin-bottom: 40px;
+            transform: rotate(-7deg);
+            color: var(--primary-color);
+            text-shadow: 5px 5px 0 var(--accent-color);
+        }
+
+        .about-text p {
+            font-size: calc(1.2rem * var(--font-multiplier));
+            line-height: 1.8;
+            margin-bottom: 25px;
+            transform: skewX(-3deg);
+        }
+
+        .about-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            transform: rotate(5deg);
+        }
+
+        .about-box {
+            height: 150px;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--headline-font);
+            font-size: calc(3rem * var(--font-multiplier));
+            color: white;
+            transform: skewY(-10deg);
+            transition: all 0.3s ease;
+        }
+
+        .about-box:nth-child(2) {
+            background: var(--accent-color);
+            transform: skewY(10deg);
+        }
+
+        .about-box:nth-child(3) {
+            background: var(--accent-color);
+            transform: skewY(10deg);
+        }
+
+        .about-box:nth-child(4) {
+            background: var(--primary-color);
+            transform: skewY(-10deg);
+        }
+
+        .about-box:hover {
+            transform: skewY(0deg) scale(1.1);
+            z-index: 1;
+        }
+
+        /* Services Section with rotated cards */
+        .services {
+            padding: 150px 40px;
+            background: var(--bg-color);
+        }
+
+        .services h2 {
+            font-family: var(--headline-font);
+            font-size: calc(5rem * var(--font-multiplier));
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 100px;
+            letter-spacing: 4px;
+            transform: skewY(-3deg);
+        }
+
+        .services-carousel {
+            display: flex;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .service-card {
+            background: var(--bg-color);
+            color: var(--text-color);
+            padding: 60px 40px;
+            border: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            transform: rotate(-10deg);
+            width: 350px;
+            box-shadow: 15px 15px 0 var(--accent-color);
+        }
+
+        .service-card:nth-child(2) {
+            transform: rotate(0deg) translateY(-40px);
+            z-index: 2;
+            border-color: var(--accent-color);
+            box-shadow: 15px 15px 0 var(--primary-color);
+        }
+
+        .service-card:nth-child(3) {
+            transform: rotate(10deg);
+            box-shadow: 15px 15px 0 var(--accent-color);
+        }
+
+        .service-card:hover {
+            transform: rotate(0deg) translateY(-20px) scale(1.05);
+            z-index: 3;
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(2.8rem * var(--font-multiplier));
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            transform: skewX(-5deg);
+        }
+
+        .service-card p {
+            font-size: calc(1.2rem * var(--font-multiplier));
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        /* Contact Section - Exact design from frame-landing-1 */
+        .contact {
+            padding: 100px 40px;
+            background: var(--accent-color);
+            clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-family: var(--headline-font);
+            font-size: calc(3rem * var(--font-multiplier));
+            color: black;
+            margin-bottom: 40px;
+            transform: rotate(-1deg);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 15px;
+            border: 3px solid black;
+            background: rgba(255,255,255,0.8);
+            font-family: var(--body-font);
+            font-size: calc(1rem * var(--font-multiplier));
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            transform: scale(1.02);
+            background: white;
+        }
+
+        .contact-form button {
+            background: black;
+            color: var(--accent-color);
+            padding: 20px;
+            border: none;
+            font-family: var(--headline-font);
+            font-size: calc(1.5rem * var(--font-multiplier));
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .contact-form button:hover {
+            transform: scale(1.05) rotate(-2deg);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 80px 40px;
+            font-size: calc(1rem * var(--font-multiplier));
+            letter-spacing: 2px;
+            clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .hero {
+                margin-top: 120px;
+            }
+            
+            .hero h1 {
+                font-size: calc(5rem * var(--font-multiplier));
+            }
+            
+            .hero h1 span {
+                font-size: calc(2.5rem * var(--font-multiplier));
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+            
+            .cta-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .cta-button,
+            .cta-secondary {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .innovation-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .services-carousel {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .shape-1 {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .shape-2 {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .shape-3 {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <a href="#" class="logo">FRAME</a>
+        <div class="nav-links">
+            <a href="#innovation">INNOVATION</a>
+            <a href="#about">ABOUT</a>
+            <a href="#services">SERVICES</a>
+            <a href="#contact">CONTACT</a>
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()">DARK MODE</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="hero-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+            <div class="hero-content">
+                <h1>DISRUPT<span>EVERYTHING</span></h1>
+                <p>Digital experiences that break rules, shatter expectations, and redefine what's possible. Welcome to the future of design.</p>
+                <div class="cta-group">
+                    <a href="#contact" class="cta-button">BREAK BARRIERS</a>
+                    <a href="#services" class="cta-secondary">SEE CHAOS</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Innovation Section -->
+        <section class="innovation" id="innovation">
+            <div class="innovation-content">
+                <h2>INNOVATION UNLEASHED</h2>
+                <div class="innovation-grid">
+                    <div class="innovation-item">
+                        <h3>RADICAL THINKING</h3>
+                        <p>We don't follow trends. We obliterate them and create new paradigms.</p>
+                    </div>
+                    <div class="innovation-item">
+                        <h3>EXPLOSIVE DESIGN</h3>
+                        <p>Visual experiences that detonate expectations and leave lasting impressions.</p>
+                    </div>
+                    <div class="innovation-item">
+                        <h3>FUTURE FORWARD</h3>
+                        <p>Tomorrow's solutions delivered today. We're always three steps ahead.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about" id="about">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>WE ARE FRAME</h2>
+                    <p>Born from chaos, refined by rebellion. We're the digital anarchists who believe that the best design doesn't just push boundaries - it obliterates them.</p>
+                    <p>Our philosophy is simple: Why fit in when you were born to stand out? Why whisper when you can roar?</p>
+                    <p>This is Frame. Where madness meets method.</p>
+                </div>
+                <div class="about-visual">
+                    <div class="about-box">F</div>
+                    <div class="about-box">R</div>
+                    <div class="about-box">A</div>
+                    <div class="about-box">M</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services" id="services">
+            <h2>CREATIVE CHAOS</h2>
+            <div class="services-carousel">
+                <div class="service-card">
+                    <h3>BRAND DISRUPTION</h3>
+                    <p>Identities that don't just stand out - they stand alone. We create brands that rewrite the rules.</p>
+                </div>
+                <div class="service-card">
+                    <h3>WEB REVOLUTION</h3>
+                    <p>Digital experiences that challenge everything you thought you knew about the web.</p>
+                </div>
+                <div class="service-card">
+                    <h3>STRATEGIC MAYHEM</h3>
+                    <p>Controlled chaos that delivers uncontrolled results. Strategy that breaks all conventions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <div class="contact-content">
+                <h2>JOIN THE REVOLUTION</h2>
+                <form class="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea rows="5" placeholder="Your Wildest Ideas" required></textarea>
+                    <button type="submit">DETONATE</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 FRAME STUDIO. Disrupting design since day one.</p>
+    </footer>
+
+    <script>
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.documentElement.setAttribute('data-theme', 
+                document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+            );
+            const button = document.querySelector('.dark-mode-toggle');
+            button.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? 'LIGHT MODE' : 'DARK MODE';
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Extreme parallax effects
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const shapes = document.querySelectorAll('.shape');
+            
+            shapes.forEach((shape, index) => {
+                const speed = 0.2 + (index * 0.3);
+                const rotation = 45 + (index * 15) + (scrolled * 0.1);
+                shape.style.transform = `translateY(${scrolled * speed * 0.15}px) rotate(${rotation}deg)`;
+            });
+
+            // Hero text parallax
+            const heroH1 = document.querySelector('.hero h1');
+            const heroSpan = document.querySelector('.hero h1 span');
+            if (heroH1) {
+                heroH1.style.transform = `skewY(${-5 + scrolled * 0.01}deg) translateY(${scrolled * -0.2}px)`;
+                heroSpan.style.transform = `skewY(${5 - scrolled * 0.01}deg) translateX(${scrolled * 0.1}px)`;
+            }
+        });
+
+        // Dynamic hover effects
+        document.querySelectorAll('.service-card').forEach((card, index) => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = `rotate(${Math.random() * 10 - 5}deg) translateY(-30px) scale(1.1)`;
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                const baseRotation = index === 0 ? -10 : index === 1 ? 0 : 10;
+                const baseY = index === 1 ? -40 : 0;
+                this.style.transform = `rotate(${baseRotation}deg) translateY(${baseY}px) scale(1)`;
+            });
+        });
+
+        // About boxes animation
+        document.querySelectorAll('.about-box').forEach((box, index) => {
+            box.addEventListener('mouseenter', function() {
+                document.querySelectorAll('.about-box').forEach(b => {
+                    b.style.transform = 'skewY(0deg) scale(0.9)';
+                    b.style.opacity = '0.5';
+                });
+                this.style.transform = 'skewY(0deg) scale(1.2) rotate(360deg)';
+                this.style.opacity = '1';
+            });
+        });
+
+        document.querySelector('.about-visual').addEventListener('mouseleave', function() {
+            document.querySelectorAll('.about-box').forEach((box, index) => {
+                box.style.opacity = '1';
+                if (index % 2 === 0) {
+                    box.style.transform = 'skewY(-10deg) scale(1)';
+                } else {
+                    box.style.transform = 'skewY(10deg) scale(1)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

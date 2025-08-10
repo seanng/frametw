@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame Landing Pages - Iteration 1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f5f5f5;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-preview {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            background: #f8f8f8;
+        }
+
+        .card-preview iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            transform: scale(0.5);
+            transform-origin: top left;
+            width: 200%;
+            height: 200%;
+            pointer-events: none;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .card-number {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .future-card {
+            opacity: 0.6;
+        }
+
+        .future-card .card-preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e0e0e0;
+        }
+
+        .future-card .card-preview::after {
+            content: "Coming Soon";
+            color: #999;
+            font-size: 1.2rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Frame Landing Pages - Iteration 1</h1>
+        <div class="grid">
+            <!-- Existing pages 1-26 -->
+            <a href="frame-landing-1.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-1.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 1</h2>
+                        <p class="card-number">Page 1 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-2.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-2.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 2</h2>
+                        <p class="card-number">Page 2 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-3.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-3.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 3</h2>
+                        <p class="card-number">Page 3 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-4.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-4.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 4</h2>
+                        <p class="card-number">Page 4 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-5.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-5.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 5</h2>
+                        <p class="card-number">Page 5 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-6.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-6.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 6</h2>
+                        <p class="card-number">Page 6 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-7.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-7.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 7</h2>
+                        <p class="card-number">Page 7 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-8.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-8.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 8</h2>
+                        <p class="card-number">Page 8 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-9.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-9.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 9</h2>
+                        <p class="card-number">Page 9 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-10.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-10.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 10</h2>
+                        <p class="card-number">Page 10 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-11.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-11.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 11</h2>
+                        <p class="card-number">Page 11 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-12.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-12.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 12</h2>
+                        <p class="card-number">Page 12 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-13.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-13.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 13</h2>
+                        <p class="card-number">Page 13 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-14.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-14.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 14</h2>
+                        <p class="card-number">Page 14 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-15.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-15.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 15</h2>
+                        <p class="card-number">Page 15 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-16.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-16.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 16</h2>
+                        <p class="card-number">Page 16 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-17.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-17.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 17</h2>
+                        <p class="card-number">Page 17 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-18.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-18.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 18</h2>
+                        <p class="card-number">Page 18 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-19.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-19.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 19</h2>
+                        <p class="card-number">Page 19 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-20.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-20.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 20</h2>
+                        <p class="card-number">Page 20 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-21.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-21.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 21</h2>
+                        <p class="card-number">Page 21 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-22.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-22.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 22</h2>
+                        <p class="card-number">Page 22 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-23.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-23.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 23</h2>
+                        <p class="card-number">Page 23 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-24.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-24.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 24</h2>
+                        <p class="card-number">Page 24 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-25.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-25.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 25</h2>
+                        <p class="card-number">Page 25 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-26.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-26.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 26</h2>
+                        <p class="card-number">Page 26 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Pages 27-40 -->
+            <a href="frame-landing-27.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-27.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 27</h2>
+                        <p class="card-number">Page 27 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-28.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-28.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 28</h2>
+                        <p class="card-number">Page 28 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-29.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-29.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 29</h2>
+                        <p class="card-number">Page 29 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-30.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-30.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 30</h2>
+                        <p class="card-number">Page 30 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-31.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-31.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 31</h2>
+                        <p class="card-number">Page 31 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-32.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-32.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 32</h2>
+                        <p class="card-number">Page 32 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-33.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-33.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 33</h2>
+                        <p class="card-number">Page 33 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-34.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-34.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 34</h2>
+                        <p class="card-number">Page 34 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-35.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-35.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 35</h2>
+                        <p class="card-number">Page 35 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-36.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-36.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 36</h2>
+                        <p class="card-number">Page 36 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-37.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-37.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 37</h2>
+                        <p class="card-number">Page 37 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-38.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-38.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 38</h2>
+                        <p class="card-number">Page 38 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-39.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-39.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 39</h2>
+                        <p class="card-number">Page 39 of 40</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="frame-landing-40.html">
+                <div class="card">
+                    <div class="card-preview">
+                        <iframe src="frame-landing-40.html"></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Frame Landing 40</h2>
+                        <p class="card-number">Page 40 of 40</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Systematic Excellence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700&family=Manrope:wght@200;300;400;500;600;700;800&family=DM+Sans:wght@400;500;700&family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #111111;
+            --accent-color: #000000;
+            --bg-color: #FFFFFF;
+            --text-color: #000000;
+            --gray: #666666;
+            --light-gray: #F8F8F8;
+            --font-multiplier: 1;
+            --headline-font: 'Space Grotesk', sans-serif;
+            --body-font: 'Inter', sans-serif;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #000000;
+            --text-color: #FFFFFF;
+            --primary-color: #FFFFFF;
+            --secondary-color: #F0F0F0;
+            --accent-color: #FFFFFF;
+            --gray: #999999;
+            --light-gray: #0A0A0A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            background: var(--bg-color);
+            border-bottom: 1px solid var(--text-color);
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1001;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .toolbar-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .toolbar select, .toolbar input[type="color"], .toolbar input[type="range"] {
+            padding: 8px;
+            border: 1px solid var(--text-color);
+            background: transparent;
+            color: var(--text-color);
+            cursor: pointer;
+            font-family: var(--body-font);
+        }
+
+        .toolbar label {
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .toolbar input[type="color"] {
+            width: 50px;
+            height: 35px;
+        }
+
+        .toolbar input[type="range"] {
+            width: 100px;
+        }
+
+        /* Navbar */
+        nav {
+            background: var(--bg-color);
+            border-bottom: 1px solid var(--text-color);
+            padding: 20px 40px;
+            position: fixed;
+            top: 70px;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-family: var(--headline-font);
+            font-size: calc(2rem * var(--font-multiplier));
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: -1px;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            opacity: 0.7;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: calc(1rem * var(--font-multiplier));
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--text-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .dark-mode-toggle {
+            background: transparent;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            padding: 10px 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--body-font);
+        }
+
+        .dark-mode-toggle:hover {
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 140px;
+        }
+
+        /* Hero Section - Variation 6 */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-color);
+        }
+
+        .hero-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: repeating-linear-gradient(
+                0deg,
+                var(--text-color),
+                var(--text-color) 1px,
+                transparent 1px,
+                transparent 40px
+            ),
+            repeating-linear-gradient(
+                90deg,
+                var(--text-color),
+                var(--text-color) 1px,
+                transparent 1px,
+                transparent 40px
+            );
+        }
+
+        .hero-content {
+            z-index: 1;
+            padding: 40px;
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-text {
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: var(--headline-font);
+            font-size: calc(5rem * var(--font-multiplier));
+            color: var(--text-color);
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 0.9;
+        }
+
+        .hero h1 span {
+            display: block;
+            font-size: calc(5.5rem * var(--font-multiplier));
+            margin-top: 10px;
+        }
+
+        .hero p {
+            font-size: calc(1.25rem * var(--font-multiplier));
+            color: var(--gray);
+            margin-bottom: 40px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            background: transparent;
+            color: var(--text-color);
+            padding: 18px 50px;
+            font-size: calc(1rem * var(--font-multiplier));
+            font-weight: 600;
+            border: 2px solid var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: var(--text-color);
+            transition: height 0.3s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover {
+            color: var(--bg-color);
+        }
+
+        .cta-button:hover::before {
+            height: 100%;
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visual-frame {
+            position: absolute;
+            border: 2px solid var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .visual-frame:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            transform: rotate(0deg);
+            animation: frame-rotate 20s linear infinite;
+        }
+
+        .visual-frame:nth-child(2) {
+            width: 250px;
+            height: 250px;
+            transform: rotate(45deg);
+            animation: frame-rotate 25s linear infinite reverse;
+        }
+
+        .visual-frame:nth-child(3) {
+            width: 200px;
+            height: 200px;
+            transform: rotate(90deg);
+            animation: frame-rotate 30s linear infinite;
+        }
+
+        .visual-center {
+            width: 80px;
+            height: 80px;
+            background: var(--text-color);
+            position: relative;
+            z-index: 1;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes frame-rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Style Guide Section */
+        .style-guide {
+            padding: 100px 40px;
+            background: var(--bg-color);
+            border-top: 1px solid var(--text-color);
+            border-bottom: 1px solid var(--text-color);
+        }
+
+        .style-guide h2 {
+            font-family: var(--headline-font);
+            font-size: calc(3rem * var(--font-multiplier));
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 60px;
+            font-weight: 600;
+        }
+
+        .style-elements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--text-color);
+            padding: 2px;
+        }
+
+        .style-element {
+            padding: 40px;
+            background: var(--bg-color);
+            transition: all 0.3s ease;
+        }
+
+        .style-element:hover {
+            transform: scale(0.98);
+        }
+
+        .style-element h3 {
+            font-family: var(--headline-font);
+            font-size: calc(1.5rem * var(--font-multiplier));
+            color: var(--text-color);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .color-box {
+            width: 100%;
+            height: 80px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            border: 1px solid var(--text-color);
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 40px;
+            background: var(--light-gray);
+        }
+
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .about h2 {
+            font-family: var(--headline-font);
+            font-size: calc(3rem * var(--font-multiplier));
+            color: var(--text-color);
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .about-text p {
+            font-size: calc(1.1rem * var(--font-multiplier));
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: var(--gray);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 40px;
+            background: var(--bg-color);
+        }
+
+        .services h2 {
+            font-family: var(--headline-font);
+            font-size: calc(3rem * var(--font-multiplier));
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 60px;
+            font-weight: 600;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            padding: 50px;
+            border: 1px solid var(--text-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 40px 40px 0;
+            border-color: transparent var(--text-color) transparent transparent;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .service-card:hover::after {
+            border-width: 0 60px 60px 0;
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(1.75rem * var(--font-multiplier));
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .service-card p {
+            font-size: calc(1rem * var(--font-multiplier));
+            line-height: 1.6;
+            color: var(--gray);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 40px;
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        .contact-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact h2 {
+            font-family: var(--headline-font);
+            font-size: calc(3rem * var(--font-multiplier));
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .contact-intro {
+            text-align: center;
+            font-size: calc(1.2rem * var(--font-multiplier));
+            margin-bottom: 50px;
+            opacity: 0.9;
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 15px;
+            border: 1px solid var(--bg-color);
+            background: transparent;
+            font-family: var(--body-font);
+            font-size: calc(1rem * var(--font-multiplier));
+            transition: all 0.3s ease;
+            color: var(--bg-color);
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .contact-form button {
+            background: var(--bg-color);
+            color: var(--text-color);
+            padding: 18px;
+            border: none;
+            font-family: var(--headline-font);
+            font-size: calc(1.1rem * var(--font-multiplier));
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            justify-self: center;
+            width: 250px;
+        }
+
+        .contact-form button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-color);
+            color: var(--text-color);
+            text-align: center;
+            padding: 40px;
+            font-size: calc(0.9rem * var(--font-multiplier));
+            border-top: 1px solid var(--text-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+                text-align: center;
+            }
+
+            .hero-visual {
+                height: 300px;
+            }
+
+            .visual-frame:nth-child(1) {
+                width: 200px;
+                height: 200px;
+            }
+
+            .visual-frame:nth-child(2) {
+                width: 150px;
+                height: 150px;
+            }
+
+            .visual-frame:nth-child(3) {
+                width: 100px;
+                height: 100px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .toolbar {
+                position: relative;
+            }
+            
+            nav {
+                top: 0;
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            main {
+                margin-top: 120px;
+            }
+            
+            .hero h1 {
+                font-size: calc(3.5rem * var(--font-multiplier));
+            }
+
+            .hero h1 span {
+                font-size: calc(4rem * var(--font-multiplier));
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-section">
+            <label>Headline Font:</label>
+            <select id="headlineFont">
+                <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+                <option value="'Inter', sans-serif">Inter</option>
+                <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                <option value="'IBM Plex Sans', sans-serif">IBM Plex Sans</option>
+                <option value="'Manrope', sans-serif">Manrope</option>
+                <option value="'DM Sans', sans-serif">DM Sans</option>
+                <option value="'Work Sans', sans-serif">Work Sans</option>
+                <option value="'Outfit', sans-serif">Outfit</option>
+            </select>
+        </div>
+        
+        <div class="toolbar-section">
+            <label>Body Font:</label>
+            <select id="bodyFont">
+                <option value="'Inter', sans-serif">Inter</option>
+                <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+                <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                <option value="'IBM Plex Sans', sans-serif">IBM Plex Sans</option>
+                <option value="'Manrope', sans-serif">Manrope</option>
+                <option value="'DM Sans', sans-serif">DM Sans</option>
+                <option value="'Work Sans', sans-serif">Work Sans</option>
+                <option value="'Outfit', sans-serif">Outfit</option>
+            </select>
+        </div>
+        
+        <div class="toolbar-section">
+            <label>Primary:</label>
+            <input type="color" id="primaryColor" value="#000000">
+            <label>Secondary:</label>
+            <input type="color" id="secondaryColor" value="#111111">
+            <label>Accent:</label>
+            <input type="color" id="accentColor" value="#000000">
+        </div>
+        
+        <div class="toolbar-section">
+            <label>Font Size:</label>
+            <input type="range" id="fontMultiplier" min="0.8" max="1.5" step="0.1" value="1">
+            <span id="fontMultiplierValue">1x</span>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav>
+        <a href="#" class="logo">FRAME</a>
+        <div class="nav-links">
+            <a href="#style-guide">Style Guide</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="hero-pattern"></div>
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Think.<span>Create.</span></h1>
+                    <p>We architect digital experiences with systematic precision. Every decision intentional, every outcome exceptional.</p>
+                    <button class="cta-button">Start Your Project</button>
+                </div>
+                <div class="hero-visual">
+                    <div class="visual-frame"></div>
+                    <div class="visual-frame"></div>
+                    <div class="visual-frame"></div>
+                    <div class="visual-center"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Style Guide Section -->
+        <section class="style-guide" id="style-guide">
+            <h2>System & Structure</h2>
+            <div class="style-elements">
+                <div class="style-element">
+                    <h3>Typography</h3>
+                    <p style="font-family: var(--headline-font); font-size: calc(2rem * var(--font-multiplier));">Headlines with weight</p>
+                    <p style="font-size: calc(1.2rem * var(--font-multiplier));">Body text engineered for clarity.</p>
+                </div>
+                <div class="style-element">
+                    <h3>Color System</h3>
+                    <div class="color-box" style="background: var(--primary-color); color: var(--bg-color);">Primary</div>
+                    <div class="color-box" style="background: var(--bg-color); color: var(--text-color);">Background</div>
+                    <div class="color-box" style="background: var(--light-gray); color: var(--text-color);">Light Gray</div>
+                </div>
+                <div class="style-element">
+                    <h3>Core Principles</h3>
+                    <p>Systematic approach to design excellence.</p>
+                    <p>Function defines form. Always.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about" id="about">
+            <div class="about-content">
+                <h2>Method & Mindset</h2>
+                <div class="about-text">
+                    <p>Frame operates at the intersection of design and engineering. We approach every project with systematic thinking and creative problem-solving.</p>
+                    <p>Our process is refined through years of experience: analyze thoroughly, design deliberately, execute precisely. We don't chase trends; we create timeless digital solutions.</p>
+                    <p>In a landscape cluttered with complexity, we champion clarity. Our work speaks through its simplicity and performs through its sophistication.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services" id="services">
+            <h2>Core Capabilities</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Digital Strategy</h3>
+                    <p>Data-driven insights meet creative vision. We chart the course from concept to completion with precision and purpose.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Interface Design</h3>
+                    <p>Interfaces that feel inevitable. We design systems that users understand intuitively and interact with effortlessly.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Technical Build</h3>
+                    <p>Robust architecture, flawless execution. Our code is as elegant as our designs, built to scale and perform.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <div class="contact-content">
+                <h2>Begin Something Great</h2>
+                <p class="contact-intro">Ready to elevate your digital presence? Let's discuss your vision.</p>
+                <form class="contact-form">
+                    <div class="form-row">
+                        <input type="text" placeholder="Name" required>
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <textarea rows="5" placeholder="Tell us about your project" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 FRAME. Excellence through simplicity.</p>
+    </footer>
+
+    <script>
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.documentElement.setAttribute('data-theme', 
+                document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+            );
+            const button = document.querySelector('.dark-mode-toggle');
+            button.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? 'Light Mode' : 'Dark Mode';
+        }
+
+        // Font and color controls
+        document.getElementById('headlineFont').addEventListener('change', (e) => {
+            document.documentElement.style.setProperty('--headline-font', e.target.value);
+        });
+
+        document.getElementById('bodyFont').addEventListener('change', (e) => {
+            document.documentElement.style.setProperty('--body-font', e.target.value);
+        });
+
+        document.getElementById('primaryColor').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--primary-color', e.target.value);
+        });
+
+        document.getElementById('secondaryColor').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--secondary-color', e.target.value);
+        });
+
+        document.getElementById('accentColor').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--accent-color', e.target.value);
+        });
+
+        document.getElementById('fontMultiplier').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--font-multiplier', e.target.value);
+            document.getElementById('fontMultiplierValue').textContent = e.target.value + 'x';
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Rotating hover effect on service cards
+        const serviceCards = document.querySelectorAll('.service-card');
+        serviceCards.forEach((card, index) => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) rotate(' + (index % 2 === 0 ? '1' : '-1') + 'deg)';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) rotate(0deg)';
+            });
+        });
+
+        // Rotating hover effect on style elements
+        const styleElements = document.querySelectorAll('.style-element');
+        styleElements.forEach((element, index) => {
+            element.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(0.98) rotate(' + (index % 2 === 0 ? '-0.5' : '0.5') + 'deg)';
+            });
+            element.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1) rotate(0deg)';
+            });
+        });
+
+        // Visual frame hover effect
+        const visualFrames = document.querySelectorAll('.visual-frame');
+        visualFrames.forEach((frame, index) => {
+            frame.addEventListener('mouseenter', function() {
+                this.style.animationPlayState = 'paused';
+                this.style.transform = 'scale(1.1) rotate(' + (index * 45) + 'deg)';
+            });
+            frame.addEventListener('mouseleave', function() {
+                this.style.animationPlayState = 'running';
+                this.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>

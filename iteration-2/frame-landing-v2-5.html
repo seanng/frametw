@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame - Minimal Professional Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700&family=Manrope:wght@200;300;400;500;600;700;800&family=DM+Sans:wght@400;500;700&family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #111111;
+            --accent-color: #000000;
+            --bg-color: #FFFFFF;
+            --text-color: #000000;
+            --gray: #666666;
+            --light-gray: #F5F5F5;
+            --font-multiplier: 1;
+            --headline-font: 'Space Grotesk', sans-serif;
+            --body-font: 'Inter', sans-serif;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #000000;
+            --text-color: #FFFFFF;
+            --primary-color: #FFFFFF;
+            --secondary-color: #F0F0F0;
+            --accent-color: #FFFFFF;
+            --gray: #999999;
+            --light-gray: #1A1A1A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            background: var(--bg-color);
+            border-bottom: 1px solid var(--text-color);
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1001;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .toolbar-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .toolbar select, .toolbar input[type="color"], .toolbar input[type="range"] {
+            padding: 8px;
+            border: 1px solid var(--text-color);
+            background: transparent;
+            color: var(--text-color);
+            cursor: pointer;
+            font-family: var(--body-font);
+        }
+
+        .toolbar label {
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .toolbar input[type="color"] {
+            width: 50px;
+            height: 35px;
+        }
+
+        .toolbar input[type="range"] {
+            width: 100px;
+        }
+
+        /* Navbar */
+        nav {
+            background: var(--bg-color);
+            border-bottom: 1px solid var(--text-color);
+            padding: 20px 40px;
+            position: fixed;
+            top: 70px;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-family: var(--headline-font);
+            font-size: calc(2rem * var(--font-multiplier));
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: -1px;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            opacity: 0.7;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: calc(1rem * var(--font-multiplier));
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--text-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .dark-mode-toggle {
+            background: transparent;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            padding: 10px 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--body-font);
+        }
+
+        .dark-mode-toggle:hover {
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 140px;
+        }
+
+        /* Hero Section - Variation 5 */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-color);
+        }
+
+        .hero-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--text-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--text-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.05;
+            animation: grid-move 20s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 40px;
+            max-width: 1000px;
+        }
+
+        .hero h1 {
+            font-family: var(--headline-font);
+            font-size: calc(6rem * var(--font-multiplier));
+            color: var(--text-color);
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: -3px;
+            line-height: 0.9;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero h1::before {
+            content: 'FRAME';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--text-color);
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .hero p {
+            font-size: calc(1.25rem * var(--font-multiplier));
+            color: var(--gray);
+            margin-bottom: 40px;
+            font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            background: var(--text-color);
+            color: var(--bg-color);
+            padding: 18px 50px;
+            font-size: calc(1rem * var(--font-multiplier));
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            transition: left 0.3s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        /* Rotating elements */
+        .hero-shape {
+            position: absolute;
+            border: 1px solid var(--text-color);
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .hero-shape:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+            animation: rotate 30s linear infinite;
+        }
+
+        .hero-shape:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            bottom: 10%;
+            right: 5%;
+            animation: rotate 25s linear infinite reverse;
+        }
+
+        .hero-shape:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            right: 20%;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Style Guide Section */
+        .style-guide {
+            padding: 100px 40px;
+            background: var(--light-gray);
+        }
+
+        .style-guide h2 {
+            font-family: var(--headline-font);
+            font-size: calc(3rem * var(--font-multiplier));
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 60px;
+            font-weight: 600;
+        }
+
+        .style-elements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .style-element {
+            padding: 30px;
+            border: 1px solid var(--text-color);
+            background: var(--bg-color);
+            transition: all 0.3s ease;
+        }
+
+        .style-element:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .style-element h3 {
+            font-family: var(--headline-font);
+            font-size: calc(1.5rem * var(--font-multiplier));
+            color: var(--text-color);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .color-box {
+            width: 100%;
+            height: 80px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            border: 1px solid var(--text-color);
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 40px;
+            background: var(--bg-color);
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about h2 {
+            font-family: var(--headline-font);
+            font-size: calc(3rem * var(--font-multiplier));
+            margin-bottom: 40px;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .about p {
+            font-size: calc(1.1rem * var(--font-multiplier));
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: var(--gray);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 40px;
+            background: var(--light-gray);
+        }
+
+        .services h2 {
+            font-family: var(--headline-font);
+            font-size: calc(3rem * var(--font-multiplier));
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 60px;
+            font-weight: 600;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--text-color);
+            padding: 2px;
+        }
+
+        .service-card {
+            background: var(--bg-color);
+            padding: 40px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--text-color);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 0;
+        }
+
+        .service-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .service-card:hover {
+            color: var(--bg-color);
+        }
+
+        .service-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card h3 {
+            font-family: var(--headline-font);
+            font-size: calc(1.75rem * var(--font-multiplier));
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .service-card p {
+            font-size: calc(1rem * var(--font-multiplier));
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 40px;
+            background: var(--bg-color);
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-family: var(--headline-font);
+            font-size: calc(3rem * var(--font-multiplier));
+            color: var(--text-color);
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 15px;
+            border: 1px solid var(--text-color);
+            background: transparent;
+            font-family: var(--body-font);
+            font-size: calc(1rem * var(--font-multiplier));
+            transition: all 0.3s ease;
+            color: var(--text-color);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--gray);
+        }
+
+        .contact-form button {
+            background: var(--text-color);
+            color: var(--bg-color);
+            padding: 18px;
+            border: none;
+            font-family: var(--headline-font);
+            font-size: calc(1.1rem * var(--font-multiplier));
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .contact-form button:hover {
+            transform: scale(1.02);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-color);
+            color: var(--bg-color);
+            text-align: center;
+            padding: 40px;
+            font-size: calc(0.9rem * var(--font-multiplier));
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .toolbar {
+                position: relative;
+            }
+            
+            nav {
+                top: 0;
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            main {
+                margin-top: 120px;
+            }
+            
+            .hero h1 {
+                font-size: calc(3.5rem * var(--font-multiplier));
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-section">
+            <label>Headline Font:</label>
+            <select id="headlineFont">
+                <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+                <option value="'Inter', sans-serif">Inter</option>
+                <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                <option value="'IBM Plex Sans', sans-serif">IBM Plex Sans</option>
+                <option value="'Manrope', sans-serif">Manrope</option>
+                <option value="'DM Sans', sans-serif">DM Sans</option>
+                <option value="'Work Sans', sans-serif">Work Sans</option>
+                <option value="'Outfit', sans-serif">Outfit</option>
+            </select>
+        </div>
+        
+        <div class="toolbar-section">
+            <label>Body Font:</label>
+            <select id="bodyFont">
+                <option value="'Inter', sans-serif">Inter</option>
+                <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+                <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                <option value="'IBM Plex Sans', sans-serif">IBM Plex Sans</option>
+                <option value="'Manrope', sans-serif">Manrope</option>
+                <option value="'DM Sans', sans-serif">DM Sans</option>
+                <option value="'Work Sans', sans-serif">Work Sans</option>
+                <option value="'Outfit', sans-serif">Outfit</option>
+            </select>
+        </div>
+        
+        <div class="toolbar-section">
+            <label>Primary:</label>
+            <input type="color" id="primaryColor" value="#000000">
+            <label>Secondary:</label>
+            <input type="color" id="secondaryColor" value="#111111">
+            <label>Accent:</label>
+            <input type="color" id="accentColor" value="#000000">
+        </div>
+        
+        <div class="toolbar-section">
+            <label>Font Size:</label>
+            <input type="range" id="fontMultiplier" min="0.8" max="1.5" step="0.1" value="1">
+            <span id="fontMultiplierValue">1x</span>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav>
+        <a href="#" class="logo">FRAME</a>
+        <div class="nav-links">
+            <a href="#style-guide">Style Guide</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="hero-grid"></div>
+            <div class="hero-shape"></div>
+            <div class="hero-shape"></div>
+            <div class="hero-shape"></div>
+            <div class="hero-content">
+                <h1>FRAME</h1>
+                <p>Minimal design, maximum impact. We craft digital experiences that transcend the ordinary through thoughtful simplicity.</p>
+                <button class="cta-button">Explore Our Work</button>
+            </div>
+        </section>
+
+        <!-- Style Guide Section -->
+        <section class="style-guide" id="style-guide">
+            <h2>Design System</h2>
+            <div class="style-elements">
+                <div class="style-element">
+                    <h3>Typography</h3>
+                    <p style="font-family: var(--headline-font); font-size: calc(2rem * var(--font-multiplier));">Headlines that speak</p>
+                    <p style="font-size: calc(1.2rem * var(--font-multiplier));">Body text for clarity and readability.</p>
+                </div>
+                <div class="style-element">
+                    <h3>Color Palette</h3>
+                    <div class="color-box" style="background: var(--primary-color); color: var(--bg-color);">Primary</div>
+                    <div class="color-box" style="background: var(--bg-color); color: var(--text-color);">Background</div>
+                    <div class="color-box" style="background: var(--gray); color: white;">Gray</div>
+                </div>
+                <div class="style-element">
+                    <h3>Design Philosophy</h3>
+                    <p>Less is more. Every element serves a purpose.</p>
+                    <p>Clean lines, clear communication, compelling results.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about" id="about">
+            <div class="about-content">
+                <h2>Precision & Purpose</h2>
+                <p>Frame is a digital agency built on the principles of minimalism and functionality. We believe that great design isn't about what you add, but what you leave out.</p>
+                <p>Our approach is simple: understand deeply, design thoughtfully, execute flawlessly. We strip away the unnecessary to reveal the essential.</p>
+                <p>In a world of digital noise, we create clarity. In a sea of complexity, we find simplicity.</p>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services" id="services">
+            <h2>What We Do</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Strategy</h3>
+                    <p>Clear thinking leads to clear results. We develop strategies that cut through complexity to achieve your goals.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Design</h3>
+                    <p>Minimal aesthetics with maximum functionality. Every pixel has purpose, every interaction has meaning.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Development</h3>
+                    <p>Clean code, scalable solutions. We build digital products that perform beautifully and reliably.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <div class="contact-content">
+                <h2>Let's Talk</h2>
+                <form class="contact-form">
+                    <input type="text" placeholder="Name" required>
+                    <input type="email" placeholder="Email" required>
+                    <textarea rows="5" placeholder="Your Project" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 FRAME. Minimal by design.</p>
+    </footer>
+
+    <script>
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.documentElement.setAttribute('data-theme', 
+                document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+            );
+            const button = document.querySelector('.dark-mode-toggle');
+            button.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? 'Light Mode' : 'Dark Mode';
+        }
+
+        // Font and color controls
+        document.getElementById('headlineFont').addEventListener('change', (e) => {
+            document.documentElement.style.setProperty('--headline-font', e.target.value);
+        });
+
+        document.getElementById('bodyFont').addEventListener('change', (e) => {
+            document.documentElement.style.setProperty('--body-font', e.target.value);
+        });
+
+        document.getElementById('primaryColor').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--primary-color', e.target.value);
+        });
+
+        document.getElementById('secondaryColor').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--secondary-color', e.target.value);
+        });
+
+        document.getElementById('accentColor').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--accent-color', e.target.value);
+        });
+
+        document.getElementById('fontMultiplier').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--font-multiplier', e.target.value);
+            document.getElementById('fontMultiplierValue').textContent = e.target.value + 'x';
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Rotating hover effect on service cards
+        const serviceCards = document.querySelectorAll('.service-card');
+        serviceCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'rotate(1deg)';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'rotate(0deg)';
+            });
+        });
+
+        // Rotating hover effect on style elements
+        const styleElements = document.querySelectorAll('.style-element');
+        styleElements.forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) rotate(-1deg)';
+            });
+            element.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) rotate(0deg)';
+            });
+        });
+    </script>
+</body>
+</html>

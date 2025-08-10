@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frame - Precision Digital Studio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Russo+One&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Barlow:wght@400;500;600;700;800&family=Archivo:wght@400;500;600;700;800;900&family=Work+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Barlow:wght@400;500;600;700;800&family=Archivo:wght@400;500;600;700;800;900&family=Work+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #000000;
@@ -20,7 +17,7 @@
             --gray-light: #FAFAFA;
             --gray-medium: #E5E5E5;
             --font-multiplier: 1;
-            --headline-font: 'Russo One', sans-serif;
+            --headline-font: 'Space Grotesk', sans-serif;
             --body-font: 'Inter', sans-serif;
         }
 
@@ -71,9 +68,7 @@
             gap: 15px;
         }
 
-        .toolbar select,
-        .toolbar input[type="color"],
-        .toolbar input[type="range"] {
+        .toolbar select, .toolbar input[type="color"], .toolbar input[type="range"] {
             padding: 8px;
             border: 1px solid var(--primary-color);
             background: transparent;
@@ -212,6 +207,7 @@
             left: 0;
             right: 0;
             bottom: 0;
+            pointer-events: none;
         }
 
         .shape {
@@ -220,8 +216,6 @@
             background: transparent;
             transition: all 0.5s ease;
             border-radius: 0;
-            pointer-events: auto;
-            cursor: pointer;
         }
 
         .shape-1 {
@@ -248,19 +242,19 @@
             transform: translate(-50%, -50%) rotate(30deg);
         }
 
-        .shape-1:hover {
+        .hero:hover .shape-1 {
             transform: rotate(90deg) scale(1.1);
             background: var(--primary-color);
             opacity: 0.1;
         }
 
-        .shape-2:hover {
+        .hero:hover .shape-2 {
             transform: rotate(-30deg) scale(0.9);
             background: var(--primary-color);
             opacity: 0.1;
         }
 
-        .shape-3:hover {
+        .hero:hover .shape-3 {
             transform: translate(-50%, -50%) rotate(180deg) scale(1.2);
             background: var(--primary-color);
             opacity: 0.1;
@@ -271,7 +265,6 @@
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            pointer-events: none;
         }
 
         .hero h1 {
@@ -327,7 +320,6 @@
             text-decoration: none;
             display: inline-block;
             border-radius: 0;
-            pointer-events: auto;
         }
 
         .cta-button:hover {
@@ -350,7 +342,6 @@
             text-decoration: none;
             display: inline-block;
             border-radius: 0;
-            pointer-events: auto;
         }
 
         .cta-secondary:hover {
@@ -411,7 +402,7 @@
             width: 100%;
         }
 
-        .style-element>* {
+        .style-element > * {
             position: relative;
             z-index: 1;
         }
@@ -664,10 +655,10 @@
             pointer-events: none;
         }
 
-        .contact-form input:focus+label,
-        .contact-form textarea:focus+label,
-        .contact-form input:not(:placeholder-shown)+label,
-        .contact-form textarea:not(:placeholder-shown)+label {
+        .contact-form input:focus + label,
+        .contact-form textarea:focus + label,
+        .contact-form input:not(:placeholder-shown) + label,
+        .contact-form textarea:not(:placeholder-shown) + label {
             top: -10px;
             font-size: calc(0.8rem * var(--font-multiplier));
             opacity: 1;
@@ -719,82 +710,82 @@
             .toolbar {
                 position: relative;
             }
-
+            
             nav {
                 top: 0;
                 flex-direction: column;
                 gap: 20px;
                 padding: 20px;
             }
-
+            
             main {
                 margin-top: 120px;
             }
-
+            
             .hero h1 {
                 font-size: calc(4rem * var(--font-multiplier));
             }
-
+            
             .hero h1 span {
                 font-size: calc(2rem * var(--font-multiplier));
             }
-
+            
             .nav-links {
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 20px;
             }
-
+            
             .cta-group {
                 flex-direction: column;
                 width: 100%;
             }
-
+            
             .cta-button,
             .cta-secondary {
                 width: 100%;
                 text-align: center;
             }
-
+            
             .style-elements {
                 grid-template-columns: 1fr;
             }
-
+            
             .about-container {
                 grid-template-columns: 1fr;
                 gap: 40px;
             }
-
+            
             .about-visual {
                 height: 300px;
             }
-
+            
             .service-row {
                 grid-template-columns: 1fr;
             }
-
+            
             .service-number {
                 border-right: none;
                 border-bottom: 1px solid var(--primary-color);
                 padding: 30px;
                 font-size: calc(3rem * var(--font-multiplier));
             }
-
+            
             .contact-container {
                 grid-template-columns: 1fr;
                 gap: 60px;
             }
-
+            
             .shape-1 {
                 width: 200px;
                 height: 200px;
             }
-
+            
             .shape-2 {
                 width: 150px;
                 height: 150px;
             }
-
+            
             .shape-3 {
                 width: 100px;
                 height: 100px;
@@ -802,14 +793,12 @@
         }
     </style>
 </head>
-
 <body>
     <!-- Toolbar -->
     <div class="toolbar">
         <div class="toolbar-section">
             <label>Headline Font:</label>
             <select id="headlineFont">
-                <option value="'Russo One', sans-serif">Russo One</option>
                 <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
                 <option value="'Inter', sans-serif">Inter</option>
                 <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
@@ -821,7 +810,7 @@
                 <option value="'Montserrat', sans-serif">Montserrat</option>
             </select>
         </div>
-
+        
         <div class="toolbar-section">
             <label>Body Font:</label>
             <select id="bodyFont">
@@ -834,7 +823,7 @@
                 <option value="'Montserrat', sans-serif">Montserrat</option>
             </select>
         </div>
-
+        
         <div class="toolbar-section">
             <label>Primary:</label>
             <input type="color" id="primaryColor" value="#000000">
@@ -843,7 +832,7 @@
             <label>Accent:</label>
             <input type="color" id="accentColor" value="#000000">
         </div>
-
+        
         <div class="toolbar-section">
             <label>Font Size:</label>
             <input type="range" id="fontMultiplier" min="0.8" max="1.5" step="0.1" value="1">
@@ -874,8 +863,7 @@
             </div>
             <div class="hero-content">
                 <h1>PRECISION<span>DIGITAL STUDIO</span></h1>
-                <p>Where minimal design meets maximum impact. We craft digital experiences that stand the test of time.
-                </p>
+                <p>Where minimal design meets maximum impact. We craft digital experiences that stand the test of time.</p>
                 <div class="cta-group">
                     <a href="#contact" class="cta-button">Start a Project</a>
                     <a href="#services" class="cta-secondary">View Our Work</a>
@@ -889,26 +877,20 @@
             <div class="style-elements">
                 <div class="style-element">
                     <h3>Typography System</h3>
-                    <p
-                        style="font-family: var(--headline-font); font-size: calc(2.5rem * var(--font-multiplier)); font-weight: 700; margin: 20px 0;">
-                        Display</p>
+                    <p style="font-family: var(--headline-font); font-size: calc(2.5rem * var(--font-multiplier)); font-weight: 700; margin: 20px 0;">Display</p>
                     <p style="font-size: calc(1.4rem * var(--font-multiplier)); margin: 10px 0;">Subheadline Text</p>
-                    <p style="font-size: calc(1rem * var(--font-multiplier)); opacity: 0.8;">Body copy for extended
-                        reading and optimal legibility.</p>
+                    <p style="font-size: calc(1rem * var(--font-multiplier)); opacity: 0.8;">Body copy for extended reading and optimal legibility.</p>
                 </div>
                 <div class="style-element">
                     <h3>Color Philosophy</h3>
                     <div class="color-box" style="background: var(--primary-color); color: var(--bg-color);">Black</div>
                     <div class="color-box" style="background: var(--bg-color); color: var(--primary-color);">White</div>
-                    <div class="color-box" style="background: var(--gray-medium); color: var(--primary-color);">Gray
-                    </div>
+                    <div class="color-box" style="background: var(--gray-medium); color: var(--primary-color);">Gray</div>
                 </div>
                 <div class="style-element">
                     <h3>Design Principles</h3>
-                    <p style="font-size: calc(1.2rem * var(--font-multiplier)); margin-bottom: 15px;">Clarity Above All
-                    </p>
-                    <p>We believe in purposeful minimalism. Every element serves a function. Every decision is
-                        intentional.</p>
+                    <p style="font-size: calc(1.2rem * var(--font-multiplier)); margin-bottom: 15px;">Clarity Above All</p>
+                    <p>We believe in purposeful minimalism. Every element serves a function. Every decision is intentional.</p>
                 </div>
             </div>
         </section>
@@ -918,10 +900,8 @@
             <div class="about-container">
                 <div class="about-text">
                     <h2>The Frame Philosophy</h2>
-                    <p>In a world saturated with visual noise, we choose restraint. Frame is not just our name—it's our
-                        approach. We frame problems, frame solutions, and frame experiences.</p>
-                    <p>Our work is characterized by meticulous attention to detail, unwavering focus on user needs, and
-                        a commitment to timeless design principles.</p>
+                    <p>In a world saturated with visual noise, we choose restraint. Frame is not just our name—it's our approach. We frame problems, frame solutions, and frame experiences.</p>
+                    <p>Our work is characterized by meticulous attention to detail, unwavering focus on user needs, and a commitment to timeless design principles.</p>
                     <p>We don't chase trends. We set standards.</p>
                 </div>
                 <div class="about-visual">
@@ -941,32 +921,28 @@
                     <div class="service-number">01</div>
                     <div class="service-content">
                         <h3>Digital Strategy</h3>
-                        <p>We begin with understanding. Research, analysis, and strategic planning form the foundation
-                            of every project we undertake.</p>
+                        <p>We begin with understanding. Research, analysis, and strategic planning form the foundation of every project we undertake.</p>
                     </div>
                 </div>
                 <div class="service-row">
                     <div class="service-number">02</div>
                     <div class="service-content">
                         <h3>Interface Design</h3>
-                        <p>Clean, intuitive interfaces that prioritize user experience. We design with purpose, ensuring
-                            every interaction is meaningful.</p>
+                        <p>Clean, intuitive interfaces that prioritize user experience. We design with purpose, ensuring every interaction is meaningful.</p>
                     </div>
                 </div>
                 <div class="service-row">
                     <div class="service-number">03</div>
                     <div class="service-content">
                         <h3>Development</h3>
-                        <p>Robust, scalable solutions built with modern technologies. Our code is as clean as our
-                            design, optimized for performance and maintainability.</p>
+                        <p>Robust, scalable solutions built with modern technologies. Our code is as clean as our design, optimized for performance and maintainability.</p>
                     </div>
                 </div>
                 <div class="service-row">
                     <div class="service-number">04</div>
                     <div class="service-content">
                         <h3>Brand Systems</h3>
-                        <p>Comprehensive brand identities that transcend mediums. We create visual languages that speak
-                            clearly and consistently.</p>
+                        <p>Comprehensive brand identities that transcend mediums. We create visual languages that speak clearly and consistently.</p>
                     </div>
                 </div>
             </div>
@@ -1021,7 +997,7 @@
     <script>
         // Dark mode toggle
         function toggleDarkMode() {
-            document.documentElement.setAttribute('data-theme',
+            document.documentElement.setAttribute('data-theme', 
                 document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
             );
             const button = document.querySelector('.dark-mode-toggle');
@@ -1069,7 +1045,7 @@
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const shapes = document.querySelectorAll('.shape');
-
+            
             shapes.forEach((shape, index) => {
                 const speed = 0.5 + (index * 0.2);
                 shape.style.transform = `translateY(${scrolled * speed * 0.1}px) rotate(${45 + (index * 15) + (scrolled * 0.05)}deg)`;
@@ -1077,5 +1053,4 @@
         });
     </script>
 </body>
-
 </html>
